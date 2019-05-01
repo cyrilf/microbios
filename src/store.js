@@ -36,6 +36,14 @@ export default new Vuex.Store({
       }
     },
 
+    restart({ state, dispatch }) {
+      const { isPlaying } = state
+      dispatch('init', { width: state.width, height: state.height })
+      dispatch('pause')
+      dispatch('update')
+      if (isPlaying) dispatch('play')
+    },
+
     toggle({ state, commit }, { row, column }) {
       commit('setCell', { row, column, isAlive: !state.world[row][column] })
     },

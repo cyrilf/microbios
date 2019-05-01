@@ -2,6 +2,7 @@
   <div class="controls">
     <button :disabled="isPlaying" @click="update">Next</button>
     <button @click="isPlaying ? pause() : play()">{{ isPlaying ? 'Pause' : 'Play'}}</button>
+    <button @click="restart">Restart</button>
     <div><input v-model.number="fps" type="number" min="0" max="60"/><span>fps</span></div>
   </div>
 </template>
@@ -19,7 +20,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['play', 'pause', 'update', 'changeFPS']),
+    ...mapActions(['play', 'pause', 'update', 'changeFPS', 'restart']),
   },
 }
 </script>
