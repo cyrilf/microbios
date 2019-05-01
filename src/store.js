@@ -67,8 +67,8 @@ export default new Vuex.Store({
       state.world = world
     },
 
-    setCell(state, { i, j, isAlive }) {
-      Vue.set(state.world[i], j, isAlive)
+    setCell(state, { row, column, isAlive }) {
+      Vue.set(state.world[row], column, isAlive)
     },
 
     setIsPlaying(state, isPlaying) {

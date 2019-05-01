@@ -6,6 +6,7 @@
           v-for="(cell, j) in row"
           :key="`${i}-${j}`"
           :isAlive="cell"
+          @click="toggle({ row: i, column: j })"
           />
       </tr>
     </tbody>
@@ -13,7 +14,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import Cell from './Cell.vue'
 
 export default {
@@ -22,6 +23,9 @@ export default {
   },
   computed: {
     ...mapState(['world']),
+  },
+  methods: {
+    ...mapActions(['toggle']),
   },
 }
 </script>
