@@ -1,4 +1,4 @@
-# micri
+# microbios
 
 ## Project setup
 ```
