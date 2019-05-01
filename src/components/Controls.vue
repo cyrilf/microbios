@@ -2,7 +2,7 @@
   <div class="controls">
     <button :disabled="isPlaying" @click="update">Next</button>
     <button @click="isPlaying ? pause() : play()">{{ isPlaying ? 'Pause' : 'Play'}}</button>
-    <div><input v-model.number="fps" type="number"/><span>fps</span></div>
+    <div><input v-model.number="fps" type="number" min="0" max="60"/><span>fps</span></div>
   </div>
 </template>
 

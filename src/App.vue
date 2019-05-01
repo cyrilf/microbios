@@ -18,7 +18,7 @@ export default {
   },
 
   mounted() {
-    this.init({ width: 96, height: 64 })
+    this.init({ width: 100, height: 50 })
     this.play()
   },
 
