@@ -32,4 +32,7 @@ export default {
 * {
   box-sizing: border-box;
 }
+body {
+  text-align: center;
+}
 </style>

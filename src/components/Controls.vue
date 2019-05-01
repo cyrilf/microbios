@@ -1,10 +1,13 @@
 <template>
-  <div class="controls">
-    <button :disabled="isPlaying" @click="update">Next</button>
-    <button @click="isPlaying ? pause() : play()">{{ isPlaying ? 'Pause' : 'Play'}}</button>
-    <button @click="restart">Restart</button>
-    <div><input v-model.number="fps" type="number" min="0" max="60"/><span>fps</span></div>
-  </div>
+  <section>
+    <div>Generation: {{generation}}</div>
+    <div class="controls">
+      <button :disabled="isPlaying" @click="update">Next</button>
+      <button @click="isPlaying ? pause() : play()">{{ isPlaying ? 'Pause' : 'Play'}}</button>
+      <button @click="restart">Restart</button>
+      <div><input v-model.number="fps" type="number" min="0" max="60"/><span>fps</span></div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -12,7 +15,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['isPlaying']),
+    ...mapState(['isPlaying', 'generation']),
     fps: {
       get() { return this.$store.state.fps },
       set(value) { this.changeFPS(value) },
@@ -26,6 +29,10 @@ export default {
 </script>
 
 <style lang="scss">
+section {
+  padding-top: 10px;
+}
+
 .controls {
   padding-top: 50px;
   display: flex;

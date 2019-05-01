@@ -13,6 +13,7 @@ export default new Vuex.Store({
     width: 0,
     height: 0,
     world: [],
+    generation: 0,
     isPlaying: false,
     fps: 60,
   },
@@ -21,18 +22,21 @@ export default new Vuex.Store({
     init({ commit }, { width, height }) {
       commit('setSize', { width, height })
       commit('setWorld', createWorld(width, height))
+      commit('setGeneration', 0)
     },
 
     update({ state, commit, dispatch }) {
       if (state.isPlaying) {
         if (state.fps !== 0 && frames >= (60 / state.fps)) {
           commit('setWorld', updateWorld(state.world))
+          commit('setGeneration', state.generation + 1)
           frames = -1 // because we ++ aterwards
         }
         animationId = requestAnimationFrame(() => dispatch('update'))
         frames++
       } else {
         commit('setWorld', updateWorld(state.world))
+        commit('setGeneration', state.generation + 1)
       }
     },
 
@@ -81,6 +85,10 @@ export default new Vuex.Store({
 
     setIsPlaying(state, isPlaying) {
       state.isPlaying = isPlaying
+    },
+
+    setGeneration(state, generation) {
+      state.generation = generation
     },
 
     setFPS(state, { fps }) {
