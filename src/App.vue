@@ -19,7 +19,7 @@ export default {
 
   mounted() {
     this.init({ columns: 100, rows: 50 })
-    this.play()
+      .then(this.play)
   },
 
   methods: {

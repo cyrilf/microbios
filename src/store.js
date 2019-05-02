@@ -1,19 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import gameOfLife from './experiments/gameOfLife'
-// import forestFire from './experiments/forestFire'
-// import maze from './experiments/maze'
-// import cave from './experiments/cave'
-// import splash from './experiments/splash'
-// import lava from './experiments/lava'
-import trippy from './experiments/trippy'
-
 Vue.use(Vuex)
 
 let animationId = null
 let frames = 0
 let world
+
+const experiments = [
+  { name: 'Game of Life', getModule: () => import('./experiments/gameOfLife') },
+  { name: 'Forest Fire', getModule: () => import('./experiments/forestFire') },
+  { name: 'Maze', getModule: () => import('./experiments/maze') },
+  { name: 'Cave', getModule: () => import('./experiments/cave') },
+  { name: 'Splash', getModule: () => import('./experiments/splash') },
+  { name: 'Lava', getModule: () => import('./experiments/lava') },
+  { name: 'Trippy', getModule: () => import('./experiments/trippy') },
+]
 
 export default new Vuex.Store({
   state: {
@@ -21,13 +23,19 @@ export default new Vuex.Store({
     grid: [],
     isPlaying: false,
     fps: 60,
+    experiments,
+    currentExperiment: experiments[0].name,
   },
 
   actions: {
-    init({ commit }, { columns, rows }) {
-      // world = gameOfLife(columns, rows)
-      world = trippy(columns, rows)
-      commit('nextGeneration', [world.initGrid, world.generation])
+    init({ state, commit }, { columns, rows }) {
+      const currentExperiment = state.experiments.find(
+        experiment => (experiment.name === state.currentExperiment),
+      )
+      return currentExperiment.getModule().then((module) => {
+        world = module.default(columns, rows)
+        commit('nextGeneration', [world.initGrid, world.generation])
+      })
     },
 
     update({ state, commit, dispatch }) {
@@ -48,6 +56,13 @@ export default new Vuex.Store({
       dispatch('pause')
       dispatch('update')
       if (isPlaying) dispatch('play')
+    },
+
+    changeExperiment({ state, dispatch, commit }, experiment) {
+      if (state.currentExperiment !== experiment) {
+        commit('changeExperiment', experiment)
+        dispatch('restart')
+      }
     },
 
     // cellClick({ state, commit }, { row, column }) {
@@ -89,6 +104,10 @@ export default new Vuex.Store({
       if (fps >= 0) {
         state.fps = fps
       }
+    },
+
+    changeExperiment(state, experiment) {
+      state.currentExperiment = experiment
     },
   },
 })

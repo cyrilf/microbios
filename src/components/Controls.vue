@@ -5,6 +5,14 @@
       <button :disabled="isPlaying" @click="update">Next</button>
       <button @click="isPlaying ? pause() : play()">{{ isPlaying ? 'Pause' : 'Play'}}</button>
       <button @click="restart">Restart</button>
+      <select v-model="currentExperiment">
+        <option
+          v-for="experiment in experiments"
+          :key="experiment.name"
+          :value="experiment.name">
+          {{ experiment.name }}
+        </option>
+      </select>
       <div><input v-model.number="fps" type="number" min="0" max="60"/><span>fps</span></div>
     </div>
   </section>
@@ -15,15 +23,19 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['isPlaying', 'generation']),
+    ...mapState(['isPlaying', 'generation', 'experiments']),
     fps: {
       get() { return this.$store.state.fps },
       set(value) { this.changeFPS(value) },
     },
+    currentExperiment: {
+      get() { return this.$store.state.currentExperiment },
+      set(value) { this.changeExperiment(value) },
+    },
   },
 
   methods: {
-    ...mapActions(['play', 'pause', 'update', 'changeFPS', 'restart']),
+    ...mapActions(['play', 'pause', 'update', 'changeFPS', 'restart', 'changeExperiment']),
   },
 }
 </script>
@@ -39,12 +51,12 @@ section {
   justify-content: center;
 }
 
-button, input, span {
+button, input, select, span {
   color:#41403E;
   font-size:2rem;
 }
 
-button, input {
+button, input, select {
   background:transparent;
   padding:1rem 1rem;
   margin:0 1rem;
