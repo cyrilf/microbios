@@ -20,15 +20,12 @@ export default new Vuex.Store({
   actions: {
     init({ commit }, { columns, rows }) {
       world = gameOfLife(columns, rows)
-      commit('setGrid', world.grid)
-      commit('setGeneration', world.generation)
+      commit('nextGeneration', [world.initGrid, world.generation])
     },
 
     update({ state, commit, dispatch }) {
       if (!state.isPlaying || (state.isPlaying && state.fps !== 0 && frames >= (60 / state.fps))) {
-        const [grid, generation] = world.nextGeneration()
-        commit('setGrid', grid)
-        commit('setGeneration', generation)
+        commit('nextGeneration', world.nextGeneration())
         frames = -1
       }
 
@@ -68,11 +65,8 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    setGrid(state, grid) {
+    nextGeneration(state, [grid, generation]) {
       state.grid = grid
-    },
-
-    setGeneration(state, generation) {
       state.generation = generation
     },
 

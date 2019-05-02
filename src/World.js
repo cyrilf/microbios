@@ -27,6 +27,7 @@ export default class World {
       const Cell = this.cellClasses.get(name)
       return new Cell(row, column)
     }, this), this)
+    this.initGrid = simplifyGrid(this.grid)
   }
 
   registerCellClass(CellClass) { this.cellClasses.set(CellClass.name, CellClass) }
@@ -50,7 +51,7 @@ export default class World {
 
     this.generation += 1
 
-    return [this.grid, this.generation]
+    return [simplifyGrid(this.grid), this.generation]
   }
 
   getSurroundings(row, column) {
@@ -81,3 +82,5 @@ export default class World {
     return surroundings
   }
 }
+
+const simplifyGrid = grid => grid.map(row => row.map(cell => cell.getColor()))

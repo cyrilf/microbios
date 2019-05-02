@@ -1,14 +1,14 @@
 <template>
   <td
     class="cell"
-    @click="() => value.click()"
-    :style="`background-color: ${value.getColor()}`"/>
+    @click="$emit('click', $event)"
+    :style="`background-color: ${color}`"/>
 </template>
 
 <script>
 export default {
   props: {
-    value: { type: Object, required: true },
+    color: { type: String, required: true },
   },
 }
 </script>

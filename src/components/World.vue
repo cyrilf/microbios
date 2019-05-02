@@ -5,7 +5,7 @@
         <Cell
           v-for="(cell, j) in row"
           :key="`${i}-${j}`"
-          :value="cell"
+          :color="cell"
           />
       </tr>
     </tbody>
