@@ -22,6 +22,7 @@ export default new Vuex.Store({
     generation: 0,
     grid: [],
     isPlaying: false,
+    loading: true,
     fps: 60,
     experiments,
     currentExperiment: experiments[0].name,
@@ -35,6 +36,7 @@ export default new Vuex.Store({
       return currentExperiment.getModule().then((module) => {
         world = module.default(columns, rows)
         commit('nextGeneration', [world.initGrid, world.generation])
+        commit('setLoading', false)
       })
     },
 
@@ -60,6 +62,7 @@ export default new Vuex.Store({
 
     changeExperiment({ state, dispatch, commit }, experiment) {
       if (state.currentExperiment !== experiment) {
+        commit('setLoading', true)
         commit('changeExperiment', experiment)
         dispatch('restart')
       }
@@ -98,6 +101,10 @@ export default new Vuex.Store({
 
     setIsPlaying(state, isPlaying) {
       state.isPlaying = isPlaying
+    },
+
+    setLoading(state, loading) {
+      state.loading = loading
     },
 
     setFPS(state, { fps }) {
