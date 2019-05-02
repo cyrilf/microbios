@@ -53,6 +53,12 @@
             "$scope"
           ]
         }
+      ],
+      "no-unused-expressions": [
+        "error",
+        {
+          "allowShortCircuit": true
+        }
       ]
     },
     "parserOptions": {

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div>Generation: {{generation}}</div>
+    <div>Generation: {{world.generation}}</div>
     <div class="controls">
       <button :disabled="isPlaying" @click="update">Next</button>
       <button @click="isPlaying ? pause() : play()">{{ isPlaying ? 'Pause' : 'Play'}}</button>
@@ -15,7 +15,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['isPlaying', 'generation']),
+    ...mapState(['isPlaying', 'world']),
     fps: {
       get() { return this.$store.state.fps },
       set(value) { this.changeFPS(value) },

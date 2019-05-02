@@ -1,11 +1,14 @@
 <template>
-  <td class="cell" @click="$emit('click', $event)" :class="{ 'cell-alive': isAlive }"/>
+  <td
+    class="cell"
+    @click="() => value.click()"
+    :style="`background-color: ${value.getColor()}`"/>
 </template>
 
 <script>
 export default {
   props: {
-    isAlive: { type: Boolean, required: true },
+    value: { type: Object, required: true },
   },
 }
 </script>
@@ -18,11 +21,7 @@ export default {
   border: 1px solid rgba(0, 0, 0, 0.1);
 
   &:hover {
-    background: rgba(0, 0, 0, .3);
+    background: rgba(0, 0, 0, .3) !important;
   }
-}
-
-.cell-alive {
-  background: rgb(63, 107, 95);
 }
 </style>

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { createWorld, updateWorld } from './world'
+import gameOfLife from './experiments/gameOfLife'
 
 Vue.use(Vuex)
 
@@ -10,47 +10,39 @@ let frames = 0
 
 export default new Vuex.Store({
   state: {
-    width: 0,
-    height: 0,
     world: [],
-    generation: 0,
     isPlaying: false,
     fps: 60,
   },
 
   actions: {
-    init({ commit }, { width, height }) {
-      commit('setSize', { width, height })
-      commit('setWorld', createWorld(width, height))
-      commit('setGeneration', 0)
+    init({ commit }, { columns, rows }) {
+      commit('setWorld', gameOfLife(columns, rows))
     },
 
     update({ state, commit, dispatch }) {
+      if (!state.isPlaying || (state.isPlaying && state.fps !== 0 && frames >= (60 / state.fps))) {
+        commit('setWorld', state.world.nextGeneration())
+        frames = -1
+      }
+
       if (state.isPlaying) {
-        if (state.fps !== 0 && frames >= (60 / state.fps)) {
-          commit('setWorld', updateWorld(state.world))
-          commit('setGeneration', state.generation + 1)
-          frames = -1 // because we ++ aterwards
-        }
         animationId = requestAnimationFrame(() => dispatch('update'))
         frames++
-      } else {
-        commit('setWorld', updateWorld(state.world))
-        commit('setGeneration', state.generation + 1)
       }
     },
 
     restart({ state, dispatch }) {
       const { isPlaying } = state
-      dispatch('init', { width: state.width, height: state.height })
+      dispatch('init', { columns: state.world.columns, rows: state.world.rows })
       dispatch('pause')
       dispatch('update')
       if (isPlaying) dispatch('play')
     },
 
-    toggle({ state, commit }, { row, column }) {
-      commit('setCell', { row, column, isAlive: !state.world[row][column] })
-    },
+    // cellClick({ state, commit }, { row, column }) {
+    //   commit('setCell', { row, column, isAlive: !state.world[row][column] })
+    // },
 
     play({ commit, dispatch }) {
       if (animationId) return
@@ -70,25 +62,16 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    setSize(state, { width, height }) {
-      state.width = width
-      state.height = height
-    },
-
     setWorld(state, world) {
       state.world = world
     },
 
-    setCell(state, { row, column, isAlive }) {
-      Vue.set(state.world[row], column, isAlive)
-    },
+    // setCell(state, { row, column, isAlive }) {
+    //   Vue.set(state.world[row], column, isAlive)
+    // },
 
     setIsPlaying(state, isPlaying) {
       state.isPlaying = isPlaying
-    },
-
-    setGeneration(state, generation) {
-      state.generation = generation
     },
 
     setFPS(state, { fps }) {

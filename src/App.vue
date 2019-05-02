@@ -18,7 +18,7 @@ export default {
   },
 
   mounted() {
-    this.init({ width: 100, height: 50 })
+    this.init({ columns: 100, rows: 50 })
     this.play()
   },
 

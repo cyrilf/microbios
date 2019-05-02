@@ -1,12 +1,11 @@
 <template>
   <table class="world">
     <tbody>
-      <tr v-for="(row, i) in world" :key="i">
+      <tr v-for="(row, i) in world.world" :key="i">
         <Cell
           v-for="(cell, j) in row"
           :key="`${i}-${j}`"
-          :isAlive="cell"
-          @click="toggle({ row: i, column: j })"
+          :value="cell"
           />
       </tr>
     </tbody>
@@ -14,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import Cell from './Cell.vue'
 
 export default {
@@ -23,9 +22,6 @@ export default {
   },
   computed: {
     ...mapState(['world']),
-  },
-  methods: {
-    ...mapActions(['toggle']),
   },
 }
 </script>
