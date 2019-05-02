@@ -41,23 +41,26 @@ export default new Vuex.Store({
     },
 
     update({ state, commit, dispatch }) {
-      if (!state.isPlaying || (state.isPlaying && state.fps !== 0 && frames >= (60 / state.fps))) {
-        commit('nextGeneration', world.nextGeneration())
-        frames = -1
-      }
+      if (world.options.maxGeneration > state.generation) {
+        if (!state.isPlaying || (state.isPlaying && state.fps !== 0 && frames >= (60 / state.fps))) {
+          commit('nextGeneration', world.nextGeneration())
+          frames = -1
+        }
 
-      if (state.isPlaying) {
-        animationId = requestAnimationFrame(() => dispatch('update'))
-        frames++
+        if (state.isPlaying) {
+          animationId = requestAnimationFrame(() => dispatch('update'))
+          frames++
+        }
       }
     },
 
     restart({ state, dispatch }) {
       const { isPlaying } = state
-      dispatch('init', { columns: world.columns, rows: world.rows })
-      dispatch('pause')
-      dispatch('update')
-      if (isPlaying) dispatch('play')
+      dispatch('init', { columns: world.columns, rows: world.rows }).then(() => {
+        dispatch('pause')
+        dispatch('update')
+        if (isPlaying) dispatch('play')
+      })
     },
 
     changeExperiment({ state, dispatch, commit }, experiment) {

@@ -2,7 +2,7 @@ export default class World {
   constructor({ columns, rows, ...rest }) {
     this.columns = columns
     this.rows = rows
-    this.options = { wrap: false, ...rest }
+    this.options = { wrap: false, maxGeneration: Infinity, ...rest }
     this.grid = []
     this.generation = 0
     this.cellTypes = new Map()

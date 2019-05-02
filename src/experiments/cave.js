@@ -21,4 +21,4 @@ export class Wall extends Cell {
   }
 }
 
-export default createExperiment(Wall)
+export default createExperiment(Wall, { maxGeneration: 25 })

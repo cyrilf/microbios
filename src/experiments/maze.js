@@ -23,4 +23,4 @@ class Wall extends Living {
   }
 }
 
-export default createExperiment(Wall)
+export default createExperiment(Wall, { maxGeneration: 30 })
