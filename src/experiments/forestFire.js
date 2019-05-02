@@ -1,5 +1,5 @@
-import World from '../World'
 import Cell from '../Cell'
+import createExperiment from './createExperiment'
 
 const CHANCE_TO_IGNITE = 0.0001
 const CHANCE_TO_GROW = 0.01
@@ -51,14 +51,4 @@ class Tree extends Cell {
   }
 }
 
-export default (columns, rows) => {
-  const world = new World({ columns, rows })
-
-  world.registerCellClass(Tree)
-
-  world.init([
-    { type: Tree.type, distribution: 100 },
-  ])
-
-  return world
-}
+export default createExperiment(Tree)

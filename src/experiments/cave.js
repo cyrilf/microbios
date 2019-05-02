@@ -1,5 +1,5 @@
-import World from '../World'
 import Cell from '../Cell'
+import createExperiment from './createExperiment'
 
 export class Wall extends Cell {
   static type = 'wall'
@@ -21,14 +21,4 @@ export class Wall extends Cell {
   }
 }
 
-export default (columns, rows) => {
-  const world = new World({ columns, rows })
-
-  world.registerCellClass(Wall)
-
-  world.init([
-    { type: Wall.type, distribution: 100 },
-  ])
-
-  return world
-}
+export default createExperiment(Wall)

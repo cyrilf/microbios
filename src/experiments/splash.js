@@ -1,5 +1,5 @@
-import World from '../World'
 import Cell from '../Cell'
+import createExperiment from './createExperiment'
 
 // thanks to @sanojian who thanks lithander on TIGSource
 
@@ -70,14 +70,4 @@ export class Water extends Cell {
   }
 }
 
-export default (columns, rows) => {
-  const world = new World({ columns, rows })
-
-  world.registerCellClass(Water)
-
-  world.init([
-    { type: Water.type, distribution: 100 },
-  ])
-
-  return world
-}
+export default createExperiment(Water)

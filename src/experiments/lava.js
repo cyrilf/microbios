@@ -1,5 +1,5 @@
-import World from '../World'
 import Cell from '../Cell'
+import createExperiment from './createExperiment'
 
 // thanks to @sanojian who thanks TheLastBanana on TIGSource
 
@@ -91,14 +91,4 @@ export class Lava extends Cell {
   }
 }
 
-export default (columns, rows) => {
-  const world = new World({ columns, rows, wrap: true })
-
-  world.registerCellClass(Lava)
-
-  world.init([
-    { type: Lava.type, distribution: 100 },
-  ])
-
-  return world
-}
+export default createExperiment(Lava)

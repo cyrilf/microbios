@@ -1,5 +1,5 @@
-import World from '../World'
 import Cell from '../Cell'
+import createExperiment from './createExperiment'
 
 const COLORS = [
   'rgba(255,0,0,1)', 'rgba(255,96,0,1)', 'rgba(255,191,0,1)', 'rgba(223,255,0,1)',
@@ -31,14 +31,4 @@ export class Trippy extends Cell {
   }
 }
 
-export default (columns, rows) => {
-  const world = new World({ columns, rows })
-
-  world.registerCellClass(Trippy)
-
-  world.init([
-    { type: Trippy.type, distribution: 100 },
-  ])
-
-  return world
-}
+export default createExperiment(Trippy)
