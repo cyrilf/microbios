@@ -6,7 +6,8 @@ import Vuex from 'vuex'
 // import maze from './experiments/maze'
 // import cave from './experiments/cave'
 // import splash from './experiments/splash'
-import lava from './experiments/lava'
+// import lava from './experiments/lava'
+import trippy from './experiments/trippy'
 
 Vue.use(Vuex)
 
@@ -25,7 +26,7 @@ export default new Vuex.Store({
   actions: {
     init({ commit }, { columns, rows }) {
       // world = gameOfLife(columns, rows)
-      world = lava(columns, rows)
+      world = trippy(columns, rows)
       commit('nextGeneration', [world.initGrid, world.generation])
     },
 
