@@ -1,7 +1,7 @@
 import World from '../World'
 import Cell from '../Cell'
 
-class Living extends Cell {
+export class Living extends Cell {
   static name = 'living'
 
   constructor(...args) {
@@ -19,8 +19,6 @@ class Living extends Cell {
   reset() {
     this.wasAlive = this.alive;
   }
-
-  click() { this.alive = !this.alive }
 }
 
 export default (columns, rows) => {
