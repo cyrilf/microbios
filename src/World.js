@@ -3,7 +3,7 @@ export default class World {
     this.columns = columns
     this.rows = rows
     this.options = { wrap: false, ...rest }
-    this.world = []
+    this.grid = []
     this.generation = 0
     this.cellClasses = new Map()
   }
@@ -21,7 +21,7 @@ export default class World {
     })
 
     // eslint-disable-next-line max-len
-    this.world = Array.from({ length: this.rows }, (_, row) => Array.from({ length: this.columns }, (__, column) => {
+    this.grid = Array.from({ length: this.rows }, (_, row) => Array.from({ length: this.columns }, (__, column) => {
       const random = Math.random() * totalDistribution
       const { name } = cellDistributions.find(({ distribution }) => random <= distribution) || {}
       const Cell = this.cellClasses.get(name)
@@ -35,14 +35,14 @@ export default class World {
     let cell
     for (let row = 0; row < this.rows; row++) {
       for (let column = 0; column < this.columns; column++) {
-        cell = this.world[row][column]
+        cell = this.grid[row][column]
         const surroundings = this.getSurroundings(cell.column, cell.row)
         cell.reset(surroundings)
       }
     }
     for (let row = 0; row < this.rows; row++) {
       for (let column = 0; column < this.columns; column++) {
-        cell = this.world[row][column]
+        cell = this.grid[row][column]
         const surroundings = this.getSurroundings(cell.column, cell.row)
         cell.process(surroundings)
       }
@@ -50,7 +50,7 @@ export default class World {
 
     this.generation += 1
 
-    return this
+    return [this.grid, this.generation]
   }
 
   getSurroundings(row, column) {
@@ -72,7 +72,7 @@ export default class World {
               || neighborRow >= this.rows
               || neighborColumn < 0
               || neighborColumn >= this.columns))) {
-            surroundings.push(this.world[neighborRow][neighborColumn])
+            surroundings.push(this.grid[neighborRow][neighborColumn])
           }
         }
       }

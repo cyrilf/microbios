@@ -1,7 +1,7 @@
 <template>
   <table class="world">
     <tbody>
-      <tr v-for="(row, i) in world.world" :key="i">
+      <tr v-for="(row, i) in grid" :key="i">
         <Cell
           v-for="(cell, j) in row"
           :key="`${i}-${j}`"
@@ -21,7 +21,7 @@ export default {
     Cell,
   },
   computed: {
-    ...mapState(['world']),
+    ...mapState(['grid']),
   },
 }
 </script>

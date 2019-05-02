@@ -7,22 +7,28 @@ Vue.use(Vuex)
 
 let animationId = null
 let frames = 0
+let world
 
 export default new Vuex.Store({
   state: {
-    world: [],
+    generation: 0,
+    grid: [],
     isPlaying: false,
     fps: 60,
   },
 
   actions: {
     init({ commit }, { columns, rows }) {
-      commit('setWorld', gameOfLife(columns, rows))
+      world = gameOfLife(columns, rows)
+      commit('setGrid', world.grid)
+      commit('setGeneration', world.generation)
     },
 
     update({ state, commit, dispatch }) {
       if (!state.isPlaying || (state.isPlaying && state.fps !== 0 && frames >= (60 / state.fps))) {
-        commit('setWorld', state.world.nextGeneration())
+        const [grid, generation] = world.nextGeneration()
+        commit('setGrid', grid)
+        commit('setGeneration', generation)
         frames = -1
       }
 
@@ -34,7 +40,7 @@ export default new Vuex.Store({
 
     restart({ state, dispatch }) {
       const { isPlaying } = state
-      dispatch('init', { columns: state.world.columns, rows: state.world.rows })
+      dispatch('init', { columns: world.columns, rows: world.rows })
       dispatch('pause')
       dispatch('update')
       if (isPlaying) dispatch('play')
@@ -62,8 +68,12 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    setWorld(state, world) {
-      state.world = world
+    setGrid(state, grid) {
+      state.grid = grid
+    },
+
+    setGeneration(state, generation) {
+      state.generation = generation
     },
 
     // setCell(state, { row, column, isAlive }) {
