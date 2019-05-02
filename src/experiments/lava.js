@@ -41,7 +41,7 @@ for (; index < 56; ++index) { colorsIndexes[index] = 1 }
 for (; index < 64; ++index) { colorsIndexes[index] = 0 }
 
 export class Lava extends Cell {
-  static name = 'lava'
+  static type = 'lava'
 
   constructor(...args) {
     super(...args)
@@ -97,7 +97,7 @@ export default (columns, rows) => {
   world.registerCellClass(Lava)
 
   world.init([
-    { name: 'lava', distribution: 100 },
+    { type: Lava.type, distribution: 100 },
   ])
 
   return world

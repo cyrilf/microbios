@@ -22,7 +22,7 @@ for (let index = 0; index < 64; index++) {
 }
 
 export class Water extends Cell {
-  static name = 'water'
+  static type = 'water'
 
   constructor(...args) {
     super(...args)
@@ -54,8 +54,8 @@ export class Water extends Cell {
 
       this.droplet = false
     }
-    const avg = getSurroundingCellsAverageValue(neighbors, 'value');
-    this.next = 0.99 * (2 * avg - this.prev);
+    const avg = getSurroundingCellsAverageValue(neighbors, 'value')
+    this.next = 0.99 * (2 * avg - this.prev)
   }
 
   reset() {
@@ -76,7 +76,7 @@ export default (columns, rows) => {
   world.registerCellClass(Water)
 
   world.init([
-    { name: 'water', distribution: 100 },
+    { type: Water.type, distribution: 100 },
   ])
 
   return world

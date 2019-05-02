@@ -20,7 +20,7 @@ const COLORS = [
 ]
 
 class Tree extends Cell {
-  static name = 'tree'
+  static type = 'tree'
 
   constructor(...args) {
     super(...args)
@@ -57,7 +57,7 @@ export default (columns, rows) => {
   world.registerCellClass(Tree)
 
   world.init([
-    { name: 'tree', distribution: 100 },
+    { type: Tree.type, distribution: 100 },
   ])
 
   return world

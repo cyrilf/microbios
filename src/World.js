@@ -5,12 +5,12 @@ export default class World {
     this.options = { wrap: false, ...rest }
     this.grid = []
     this.generation = 0
-    this.cellClasses = new Map()
+    this.cellTypes = new Map()
   }
 
   init(cellDistributions) {
-    if (this.cellClasses.size === 0) {
-      throw new Error('You forgot to register your `cellClasses`. Make sure to call `registerCellClass` before `init`')
+    if (this.cellTypes.size === 0) {
+      throw new Error('You forgot to register your `cellTypes`. Make sure to call `registerCellClass` before `init`')
     }
     cellDistributions.sort((a, b) => (a.distribution > b.distribution ? 1 : -1))
 
@@ -23,14 +23,14 @@ export default class World {
     // eslint-disable-next-line max-len
     this.grid = Array.from({ length: this.rows }, (_, row) => Array.from({ length: this.columns }, (__, column) => {
       const random = Math.random() * totalDistribution
-      const { name } = cellDistributions.find(({ distribution }) => random <= distribution) || {}
-      const Cell = this.cellClasses.get(name)
+      const { type } = cellDistributions.find(({ distribution }) => random <= distribution) || {}
+      const Cell = this.cellTypes.get(type)
       return new Cell(row, column)
     }, this), this)
     this.initGrid = simplifyGrid(this.grid)
   }
 
-  registerCellClass(CellClass) { this.cellClasses.set(CellClass.name, CellClass) }
+  registerCellClass(CellClass) { this.cellTypes.set(CellClass.type, CellClass) }
 
   nextGeneration() {
     let cell

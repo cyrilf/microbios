@@ -9,7 +9,7 @@ const COLORS = [
 ]
 
 export class Trippy extends Cell {
-  static name = 'trippy'
+  static type = 'trippy'
 
   constructor(...args) {
     super(...args)
@@ -37,7 +37,7 @@ export default (columns, rows) => {
   world.registerCellClass(Trippy)
 
   world.init([
-    { name: 'trippy', distribution: 100 },
+    { type: Trippy.type, distribution: 100 },
   ])
 
   return world

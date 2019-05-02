@@ -2,7 +2,7 @@ import World from '../World'
 import Cell from '../Cell'
 
 export class Living extends Cell {
-  static name = 'living'
+  static type = 'living'
 
   constructor(...args) {
     super(...args)
@@ -27,7 +27,7 @@ export default (columns, rows) => {
   world.registerCellClass(Living)
 
   world.init([
-    { name: 'living', distribution: 100 },
+    { type: Living.type, distribution: 100 },
   ])
 
   return world

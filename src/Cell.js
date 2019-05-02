@@ -1,5 +1,5 @@
 export default class Cell {
-  static name = 'Cell'
+  static type = 'Cell'
 
   constructor(column, row, color) {
     this.column = column
