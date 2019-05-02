@@ -5,7 +5,8 @@ import Vuex from 'vuex'
 // import forestFire from './experiments/forestFire'
 // import maze from './experiments/maze'
 // import cave from './experiments/cave'
-import splash from './experiments/splash'
+// import splash from './experiments/splash'
+import lava from './experiments/lava'
 
 Vue.use(Vuex)
 
@@ -24,7 +25,7 @@ export default new Vuex.Store({
   actions: {
     init({ commit }, { columns, rows }) {
       // world = gameOfLife(columns, rows)
-      world = splash(columns, rows)
+      world = lava(columns, rows)
       commit('nextGeneration', [world.initGrid, world.generation])
     },
 
