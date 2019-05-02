@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 
 // import gameOfLife from './experiments/gameOfLife'
 // import forestFire from './experiments/forestFire'
-import maze from './experiments/maze'
+// import maze from './experiments/maze'
+import cave from './experiments/cave'
 
 Vue.use(Vuex)
 
@@ -22,7 +23,7 @@ export default new Vuex.Store({
   actions: {
     init({ commit }, { columns, rows }) {
       // world = gameOfLife(columns, rows)
-      world = maze(columns, rows)
+      world = cave(columns, rows)
       commit('nextGeneration', [world.initGrid, world.generation])
     },
 
