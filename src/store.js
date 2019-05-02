@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import gameOfLife from './experiments/gameOfLife'
+// import gameOfLife from './experiments/gameOfLife'
+import forestFire from './experiments/forestFire'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,8 @@ export default new Vuex.Store({
 
   actions: {
     init({ commit }, { columns, rows }) {
-      world = gameOfLife(columns, rows)
+      // world = gameOfLife(columns, rows)
+      world = forestFire(columns, rows)
       commit('nextGeneration', [world.initGrid, world.generation])
     },
 
