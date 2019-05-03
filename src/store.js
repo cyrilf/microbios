@@ -15,6 +15,7 @@ const experiments = [
   { name: 'Splash', getModule: () => import('./experiments/splash') },
   { name: 'Lava', getModule: () => import('./experiments/lava') },
   { name: 'Trippy', getModule: () => import('./experiments/trippy') },
+  { name: 'Explosion', getModule: () => import('./experiments/explosion') },
 ]
 
 export default new Vuex.Store({
@@ -42,7 +43,8 @@ export default new Vuex.Store({
 
     update({ state, commit, dispatch }) {
       if (world.options.maxGeneration > state.generation) {
-        if (!state.isPlaying || (state.isPlaying && state.fps !== 0 && frames >= (60 / state.fps))) {
+        if (!state.isPlaying
+          || (state.isPlaying && state.fps !== 0 && frames >= (60 / state.fps))) {
           commit('nextGeneration', world.nextGeneration())
           frames = -1
         }
