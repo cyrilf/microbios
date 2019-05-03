@@ -1,5 +1,5 @@
 import Cell from '../Cell'
-import createExperiment from './createExperiment'
+import createExperiment from '../utils/createExperiment'
 import getSurroundingCellsAverageValue from '../utils/getSurroundingCellsAverageValue'
 
 // TODO REMOVE THIS

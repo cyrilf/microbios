@@ -1,5 +1,5 @@
 import Cell from '../Cell'
-import createExperiment from './createExperiment'
+import createExperiment from '../utils/createExperiment'
 
 export class Wall extends Cell {
   static type = 'wall'

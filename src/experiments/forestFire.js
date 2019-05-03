@@ -1,5 +1,5 @@
 import Cell from '../Cell'
-import createExperiment from './createExperiment'
+import createExperiment from '../utils/createExperiment'
 
 const CHANCE_TO_IGNITE = 0.0001
 const CHANCE_TO_GROW = 0.01

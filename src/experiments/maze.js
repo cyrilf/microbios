@@ -1,5 +1,5 @@
 import { Living } from './gameOfLife'
-import createExperiment from './createExperiment'
+import createExperiment from '../utils/createExperiment'
 
 class Wall extends Living {
   static type = 'wall'
