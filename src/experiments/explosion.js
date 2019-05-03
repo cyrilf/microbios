@@ -1,16 +1,6 @@
 import Cell from '../Cell'
 import createExperiment from './createExperiment'
-
-const getSurroundingCellsAverageValue = (neighbors, value) => {
-  const summed = neighbors.reduce((result, neighbor) => {
-    if (neighbor !== null && (neighbor[value] || neighbor[value] === 0)) {
-      result += neighbor[value] // eslint-disable-line no-param-reassign
-    }
-    return result
-  }, 0)
-
-  return summed / neighbors.length
-}
+import getSurroundingCellsAverageValue from '../utils/getSurroundingCellsAverageValue'
 
 // TODO REMOVE THIS
 const world = { width: 100, height: 50 }

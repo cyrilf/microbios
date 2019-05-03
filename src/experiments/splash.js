@@ -1,18 +1,8 @@
 import Cell from '../Cell'
 import createExperiment from './createExperiment'
+import getSurroundingCellsAverageValue from '../utils/getSurroundingCellsAverageValue'
 
 // thanks to @sanojian who thanks lithander on TIGSource
-
-const getSurroundingCellsAverageValue = (neighbors, value) => {
-  const summed = neighbors.reduce((result, neighbor) => {
-    if (neighbor !== null && (neighbor[value] || neighbor[value] === 0)) {
-      result += neighbor[value] // eslint-disable-line no-param-reassign
-    }
-    return result
-  }, 0)
-
-  return summed / neighbors.length
-}
 
 const COLORS = []
 const REVERSE_COLORS_INDEX = []
