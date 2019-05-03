@@ -40,6 +40,9 @@ for (; index < 46; ++index) { colorsIndexes[index] = 2 }
 for (; index < 56; ++index) { colorsIndexes[index] = 1 }
 for (; index < 64; ++index) { colorsIndexes[index] = 0 }
 
+// TODO REMOVE THIS
+const world = { width: 100, height: 50 }
+
 export class Lava extends Cell {
   static type = 'lava'
 
@@ -52,8 +55,8 @@ export class Lava extends Cell {
 
   getColor() {
     let v = this.value + 0.5
-      + Math.sin(this.column / 50 * Math.PI) * 0.04
-      + Math.sin(this.row / 100 * Math.PI) * 0.04
+      + Math.sin(this.column / world.width * Math.PI) * 0.04
+      + Math.sin(this.row / world.height * Math.PI) * 0.04
       - 0.05
     v = Math.min(1.0, Math.max(0, v))
 

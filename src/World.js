@@ -37,14 +37,14 @@ export default class World {
     for (let row = 0; row < this.rows; row++) {
       for (let column = 0; column < this.columns; column++) {
         cell = this.grid[row][column]
-        const surroundings = this.getSurroundings(cell.column, cell.row)
+        const surroundings = this.getSurroundings(cell.row, cell.column)
         cell.reset(surroundings)
       }
     }
     for (let row = 0; row < this.rows; row++) {
       for (let column = 0; column < this.columns; column++) {
         cell = this.grid[row][column]
-        const surroundings = this.getSurroundings(cell.column, cell.row)
+        const surroundings = this.getSurroundings(cell.row, cell.column)
         cell.process(surroundings)
       }
     }

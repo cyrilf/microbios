@@ -1,10 +1,9 @@
 export default class Cell {
   static type = 'Cell'
 
-  constructor(column, row, color) {
-    this.column = column
+  constructor(row, column) {
     this.row = row
-    this.color = color || 'rgba(0, 0, 0, 1)'
+    this.column = column
   }
 
 
@@ -14,6 +13,6 @@ export default class Cell {
   process(surroundings) {}
   // eslint-disable-next-line
   click() {}
-
-  getColor() { return this.color }
+  // eslint-disable-next-line
+  getColor() {}
 }
