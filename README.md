@@ -67,6 +67,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 _Game of Life experiment_
 
-![trippy](./src/assets/trippy.gif)
+![trippy](./src/assets/cyclic.gif)
 
-_Trippy experiment_
+_Cyclic experiment_
