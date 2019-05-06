@@ -84,10 +84,6 @@ export default new Vuex.Store({
       commit('setLoading', loading)
     },
 
-    // cellClick({ state, commit }, { row, column }) {
-    //   commit('setCell', { row, column, isAlive: !state.world[row][column] })
-    // },
-
     play({ commit, dispatch }) {
       if (animationId) return
       animationId = requestAnimationFrame(() => dispatch('update'))
@@ -110,10 +106,6 @@ export default new Vuex.Store({
       state.grid = grid
       state.generation = generation
     },
-
-    // setCell(state, { row, column, isAlive }) {
-    //   Vue.set(state.world[row], column, isAlive)
-    // },
 
     setIsPlaying(state, isPlaying) {
       state.isPlaying = isPlaying

@@ -2,10 +2,11 @@
   <table class="world">
     <tbody>
       <tr v-for="(row, i) in grid" :key="i">
-        <Cell
-          v-for="(cell, j) in row"
+        <td
+          v-for="(cellColor, j) in row"
           :key="`${i}-${j}`"
-          :color="cell"
+          class="cell"
+          :style="`background-color: ${cellColor || 'white'}`"
           />
       </tr>
     </tbody>
@@ -14,12 +15,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import Cell from './Cell.vue'
 
 export default {
-  components: {
-    Cell,
-  },
   mounted() {
     this.setLoading({ renderer: false })
   },
@@ -36,5 +33,10 @@ export default {
 .world {
   margin: 0 auto;
   border-collapse: collapse;
+}
+
+.cell {
+  height: 6px;
+  width: 6px;
 }
 </style>
