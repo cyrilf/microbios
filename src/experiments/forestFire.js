@@ -16,7 +16,7 @@ const COLORS = [
   'rgba(208, 70, 72, 0.888)',
   'rgba(208, 70, 72, 1)',
   'rgba(52, 101, 36, 1)',
-  'rgba(255, 255, 255, 1)',
+  null,
 ]
 
 class Tree extends Cell {

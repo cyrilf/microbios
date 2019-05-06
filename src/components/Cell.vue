@@ -2,13 +2,13 @@
   <td
     class="cell"
     @click="$emit('click', $event)"
-    :style="`background-color: ${color}`"/>
+    :style="`background-color: ${color || 'white'}`"/>
 </template>
 
 <script>
 export default {
   props: {
-    color: { type: String, required: true },
+    color: { type: String },
   },
 }
 </script>

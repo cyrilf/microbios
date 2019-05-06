@@ -9,7 +9,7 @@ export class Wall extends Cell {
     this.open = Math.random() > 0.4
   }
 
-  getColor() { return this.open ? 'rgba(255, 255, 255, 1)' : 'rgba(68, 36, 52, 1)' }
+  getColor() { return this.open ? null : 'rgba(68, 36, 52, 1)' }
 
   process(neighbors) {
     const surrounding = neighbors.filter(neighbor => neighbor.wasOpen).length
