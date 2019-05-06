@@ -32,24 +32,26 @@ export default class World {
 
   registerCellClass(CellClass) { this.cellTypes.set(CellClass.type, CellClass) }
 
-  nextGeneration() {
-    let cell
-    for (let row = 0; row < this.rows; row++) {
-      for (let column = 0; column < this.columns; column++) {
-        cell = this.grid[row][column]
-        const surroundings = this.getSurroundings(cell.row, cell.column)
-        cell.reset(surroundings)
+  nextGeneration(steps = 1) {
+    for (let i = 0; i < steps; i++) {
+      let cell
+      for (let row = 0; row < this.rows; row++) {
+        for (let column = 0; column < this.columns; column++) {
+          cell = this.grid[row][column]
+          const surroundings = this.getSurroundings(cell.row, cell.column)
+          cell.reset(surroundings)
+        }
       }
-    }
-    for (let row = 0; row < this.rows; row++) {
-      for (let column = 0; column < this.columns; column++) {
-        cell = this.grid[row][column]
-        const surroundings = this.getSurroundings(cell.row, cell.column)
-        cell.process(surroundings)
+      for (let row = 0; row < this.rows; row++) {
+        for (let column = 0; column < this.columns; column++) {
+          cell = this.grid[row][column]
+          const surroundings = this.getSurroundings(cell.row, cell.column)
+          cell.process(surroundings)
+        }
       }
-    }
 
-    this.generation += 1
+      this.generation += 1
+    }
 
     return [simplifyGrid(this.grid), this.generation]
   }
@@ -83,4 +85,16 @@ export default class World {
   }
 }
 
-const simplifyGrid = grid => grid.map(row => row.map(cell => cell.getColor()))
+const simplifyGrid = (grid) => {
+  const simple = []
+  const rows = grid.length
+  const columns = grid[0].length
+  for (let row = 0; row < rows; row++) {
+    simple.push([])
+    for (let column = 0; column < columns; column++) {
+      simple[row][column] = grid[row][column].getColor()
+    }
+  }
+
+  return simple
+}

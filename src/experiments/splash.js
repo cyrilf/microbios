@@ -32,15 +32,15 @@ export class Water extends Cell {
     this.open = (this.wasOpen && surrounding >= 4) || surrounding >= 6
 
     if (this.droplet === true) {
-      neighbors.forEach((neighbor) => {
-        if (neighbor === null || !neighbor.value) {
-          return neighbor
+      const neighborsLength = neighbors.length
+
+      for (let i = 0; i < neighborsLength; i++) {
+        const neighbor = neighbors[i]
+        if (neighbor !== null && neighbor.value) {
+          neighbor.value = 0.5 * this.value
+          neighbor.prev = 0.5 * this.prev
         }
-        const newNeighbor = { ...neighbor }
-        newNeighbor.value = 0.5 * this.value
-        newNeighbor.prev = 0.5 * this.prev
-        return newNeighbor
-      }, this)
+      }
 
       this.droplet = false
     }
