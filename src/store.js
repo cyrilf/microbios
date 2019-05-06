@@ -48,7 +48,7 @@ export default new Vuex.Store({
         if (!state.isPlaying
           || (state.isPlaying && state.fps !== 0 && frames >= (60 / state.fps))) {
           commit('nextGeneration', world.nextGeneration())
-          frames = -1
+          frames = 0
         }
 
         if (state.isPlaying) {
