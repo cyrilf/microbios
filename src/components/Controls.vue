@@ -13,6 +13,10 @@
           {{ experiment.name }}
         </option>
       </select>
+      <select v-model="renderer">
+        <option value="Canvas">Canvas</option>
+        <option value="Table">HTML (table)</option>
+      </select>
       <div><input v-model.number="fps" type="number" min="0" max="60"/><span>fps</span></div>
     </div>
   </section>
@@ -32,10 +36,15 @@ export default {
       get() { return this.$store.state.currentExperiment },
       set(value) { this.changeExperiment(value) },
     },
+    renderer: {
+      get() { return this.$store.state.renderer },
+      set(value) { this.changeRenderer(value) },
+    },
   },
 
   methods: {
-    ...mapActions(['play', 'pause', 'update', 'changeFPS', 'restart', 'changeExperiment']),
+    ...mapActions(['play', 'pause', 'update', 'changeFPS', 'restart',
+      'changeExperiment', 'changeRenderer']),
   },
 }
 </script>

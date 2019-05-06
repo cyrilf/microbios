@@ -27,6 +27,7 @@ export default new Vuex.Store({
     fps: 60,
     experiments,
     currentExperiment: experiments[0].name,
+    renderer: 'Canvas',
   },
 
   actions: {
@@ -71,6 +72,10 @@ export default new Vuex.Store({
         commit('changeExperiment', experiment)
         dispatch('restart')
       }
+    },
+
+    changeRenderer({ commit }, renderer) {
+      commit('changeRenderer', renderer)
     },
 
     // cellClick({ state, commit }, { row, column }) {
@@ -120,6 +125,10 @@ export default new Vuex.Store({
 
     changeExperiment(state, experiment) {
       state.currentExperiment = experiment
+    },
+
+    changeRenderer(state, renderer) {
+      state.renderer = renderer
     },
   },
 })
