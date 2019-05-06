@@ -22,8 +22,8 @@ export default new Vuex.Store({
   state: {
     generation: 0,
     grid: [],
-    isPlaying: false,
-    loading: true,
+    isPlaying: true,
+    loading: { experiment: true, renderer: true },
     fps: 60,
     experiments,
     currentExperiment: experiments[0].name,
@@ -36,9 +36,10 @@ export default new Vuex.Store({
         experiment => (experiment.name === state.currentExperiment),
       )
       return currentExperiment.getModule().then((module) => {
-        world = module.default(columns, rows)
+        const createWorld = module.default
+        world = createWorld(columns, rows)
         commit('nextGeneration', [world.initGrid, world.generation])
-        commit('setLoading', false)
+        commit('setLoading', { experiment: false })
       })
     },
 
@@ -68,14 +69,19 @@ export default new Vuex.Store({
 
     changeExperiment({ state, dispatch, commit }, experiment) {
       if (state.currentExperiment !== experiment) {
-        commit('setLoading', true)
+        commit('setLoading', { experiment: true })
         commit('changeExperiment', experiment)
         dispatch('restart')
       }
     },
 
     changeRenderer({ commit }, renderer) {
+      commit('setLoading', { renderer: true })
       commit('changeRenderer', renderer)
+    },
+
+    setLoading({ commit }, loading) {
+      commit('setLoading', loading)
     },
 
     // cellClick({ state, commit }, { row, column }) {
@@ -114,7 +120,7 @@ export default new Vuex.Store({
     },
 
     setLoading(state, loading) {
-      state.loading = loading
+      state.loading = { ...state.loading, ...loading }
     },
 
     setFPS(state, { fps }) {

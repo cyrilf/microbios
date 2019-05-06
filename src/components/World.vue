@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Loader v-show="loading"/>
-    <component :is="worldComponent" v-show="!loading"/>
+  <div class="world-container">
+    <Loader v-show="experimentLoading || rendererLoading"/>
+    <component :is="worldComponent" v-show="!experimentLoading && !rendererLoading"/>
   </div>
 </template>
 
@@ -15,10 +15,18 @@ export default {
   },
   computed: {
     ...mapState(['loading', 'renderer']),
+    experimentLoading() { return this.loading.experiment },
+    rendererLoading() { return this.loading.renderer },
     worldComponent() {
       const { renderer } = this // to make `renderer` reactive
-      return () => import(`./World${renderer}.vue`)
+      return () => import(`./renderers/World${renderer}.vue`)
     },
   },
 }
 </script>
+
+<style>
+  .world-container {
+    min-height: 304px; /*hacky-way to avoid controler jump when switching renderer*/
+  }
+</style>

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   props: {
@@ -22,6 +22,8 @@ export default {
   mounted() {
     this.canvas = this.$refs.canvas
     this.ctx = this.canvas.getContext('2d')
+    this.setLoading({ renderer: false })
+    this.draw()
   },
 
   computed: {
@@ -32,10 +34,22 @@ export default {
 
   watch: {
     grid() {
+      const { // eslint-disable-next-line no-unused-vars
+        canvasWidth, canvasHeight, grid, ctx, cellSize, // make them reactive
+      } = this
+      this.draw()
+    },
+  },
+
+  methods: {
+    ...mapActions(['setLoading']),
+    draw() {
       const {
         canvasWidth, canvasHeight,
         grid, ctx, cellSize,
       } = this
+      if (!grid[0]) { return }
+
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
       const rows = grid.length

@@ -4,8 +4,8 @@
 
 <style>
 .loading {
-  width: 601px;
-  min-height: 301px;
+  width: 600px;
+  min-height: 304px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
