@@ -9,7 +9,7 @@ export class Living extends Cell {
     this.alive = Math.random() > 0.5
   }
 
-  getColor() { return this.alive ? 'rgba(68, 36, 52, 1)' : 'rgba(255, 255, 255, 1)' }
+  getColor() { return this.alive ? `rgba(68, 36, 52, ${this.wasAlive ? 1 : 0.7})` : 'rgba(255, 255, 255, 1)' }
 
   process(neighbors) {
     const neighborsAlive = neighbors.filter(neighbor => neighbor.wasAlive).length
