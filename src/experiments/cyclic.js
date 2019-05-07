@@ -20,7 +20,7 @@ export class Cyclic extends Cell {
 
   process(neighbors) {
     const next = (this.state + 1) % 16
-    const changing = neighbors.some(neighbor => neighbor.state === next)
+    const changing = neighbors.some(neighbor => neighbor && neighbor.state === next)
 
     if (changing) this.state = next
   }

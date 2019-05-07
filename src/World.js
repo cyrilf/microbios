@@ -1,4 +1,15 @@
 export default class World {
+  static NEIGHBOR_INDEXES = {
+    TOP_LEFT: 0,
+    TOP: 1,
+    TOP_RIGHT: 2,
+    LEFT: 3,
+    RIGHT: 4,
+    BOTTOM_LEFT: 5,
+    BOTTOM: 6,
+    BOTTOM_RIGHT: 7,
+  }
+
   constructor({ columns, rows, ...rest }) {
     this.columns = columns
     this.rows = rows
@@ -39,14 +50,14 @@ export default class World {
         for (let column = 0; column < this.columns; column++) {
           cell = this.grid[row][column]
           const surroundings = this.getSurroundings(cell.row, cell.column)
-          cell.reset(surroundings)
+          cell.reset(surroundings, World.NEIGHBOR_INDEXES)
         }
       }
       for (let row = 0; row < this.rows; row++) {
         for (let column = 0; column < this.columns; column++) {
           cell = this.grid[row][column]
           const surroundings = this.getSurroundings(cell.row, cell.column)
-          cell.process(surroundings)
+          cell.process(surroundings, World.NEIGHBOR_INDEXES)
         }
       }
 
@@ -76,6 +87,8 @@ export default class World {
               || neighborColumn < 0
               || neighborColumn >= this.columns))) {
             surroundings.push(this.grid[neighborRow][neighborColumn])
+          } else {
+            surroundings.push(null)
           }
         }
       }
@@ -92,7 +105,7 @@ const simplifyGrid = (grid) => {
   for (let row = 0; row < rows; row++) {
     simple.push([])
     for (let column = 0; column < columns; column++) {
-      simple[row][column] = grid[row][column].getColor()
+      simple[row][column] = (grid[row][column] && grid[row][column].getColor()) || null
     }
   }
 

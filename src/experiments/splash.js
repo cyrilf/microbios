@@ -28,9 +28,6 @@ export class Water extends Cell {
   }
 
   process(neighbors) {
-    const surrounding = neighbors.filter(neighbor => neighbor.wasOpen).length
-    this.open = (this.wasOpen && surrounding >= 4) || surrounding >= 6
-
     if (this.droplet === true) {
       const neighborsLength = neighbors.length
 

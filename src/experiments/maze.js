@@ -10,7 +10,7 @@ class Wall extends Living {
   }
 
   process(neighbors) {
-    const surrounding = neighbors.filter(neighbor => neighbor.wasAlive).length
+    const surrounding = neighbors.filter(neighbor => neighbor && neighbor.wasAlive).length
 
     if (this.simulated < 20) {
       this.alive = surrounding === 1 || (surrounding === 2 && this.alive)
