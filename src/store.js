@@ -21,6 +21,7 @@ const experiments = [
 
 export default new Vuex.Store({
   state: {
+    config: { columns: 100, rows: 50, cellSize: 7 },
     generation: 0,
     grid: [],
     isPlaying: true,
@@ -32,13 +33,14 @@ export default new Vuex.Store({
   },
 
   actions: {
-    init({ state, commit }, { columns, rows }) {
+    init({ state, commit }, config = state.config) {
+      config !== state.config && commit('changeConfig', config)
       const currentExperiment = state.experiments.find(
         experiment => (experiment.name === state.currentExperiment),
       )
       return currentExperiment.getModule().then((module) => {
         const createWorld = module.default
-        world = createWorld(columns, rows)
+        world = createWorld(config)
         commit('nextGeneration', [world.initGrid, world.generation])
         commit('setLoading', { experiment: false })
       })
@@ -61,10 +63,10 @@ export default new Vuex.Store({
 
     restart({ state, dispatch }) {
       const { isPlaying } = state
-      dispatch('init', { columns: world.columns, rows: world.rows }).then(() => {
+      dispatch('init').then(() => {
         dispatch('pause')
         dispatch('update')
-        if (isPlaying) dispatch('play')
+        isPlaying && dispatch('play')
       })
     },
 
@@ -79,6 +81,11 @@ export default new Vuex.Store({
     changeRenderer({ commit }, renderer) {
       commit('setLoading', { renderer: true })
       commit('changeRenderer', renderer)
+    },
+
+    changeConfig({ commit, dispatch }, partialConfig) {
+      commit('changeConfig', partialConfig)
+      if (partialConfig.columns || partialConfig.rows) dispatch('restart')
     },
 
     setLoading({ commit }, loading) {
@@ -128,6 +135,10 @@ export default new Vuex.Store({
 
     changeRenderer(state, renderer) {
       state.renderer = renderer
+    },
+
+    changeConfig(state, partialConfig) {
+      state.config = { ...state.config, ...partialConfig }
     },
   },
 })

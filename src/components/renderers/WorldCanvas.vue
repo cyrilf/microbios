@@ -11,14 +11,6 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  props: {
-    // TODO: move it to the store
-    cellSize: {
-      type: Number,
-      default: 6,
-    },
-  },
-
   mounted() {
     this.canvas = this.$refs.canvas
     this.ctx = this.canvas.getContext('2d')
@@ -30,16 +22,20 @@ export default {
   },
 
   computed: {
-    ...mapState(['grid']),
-    canvasWidth() { return this.grid[0] && this.grid[0].length * this.cellSize * this.ratio },
-    canvasHeight() { return this.grid.length * this.cellSize * this.ratio },
+    ...mapState(['grid', 'config']),
+    canvasWidth() {
+      return this.grid[0] && this.grid[0].length * this.config.cellSize * (this.ratio || 1)
+    },
+    canvasHeight() { return this.grid.length * this.config.cellSize * (this.ratio || 1) },
   },
 
   watch: {
     grid() {
       const { // eslint-disable-next-line no-unused-vars
-        canvasWidth, canvasHeight, grid, ctx, cellSize, // make them reactive
+        canvasWidth, canvasHeight, grid, ctx, // make them reactive
       } = this
+      // eslint-disable-next-line no-unused-vars
+      const { cellSize } = this.config
       this.draw()
     },
   },
@@ -49,8 +45,9 @@ export default {
     draw() {
       const {
         canvasWidth, canvasHeight,
-        grid, ctx, cellSize,
+        grid, ctx,
       } = this
+      const { cellSize } = this.config
       if (!grid[0]) { return }
 
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)

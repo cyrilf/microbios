@@ -5,8 +5,10 @@
         <td
           v-for="(cellColor, j) in row"
           :key="`${i}-${j}`"
-          class="cell"
-          :style="`background-color: ${cellColor || 'white'}`"
+          :style="`
+            background-color: ${cellColor || 'white'};
+            width: ${config.cellSize}px;
+            height: ${config.cellSize}px;`"
           />
       </tr>
     </tbody>
@@ -21,7 +23,7 @@ export default {
     this.setLoading({ renderer: false })
   },
   computed: {
-    ...mapState(['grid']),
+    ...mapState(['grid', 'config']),
   },
   methods: {
     ...mapActions(['setLoading']),
@@ -33,10 +35,5 @@ export default {
 .world {
   margin: 0 auto;
   border-collapse: collapse;
-}
-
-.cell {
-  height: 6px;
-  width: 6px;
 }
 </style>

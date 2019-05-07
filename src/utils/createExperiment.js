@@ -1,8 +1,8 @@
 import World from '../World'
 
-export default (Cell, worldOptions) => (
-  (columns, rows) => {
-    const world = new World({ columns, rows, ...worldOptions })
+export default (Cell, worldConfig) => (
+  (config) => {
+    const world = new World({ ...config, ...worldConfig })
 
     world.registerCellClass(Cell)
 

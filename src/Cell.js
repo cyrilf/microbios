@@ -1,9 +1,11 @@
 export default class Cell {
   static type = 'Cell'
 
-  constructor(row, column) {
+  constructor(row, column, rows, columns) {
     this.row = row
     this.column = column
+    this.worldRows = rows
+    this.worldColumns = columns
   }
 
 

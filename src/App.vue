@@ -18,10 +18,8 @@ export default {
   },
 
   mounted() {
-    this.init({ columns: 100, rows: 50 })
-      .then(this.play)
+    this.init().then(this.play)
   },
-
   methods: {
     ...mapActions(['init', 'play']),
   },

@@ -18,6 +18,9 @@
         <option value="Table">HTML (table)</option>
       </select>
       <div><input v-model.number="fps" type="number" min="0" max="60"/><span>fps</span></div>
+      <div><input v-model.number="columns" type="number"/><span>columns</span></div>
+      <div><input v-model.number="rows" type="number"/><span>rows</span></div>
+      <div><input v-model.number="cellSize" type="number"/><span>cell size</span></div>
     </div>
   </section>
 </template>
@@ -27,7 +30,7 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapState(['isPlaying', 'generation', 'experiments']),
+    ...mapState(['isPlaying', 'generation', 'experiments', 'config']),
     fps: {
       get() { return this.$store.state.fps },
       set(value) { this.changeFPS(value) },
@@ -40,11 +43,23 @@ export default {
       get() { return this.$store.state.renderer },
       set(value) { this.changeRenderer(value) },
     },
+    columns: {
+      get() { return this.$store.state.config.columns },
+      set(value) { this.changeConfig({ columns: value }) },
+    },
+    rows: {
+      get() { return this.$store.state.config.rows },
+      set(value) { this.changeConfig({ rows: value }) },
+    },
+    cellSize: {
+      get() { return this.$store.state.config.cellSize },
+      set(value) { this.changeConfig({ cellSize: value }) },
+    },
   },
 
   methods: {
     ...mapActions(['play', 'pause', 'update', 'changeFPS', 'restart',
-      'changeExperiment', 'changeRenderer']),
+      'changeExperiment', 'changeRenderer', 'changeConfig']),
   },
 }
 </script>

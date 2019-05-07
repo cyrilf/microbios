@@ -2,15 +2,13 @@ import Cell from '../Cell'
 import createExperiment from '../utils/createExperiment'
 import getSurroundingCellsAverageValue from '../utils/getSurroundingCellsAverageValue'
 
-// TODO REMOVE THIS
-const world = { width: 100, height: 50 }
-
 class Boom extends Cell {
   static type = 'Boom'
 
   constructor(...args) {
     super(...args)
-    this.value = (this.column === (world.width / 2) && this.row === (world.height / 2)) ? 10 : 0
+    this.value = (this.column === (this.worldColumns / 2) && this.row === (this.worldRows / 2))
+      ? 10 : 0
     this.prev = this.value
     this.next = this.value
   }

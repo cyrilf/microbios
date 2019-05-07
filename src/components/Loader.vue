@@ -1,11 +1,25 @@
 <template>
-  <div class="loading"><h2>Loading...</h2></div>
+  <div
+    class="loading"
+    :style="`
+      width: ${config.columns * config.cellSize}px;
+      height: ${config.rows * config.cellSize}px;
+    `">
+    <h2>Loading...</h2>
+  </div>
 </template>
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  computed: {
+    ...mapState(['config']),
+  },
+}
+</script>
 
 <style>
 .loading {
-  width: 600px;
-  min-height: 304px;
   margin: 0 auto;
   display: flex;
   justify-content: center;

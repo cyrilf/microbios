@@ -68,14 +68,14 @@ class Rock extends Cell {
   }
 }
 
-export default (columns, rows) => {
-  const cave = caveExperiment(columns, rows)
+export default (config) => {
+  const cave = caveExperiment(config)
 
   for (let i = 0; i < 10; i++) { cave.nextGeneration() }
 
   const grid = cave.convertGrid([{ type: 'wall', property: 'open', value: 0 }], 1)
 
-  const world = new World({ columns, rows })
+  const world = new World(config)
   world.registerCellClass(Water)
   world.registerCellClass(Rock)
 

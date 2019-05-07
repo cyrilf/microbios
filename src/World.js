@@ -36,7 +36,7 @@ export default class World {
       const random = Math.random() * totalDistribution
       const { type } = cellDistributions.find(({ distribution }) => random <= distribution) || {}
       const Cell = this.cellTypes.get(type)
-      return new Cell(row, column)
+      return new Cell(row, column, this.rows, this.columns)
     }, this), this)
     this.initGrid = simplifyGrid(this.grid)
   }
@@ -105,7 +105,7 @@ export default class World {
         const { type, value } = mappings[i]
         if (grid[row][column] === value) {
           const Cell = this.cellTypes.get(type)
-          result = new Cell(row, column)
+          result = new Cell(row, column, this.rows, this.columns)
           break
         }
       }
