@@ -12,6 +12,7 @@ const experiments = [
   { name: 'Forest Fire', getModule: () => import('./experiments/forestFire') },
   { name: 'Maze', getModule: () => import('./experiments/maze') },
   { name: 'Cave', getModule: () => import('./experiments/cave') },
+  { name: 'Cave with water', getModule: () => import('./experiments/caveWithWater') },
   { name: 'Splash', getModule: () => import('./experiments/splash') },
   { name: 'Lava', getModule: () => import('./experiments/lava') },
   { name: 'Cyclic', getModule: () => import('./experiments/cyclic') },

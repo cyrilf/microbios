@@ -59,6 +59,14 @@
         {
           "allowShortCircuit": true
         }
+      ],
+      "object-curly-newline": [
+        "error",
+        {
+          "ObjectPattern": {
+            "consistent": true
+          }
+        }
       ]
     },
     "parserOptions": {
