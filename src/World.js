@@ -96,6 +96,42 @@ export default class World {
 
     return surroundings
   }
+
+  initFrom(grid = [], mappings = []) {
+    // eslint-disable-next-line max-len
+    this.grid = Array.from({ length: this.rows }, (_, row) => Array.from({ length: this.columns }, (__, column) => {
+      let result = null
+      for (let i = 0; i < mappings.length; i++) {
+        const { type, value } = mappings[i]
+        if (grid[row][column] === value) {
+          const Cell = this.cellTypes.get(type)
+          result = new Cell(row, column)
+          break
+        }
+      }
+      return result
+    }, this), this)
+    this.initGrid = simplifyGrid(this.grid)
+  }
+
+  convertGrid(mappings = [], defaultValue = 0) {
+    const { grid } = this
+    const exportGrid = []
+    const rows = grid.length
+    const columns = grid[0].length
+    for (let row = 0; row < rows; row++) {
+      exportGrid.push([])
+      for (let column = 0; column < columns; column++) {
+        const { type } = grid[row][column].constructor
+        const { property, value } = mappings.find(m => m.type === type)
+
+        exportGrid[row][column] = grid[row][column][property]
+          ? value : defaultValue
+      }
+    }
+
+    return exportGrid
+  }
 }
 
 const simplifyGrid = (grid) => {
