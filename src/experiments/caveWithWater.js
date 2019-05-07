@@ -30,27 +30,28 @@ class Water extends Cell {
   getColor() { return COLORS[this.water] }
 
   process(neighbors, { BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, RIGHT }) {
-    if (this.water === 0) { return }
+    if (!this.water) { return }
     // Give as much to the bottom neighbor
-    if (this.manageWater(neighbors[BOTTOM], 1)) { return }
+    this.manageWater(neighbors[BOTTOM], 1)
     // Give half to the bottom corners
-    if (this.manageWater(neighbors[BOTTOM_LEFT], 2)) { return }
-    if (this.manageWater(neighbors[BOTTOM_RIGHT], 2)) { return }
+    this.manageWater(neighbors[BOTTOM_LEFT], 1 / 2)
+    this.manageWater(neighbors[BOTTOM_RIGHT], 1 / 2)
     // Give a third to the sides
-    if (this.manageWater(neighbors[LEFT], 3, this.water)) { return }
-    this.manageWater(neighbors[RIGHT], 3, this.water)
+    this.manageWater(neighbors[LEFT], 1 / 3, this.water)
+    this.manageWater(neighbors[RIGHT], 1 / 3, this.water)
   }
 
-  manageWater(neighbor, quantity = 2, minimumWaterTransfer = WATER_FULL) {
-    if (!this.water || neighbor === null || neighbor.constructor.type !== 'water' || neighbor.water >= minimumWaterTransfer) {
-      return false
+  manageWater(neighbor, quantity, minimumWaterTransfer = WATER_FULL) {
+    if (!this.water
+      || neighbor === null
+      || neighbor.constructor.type !== 'water'
+      || neighbor.water >= minimumWaterTransfer) {
+      return
     }
-    const amount = Math.min(this.water, Math.ceil((WATER_FULL - neighbor.water) / quantity))
+    const amount = Math.min(this.water, Math.ceil((WATER_FULL - neighbor.water) * quantity))
     this.water -= amount
     // eslint-disable-next-line no-param-reassign
     neighbor.water += amount
-
-    return true
   }
 }
 

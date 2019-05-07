@@ -53,7 +53,9 @@ export default class World {
           cell.reset(surroundings, World.NEIGHBOR_INDEXES)
         }
       }
-      for (let row = 0; row < this.rows; row++) {
+      // bottom/up processing (used by cave with water experiment)
+      // better at renderering scenes that modify bottom neighbor
+      for (let row = this.rows - 1; row >= 0; row--) {
         for (let column = 0; column < this.columns; column++) {
           cell = this.grid[row][column]
           const surroundings = this.getSurroundings(cell.row, cell.column)
