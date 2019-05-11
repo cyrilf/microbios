@@ -22,10 +22,7 @@ const WATER_FULL = 9
 class Water extends Cell {
   static type = 'water'
 
-  constructor(...args) {
-    super(...args)
-    this.water = Math.floor(Math.random() * WATER_FULL)
-  }
+  water = Math.floor(Math.random() * WATER_FULL)
 
   getColor() { return COLORS[this.water] }
 

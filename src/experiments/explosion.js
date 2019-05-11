@@ -5,13 +5,9 @@ import getSurroundingCellsAverageValue from '../utils/getSurroundingCellsAverage
 class Boom extends Cell {
   static type = 'Boom'
 
-  constructor(...args) {
-    super(...args)
-    this.value = (this.column === (this.worldColumns / 2) && this.row === (this.worldRows / 2))
-      ? 10 : 0
-    this.prev = this.value
-    this.next = this.value
-  }
+  value = (this.column === (this.worldColumns / 2) && this.row === (this.worldRows / 2)) ? 10 : 0
+  prev = this.value
+  next = this.value
 
   getColor() {
     const v = (Math.max(2 * this.value + 0.02, 0) - 0.02) + 0.5

@@ -4,10 +4,7 @@ import createExperiment from '../utils/createExperiment'
 export class Wall extends Cell {
   static type = 'wall'
 
-  constructor(...args) {
-    super(...args)
-    this.open = Math.random() > 0.4
-  }
+  open = Math.random() > 0.4
 
   getColor() { return this.open ? null : 'rgba(68, 36, 52, 1)' }
 

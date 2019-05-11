@@ -4,10 +4,7 @@ import createExperiment from '../utils/createExperiment'
 export class Living extends Cell {
   static type = 'living'
 
-  constructor(...args) {
-    super(...args)
-    this.alive = Math.random() > 0.5
-  }
+  alive = Math.random() > 0.5
 
   getColor() { return this.alive ? `rgba(68, 36, 52, ${this.wasAlive ? 1 : 0.7})` : null }
 

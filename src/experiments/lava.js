@@ -33,12 +33,9 @@ for (; index < 64; ++index) { colorsIndexes[index] = 0 }
 export class Lava extends Cell {
   static type = 'lava'
 
-  constructor(...args) {
-    super(...args)
-    this.value = 0
-    this.prev = this.value
-    this.next = this.value
-  }
+  value = 0
+  prev = this.value
+  next = this.value
 
   getColor() {
     let v = this.value + 0.5

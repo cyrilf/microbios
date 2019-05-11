@@ -14,13 +14,10 @@ for (let index = 0; index < 64; index++) {
 export class Water extends Cell {
   static type = 'water'
 
-  constructor(...args) {
-    super(...args)
-    this.water = true
-    this.value = 0
-    this.prev = this.value
-    this.next = this.value
-  }
+  water = true
+  value = 0
+  prev = this.value
+  next = this.value
 
   getColor() {
     const v = (Math.max(2 * this.value + 0.02, 0) - 0.02) + 0.5

@@ -11,10 +11,7 @@ const COLORS = [
 export class Cyclic extends Cell {
   static type = 'cyclic'
 
-  constructor(...args) {
-    super(...args)
-    this.state = Math.floor(Math.random() * 16)
-  }
+  state = Math.floor(Math.random() * 16)
 
   getColor() { return COLORS[this.state] }
 

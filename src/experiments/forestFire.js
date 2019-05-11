@@ -22,10 +22,7 @@ const COLORS = [
 class Tree extends Cell {
   static type = 'tree'
 
-  constructor(...args) {
-    super(...args)
-    this.burning = 0
-  }
+  burning = 0
 
   getColor() { return COLORS[this.burning || (this.alive ? 10 : 11)] }
 

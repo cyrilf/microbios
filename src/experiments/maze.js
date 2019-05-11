@@ -4,10 +4,7 @@ import createExperiment from '../utils/createExperiment'
 class Wall extends Living {
   static type = 'wall'
 
-  constructor(...args) {
-    super(...args)
-    this.simulated = 0
-  }
+  simulated = 0
 
   process(neighbors) {
     const surrounding = neighbors.filter(neighbor => neighbor && neighbor.wasAlive).length
