@@ -14,9 +14,6 @@ export default {
   mounted() {
     this.canvas = this.$refs.canvas
     this.ctx = this.canvas.getContext('2d')
-    // https://developer.mozilla.org/en-US/docs/Web/API/Window/devicePixelRatio
-    this.ratio = window.devicePixelRatio || 1
-    this.ctx.scale(this.ratio, this.ratio)
     this.setLoading({ renderer: false })
     this.draw()
   },
@@ -24,9 +21,9 @@ export default {
   computed: {
     ...mapState(['grid', 'config']),
     canvasWidth() {
-      return this.grid[0] && this.grid[0].length * this.config.cellSize * (this.ratio || 1)
+      return this.grid[0] && this.grid[0].length * this.config.cellSize
     },
-    canvasHeight() { return this.grid.length * this.config.cellSize * (this.ratio || 1) },
+    canvasHeight() { return this.grid.length * this.config.cellSize },
   },
 
   watch: {
