@@ -1,5 +1,24 @@
 <template>
   <section>
+    <dat-gui>
+      <dat-folder label="Experiment">
+        <dat-button
+          @click="isPlaying ? pause() : play()"
+          :label="isPlaying ? 'Pause' : 'Play'"/>
+        <dat-button v-show="!isPlaying" @click="update" label="Next"/>
+        <dat-button @click="restart" label="Restart"/>
+        <dat-select v-model="currentExperiment" :items="experiments" label="Experiment"/>
+      </dat-folder>
+      <dat-folder label="Performance">
+        <dat-select v-model="renderer" :items="renderers" label="Renderers"/>
+        <dat-number :min="0" :max="60" :step="1" v-model.number="fps" label="FPS"/>
+      </dat-folder>
+      <dat-folder label="World">
+        <dat-number :min="1" v-model.number="columns" label="Columns"/>
+        <dat-number :min="1" v-model.number="rows" label="Rows"/>
+        <dat-number :min="1" v-model.number="cellSize" label="Cell size"/>
+      </dat-folder>
+    </dat-gui>
     <div>Generation: {{generation}}</div>
     <div class="controls">
       <button :disabled="isPlaying" @click="update">Next</button>
@@ -9,28 +28,36 @@
         <option
           v-for="experiment in experiments"
           :key="experiment.name"
-          :value="experiment.name">
+          :value="experiment.value">
           {{ experiment.name }}
         </option>
       </select>
-      <select v-model="renderer">
-        <option value="Canvas">Canvas</option>
-        <option value="Table">HTML (table)</option>
-      </select>
-      <div><input v-model.number="fps" type="number" min="0" max="60"/><span>fps</span></div>
-      <div><input v-model.number="columns" type="number"/><span>columns</span></div>
-      <div><input v-model.number="rows" type="number"/><span>rows</span></div>
-      <div><input v-model.number="cellSize" type="number"/><span>cell size</span></div>
     </div>
   </section>
 </template>
 
 <script>
+import Vue from 'vue'
+import DatGui from '@cyrilf/vue-dat-gui'
 import { mapState, mapActions } from 'vuex'
 
+Vue.use(DatGui)
+
 export default {
+  data() {
+    return {
+      renderers: [
+        { name: 'Canvas', value: 'Canvas' },
+        { name: 'HTML (table)', value: 'Table' },
+      ],
+    }
+  },
+
   computed: {
-    ...mapState(['isPlaying', 'generation', 'experiments', 'config']),
+    ...mapState(['isPlaying', 'generation', 'config']),
+    experiments() {
+      return this.$store.state.experiments.map(e => ({ name: e.name, value: e.name }))
+    },
     fps: {
       get() { return this.$store.state.fps },
       set(value) { this.changeFPS(value) },
@@ -73,35 +100,35 @@ section {
   padding-top: 50px;
   display: flex;
   justify-content: center;
-}
 
-button, input, select, span {
-  color:#41403E;
-  font-size:2rem;
-}
-
-button, input, select {
-  background:transparent;
-  padding:1rem 1rem;
-  margin:0 1rem;
-  transition: box-shadow .5s ease;
-  outline:none;
-  cursor: pointer;
-  box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
-  border:solid 3px #41403E;
-  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-  &:hover {
-    box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
-    background: rgba(37, 226, 177, .3);
+  button, input, select, span {
+    color:#41403E;
+    font-size:2rem;
   }
-  &:disabled {
-    background: rgba(0, 0, 0, .3);
-    cursor: not-allowed;
-  }
-}
 
-input {
-  cursor: inherit;
-  max-width: 120px;
+  button, input, select {
+    background:transparent;
+    padding:1rem 1rem;
+    margin:0 1rem;
+    transition: box-shadow .5s ease;
+    outline:none;
+    cursor: pointer;
+    box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
+    border:solid 3px #41403E;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    &:hover {
+      box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+      background: rgba(37, 226, 177, .3);
+    }
+    &:disabled {
+      background: rgba(0, 0, 0, .3);
+      cursor: not-allowed;
+    }
+  }
+
+  input {
+    cursor: inherit;
+    max-width: 120px;
+  }
 }
 </style>
