@@ -1,10 +1,10 @@
-# microbios
+# microbios - [live website](https://cyrilf.github.io/microbios/)
 
-![microbios](./src/assets/fire.gif)
+![microbios website](./src/assets/microbios.gif)
 
-_Example of the Forest Fire experiments_
+_Cyclic experiment running on the demo website_
 
-Find more **experiments** on [the live version](https://cyrilf.github.io/microbios/)
+Find more **experiments** on [the live demo version](https://cyrilf.github.io/microbios/) 💡
 
 ----
 
@@ -67,6 +67,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 _Game of Life experiment_
 
-![trippy](./src/assets/cyclic.gif)
+![fire](./src/assets/fire.gif)
 
-_Cyclic experiment_
+_Forest Fire experiment_
