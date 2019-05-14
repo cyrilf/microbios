@@ -28,6 +28,7 @@ export default {
 <style>
   .world-container {
     min-height: 370px; /*hacky-way to avoid controler jump when switching renderer*/
+    overflow: auto;
   }
   .world {
     background: white;

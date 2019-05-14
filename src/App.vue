@@ -45,14 +45,21 @@ body {
 
 .title {
   display: inline-block;
+  margin-top: 1rem;
   margin-bottom: 2rem;
 
   h1 {
     margin: 0px;
-    font-size: 5rem;
+    font-size: 2rem;
     color: rgb(223, 128, 12);
     text-shadow: 0px 5px 0px white, 0px 9px 0px #7a4815;
     font-family: 'Fascinate', sans-serif;
+
+    @media (min-width: 425px) {
+      & {
+        font-size: 4.5rem;
+      }
+    }
   }
   small {
     float: right;

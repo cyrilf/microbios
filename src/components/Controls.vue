@@ -98,21 +98,30 @@ section {
 }
 
 .arrow {
+  display: none;
   position: fixed;
   top: 25px;
   right: 100px;
   width: 130px;
   transform: scaleX(-1);
+
+  @media (min-width: 1260px) {
+    & { display: block; }
+  }
 }
 
 .controls {
   padding-top: 50px;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 
   button, input, select, span {
     color:#41403E;
-    font-size:2rem;
+    font-size:1rem;
+    @media (min-width: 788px) {
+      & { font-size: 2rem; }
+    }
   }
 
   button, input, select {
