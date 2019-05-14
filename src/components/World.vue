@@ -1,7 +1,7 @@
 <template>
   <div class="world-container">
-    <Loader v-show="experimentLoading || rendererLoading"/>
-    <component :is="worldComponent" v-show="!experimentLoading && !rendererLoading"/>
+    <Loader v-show="experimentLoading || rendererLoading" class="world"/>
+    <component :is="worldComponent" v-show="!experimentLoading && !rendererLoading" class="world"/>
   </div>
 </template>
 
@@ -27,6 +27,10 @@ export default {
 
 <style>
   .world-container {
-    min-height: 304px; /*hacky-way to avoid controler jump when switching renderer*/
+    min-height: 370px; /*hacky-way to avoid controler jump when switching renderer*/
+  }
+  .world {
+    background: white;
+    border: solid 10px #41403E;
   }
 </style>

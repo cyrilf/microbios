@@ -1,7 +1,8 @@
 <template>
   <section>
-    <dat-gui>
-      <dat-folder label="Experiment">
+    <img src="../assets/arrow.svg" alt="arrow" class="arrow"/>
+    <dat-gui :closed="true">
+      <dat-folder label="Experiment" :closed="true">
         <dat-button
           @click="isPlaying ? pause() : play()"
           :label="isPlaying ? 'Pause' : 'Play'"/>
@@ -19,7 +20,7 @@
         <dat-number :min="1" v-model.number="cellSize" label="Cell size"/>
       </dat-folder>
     </dat-gui>
-    <div>Generation: {{generation}}</div>
+    <span class="generation"><span>Generation: </span><span>{{generation}}</span></span>
     <div class="controls">
       <button :disabled="isPlaying" @click="update">Next</button>
       <button @click="isPlaying ? pause() : play()">{{ isPlaying ? 'Pause' : 'Play'}}</button>
@@ -93,7 +94,15 @@ export default {
 
 <style lang="scss">
 section {
-  padding-top: 10px;
+  margin-top: 2rem;
+}
+
+.arrow {
+  position: fixed;
+  top: 25px;
+  right: 100px;
+  width: 130px;
+  transform: scaleX(-1);
 }
 
 .controls {
@@ -107,21 +116,21 @@ section {
   }
 
   button, input, select {
-    background:transparent;
-    padding:1rem 1rem;
-    margin:0 1rem;
+    background: white;
+    padding: 1rem 1rem;
+    margin: 0 1rem;
     transition: box-shadow .5s ease;
     outline:none;
     cursor: pointer;
     box-shadow: 20px 38px 34px -26px hsla(0,0%,0%,.2);
     border:solid 3px #41403E;
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    &:hover {
+    &:hover:not(:disabled) {
       box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
-      background: rgba(37, 226, 177, .3);
+      background: #f49733;
     }
     &:disabled {
-      background: rgba(0, 0, 0, .3);
+      opacity: .5;
       cursor: not-allowed;
     }
   }
@@ -130,5 +139,14 @@ section {
     cursor: inherit;
     max-width: 120px;
   }
+}
+
+.generation {
+  padding: 10px;
+  background: #f49733;
+  border: 5px solid rgba(0, 0, 0, 0.5);
+  display: inline-flex;
+  min-width: 160px;
+  justify-content: space-between;
 }
 </style>

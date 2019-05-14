@@ -6,7 +6,7 @@
           v-for="(cellColor, j) in row"
           :key="`${i}-${j}`"
           :style="`
-            background-color: ${cellColor || 'white'};
+            background-color: ${cellColor || 'transparent'};
             width: ${config.cellSize}px;
             height: ${config.cellSize}px;`"
           />

@@ -20,6 +20,7 @@ export default {
 
 <style>
 .loading {
+  box-sizing: content-box;
   margin: 0 auto;
   display: flex;
   justify-content: center;
