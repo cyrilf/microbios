@@ -1,23 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import experimentManager from './experiments'
+
 Vue.use(Vuex)
 
 let animationId = null
 let frames = 0
 let world
-
-const experiments = [
-  { name: 'Game of Life', getModule: () => import('./experiments/gameOfLife') },
-  { name: 'Forest Fire', getModule: () => import('./experiments/forestFire') },
-  { name: 'Maze', getModule: () => import('./experiments/maze') },
-  { name: 'Cave', getModule: () => import('./experiments/cave') },
-  { name: 'Cave with water', getModule: () => import('./experiments/caveWithWater') },
-  { name: 'Splash', getModule: () => import('./experiments/splash') },
-  { name: 'Lava', getModule: () => import('./experiments/lava') },
-  { name: 'Cyclic', getModule: () => import('./experiments/cyclic') },
-  { name: 'Explosion', getModule: () => import('./experiments/explosion') },
-]
 
 export default new Vuex.Store({
   state: {
@@ -27,8 +17,8 @@ export default new Vuex.Store({
     isPlaying: true,
     loading: { experiment: true, renderer: true },
     fps: 60,
-    experiments,
-    currentExperiment: experiments[0].name,
+    experiments: experimentManager.experiments,
+    currentExperiment: experimentManager.defaultExperiment,
     renderer: 'Canvas',
   },
 
