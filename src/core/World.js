@@ -9,13 +9,14 @@ export default class World {
   }
 
   init(cellDistributions) {
+    let sortedCellDistribution = cellDistributions.slice(0)
     if (this.cellTypes.size === 0) {
       throw new Error('You forgot to register your `cellTypes`. Make sure to call `registerCellClass` before `init`')
     }
-    cellDistributions.sort((a, b) => (a.distribution > b.distribution ? 1 : -1))
+    sortedCellDistribution.sort((a, b) => (a.distribution > b.distribution ? 1 : -1))
 
     let totalDistribution = 0
-    cellDistributions.forEach((cd) => {
+    sortedCellDistribution = sortedCellDistribution.map((cd) => {
       totalDistribution += cd.distribution
       return { ...cd, distribution: totalDistribution }
     })
@@ -27,7 +28,8 @@ export default class World {
       this.grid.push([])
       for (column = 0; column < this.columns; column++) {
         const random = Math.random() * totalDistribution
-        const { type } = cellDistributions.find(({ distribution }) => random <= distribution) || {}
+        const { type } = sortedCellDistribution
+          .find(({ distribution }) => random <= distribution) || {}
         const Cell = this.cellTypes.get(type)
         this.grid[row].push(new Cell(row, column, this.rows, this.columns))
       }

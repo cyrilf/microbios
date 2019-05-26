@@ -8,6 +8,7 @@ const experiments = [
   { name: 'Splash', getModule: () => import('./splash') },
   { name: 'Lava', getModule: () => import('./lava') },
   { name: 'Cyclic', getModule: () => import('./cyclic') },
+  { name: 'Glitch', getModule: () => import('./glitch') },
   { name: 'Explosion', getModule: () => import('./explosion') },
 ]
 
