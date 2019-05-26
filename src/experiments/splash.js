@@ -24,6 +24,17 @@ export class Water extends Cell {
     return COLORS[REVERSE_COLORS_INDEX[Math.floor(REVERSE_COLORS_INDEX.length * v)]]
   }
 
+  prepare() {
+    if (Math.random() > 0.9999) {
+      this.value = -0.2 + 0.25 * Math.random()
+      this.prev = this.value
+      this.droplet = true
+    } else {
+      this.prev = this.value
+      this.value = this.next
+    }
+  }
+
   process(neighbors) {
     if (this.droplet === true) {
       const neighborsLength = neighbors.length
@@ -40,17 +51,6 @@ export class Water extends Cell {
     }
     const avg = getNeighborCellsAverageValue(neighbors, 'value')
     this.next = 0.99 * (2 * avg - this.prev)
-  }
-
-  reset() {
-    if (Math.random() > 0.9999) {
-      this.value = -0.2 + 0.25 * Math.random()
-      this.prev = this.value
-      this.droplet = true
-    } else {
-      this.prev = this.value
-      this.value = this.next
-    }
   }
 }
 

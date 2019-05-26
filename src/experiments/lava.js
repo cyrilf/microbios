@@ -47,6 +47,18 @@ export class Lava extends Cell {
     return COLORS[colorsIndexes[Math.floor(colorsIndexes.length * v)]]
   }
 
+  prepare() {
+    if (Math.random() > 0.99993) {
+      this.value = -0.25 + 0.3 * Math.random()
+      this.prev = this.value
+      this.droplet = true
+    } else {
+      this.prev = this.value
+      this.value = this.next
+    }
+    this.value = Math.min(0.5, Math.max(-0.5, this.value))
+  }
+
   process(neighbors) {
     if (this.droplet === true) {
       const neighborsLength = neighbors.length
@@ -63,18 +75,6 @@ export class Lava extends Cell {
     }
     const avg = getNeighborCellsAverageValue(neighbors, 'value')
     this.next = 0.99 * (2 * avg - this.prev)
-  }
-
-  reset() {
-    if (Math.random() > 0.99993) {
-      this.value = -0.25 + 0.3 * Math.random()
-      this.prev = this.value
-      this.droplet = true
-    } else {
-      this.prev = this.value
-      this.value = this.next
-    }
-    this.value = Math.min(0.5, Math.max(-0.5, this.value))
   }
 }
 

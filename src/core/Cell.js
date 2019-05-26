@@ -11,17 +11,16 @@ export default class Cell {
   /**
    * Should return a valid CSS color string
    */
-  getColor() {} // eslint-disable-line
+  getColor() { } // eslint-disable-line
+
+  /**
+   * Prepare the cell state for the next generation
+   */
+  prepare() { } // eslint-disable-line
 
   /**
    * Change the cell state based on its neighbors
    * @param {Array} neighbors
    */
   process(neighbors) {} // eslint-disable-line
-
-  /**
-   * Prepare the cell state for the next generation
-   * @param {Array} neighbors
-   */
-  reset(neighbors) { } // eslint-disable-line
 }

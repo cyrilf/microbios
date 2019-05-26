@@ -8,13 +8,11 @@ export class Living extends Cell {
 
   getColor() { return this.alive ? `rgba(68, 36, 52, ${this.wasAlive ? 1 : 0.7})` : null }
 
+  prepare() { this.wasAlive = this.alive }
+
   process(neighbors) {
     const neighborsAlive = neighbors.filter(neighbor => neighbor && neighbor.wasAlive).length
     this.alive = neighborsAlive === 3 || (neighborsAlive === 2 && this.alive)
-  }
-
-  reset() {
-    this.wasAlive = this.alive;
   }
 }
 

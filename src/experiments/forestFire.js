@@ -26,25 +26,20 @@ class Tree extends Cell {
 
   getColor() { return COLORS[this.burning || (this.alive ? 10 : 11)] }
 
+  prepare() { this.wasBurning = this.burning !== 0 }
+
   process(neighbors) {
     if (this.wasBurning) {
       this.burning -= 3
     } else if (this.alive) {
       const burningNeighbors = neighbors.filter(neighbor => neighbor && neighbor.wasBurning).length
-      if (burningNeighbors) {
-        this.burning = 9
-        this.alive = false
-      } else if (Math.random() < CHANCE_TO_IGNITE) {
+      if (burningNeighbors || Math.random() < CHANCE_TO_IGNITE) {
         this.burning = 9
         this.alive = false
       }
     } else if (Math.random() < CHANCE_TO_GROW) {
       this.alive = true
     }
-  }
-
-  reset() {
-    this.wasBurning = this.burning !== 0
   }
 }
 

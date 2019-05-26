@@ -18,14 +18,14 @@ class Boom extends Cell {
     return `rgba(${r}, ${g}, ${b}, ${this.value * 10})`
   }
 
+  prepare() {
+    this.prev = this.value
+    this.value = this.next
+  }
+
   process(neighbors) {
     const avg = getNeighborCellsAverageValue(neighbors, 'value')
     this.next = 0.99 * (2 * avg - this.prev)
-  }
-
-  reset() {
-    this.prev = this.value
-    this.value = this.next
   }
 }
 

@@ -15,9 +15,11 @@ export class Cyclic extends Cell {
 
   getColor() { return COLORS[this.state] }
 
+  prepare() { this.previousState = this.state }
+
   process(neighbors) {
     const next = (this.state + 1) % 16
-    const changing = neighbors.some(neighbor => neighbor && neighbor.state === next)
+    const changing = neighbors.some(neighbor => neighbor && neighbor.previousState === next)
 
     if (changing) this.state = next
   }

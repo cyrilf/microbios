@@ -47,9 +47,7 @@ export default class World {
     for (; i < steps; i++) {
       for (row = 0; row < this.rows; row++) {
         for (column = 0; column < this.columns; column++) {
-          cell = this.grid[row][column]
-          const neighbors = this.getNeighbors(cell.row, cell.column)
-          cell.reset(neighbors)
+          this.grid[row][column].prepare()
         }
       }
       // bottom/up processing (used by cave with water experiment)
