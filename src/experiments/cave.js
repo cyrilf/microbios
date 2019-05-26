@@ -9,8 +9,8 @@ export class Wall extends Cell {
   getColor() { return this.open ? null : 'rgba(68, 36, 52, 1)' }
 
   process(neighbors) {
-    const surrounding = neighbors.filter(neighbor => neighbor && neighbor.wasOpen).length
-    this.open = (this.wasOpen && surrounding >= 4) || surrounding >= 6
+    const openNeighbors = neighbors.filter(neighbor => neighbor && neighbor.wasOpen).length
+    this.open = (this.wasOpen && openNeighbors >= 4) || openNeighbors >= 6
   }
 
   reset() {

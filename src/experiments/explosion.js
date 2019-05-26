@@ -1,6 +1,6 @@
 import Cell from '../core/Cell'
 import createExperiment from '../core/utils/createExperiment'
-import getSurroundingCellsAverageValue from '../core/utils/getSurroundingCellsAverageValue'
+import getNeighborCellsAverageValue from '../core/utils/getNeighborCellsAverageValue'
 
 class Boom extends Cell {
   static type = 'Boom'
@@ -19,7 +19,7 @@ class Boom extends Cell {
   }
 
   process(neighbors) {
-    const avg = getSurroundingCellsAverageValue(neighbors, 'value')
+    const avg = getNeighborCellsAverageValue(neighbors, 'value')
     this.next = 0.99 * (2 * avg - this.prev)
   }
 

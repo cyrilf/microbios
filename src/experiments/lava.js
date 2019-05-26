@@ -1,6 +1,6 @@
 import Cell from '../core/Cell'
 import createExperiment from '../core/utils/createExperiment'
-import getSurroundingCellsAverageValue from '../core/utils/getSurroundingCellsAverageValue'
+import getNeighborCellsAverageValue from '../core/utils/getNeighborCellsAverageValue'
 
 // thanks to @sanojian who thanks TheLastBanana on TIGSource
 
@@ -61,7 +61,7 @@ export class Lava extends Cell {
 
       this.droplet = false
     }
-    const avg = getSurroundingCellsAverageValue(neighbors, 'value')
+    const avg = getNeighborCellsAverageValue(neighbors, 'value')
     this.next = 0.99 * (2 * avg - this.prev)
   }
 
