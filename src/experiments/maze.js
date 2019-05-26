@@ -1,5 +1,5 @@
 import { Living } from './gameOfLife'
-import createExperiment from '../utils/createExperiment'
+import createExperiment from '../core/utils/createExperiment'
 
 class Wall extends Living {
   static type = 'wall'
@@ -7,12 +7,12 @@ class Wall extends Living {
   simulated = 0
 
   process(neighbors) {
-    const surrounding = neighbors.filter(neighbor => neighbor && neighbor.wasAlive).length
+    const aliveNeighbors = neighbors.filter(neighbor => neighbor && neighbor.wasAlive).length
 
     if (this.simulated < 20) {
-      this.alive = surrounding === 1 || (surrounding === 2 && this.alive)
+      this.alive = aliveNeighbors === 1 || (aliveNeighbors === 2 && this.alive)
     }
-    if (this.simulated > 20 && surrounding === 2) {
+    if (this.simulated > 20 && aliveNeighbors === 2) {
       this.alive = true
     }
 

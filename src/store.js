@@ -2,69 +2,40 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import experimentManager from './experiments'
+import worldManager from './core/worldManager'
 
 Vue.use(Vuex)
 
-let animationId = null
-let frames = 0
-let world
-
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     config: { columns: 100, rows: 50, cellSize: 7 },
     generation: 0,
     grid: [],
-    isPlaying: true,
+    isPlaying: false,
     loading: { experiment: true, renderer: true },
     fps: 60,
     experiments: experimentManager.experiments,
-    currentExperiment: experimentManager.defaultExperiment,
+    currentExperiment: experimentManager.defaultExperimentName,
     renderer: 'Canvas',
   },
 
   actions: {
-    init({ state, commit }, config = state.config) {
+    async init({ state, commit }, config = state.config) {
       config !== state.config && commit('changeConfig', config)
-      const currentExperiment = state.experiments.find(
-        experiment => (experiment.name === state.currentExperiment),
-      )
-      return currentExperiment.getModule().then((module) => {
-        const createWorld = module.default
-        world = createWorld(config)
-        commit('nextGeneration', [world.initGrid, world.generation])
-        commit('setLoading', { experiment: false })
-      })
+      await worldManager.init(config)
     },
 
-    update({ state, commit, dispatch }) {
-      if (world.options.maxGeneration > state.generation) {
-        if (!state.isPlaying
-          || (state.isPlaying && state.fps !== 0 && frames >= (60 / state.fps))) {
-          commit('nextGeneration', world.nextGeneration())
-          frames = 0
-        }
+    update() { worldManager.update() },
+    restart() { worldManager.restart() },
+    setLoading({ commit }, loading) { commit('setLoading', loading) },
+    play({ commit }) { commit('setIsPlaying', worldManager.play()) },
+    pause({ commit }) { commit('setIsPlaying', worldManager.pause()) },
 
-        if (state.isPlaying) {
-          animationId = requestAnimationFrame(() => dispatch('update'))
-          frames++
-        }
-      }
-    },
-
-    restart({ state, dispatch }) {
-      const { isPlaying } = state
-      dispatch('init').then(() => {
-        dispatch('pause')
-        dispatch('update')
-        isPlaying && dispatch('play')
-      })
-    },
-
-    changeExperiment({ state, dispatch, commit }, experiment) {
+    changeExperiment({ state, commit }, experiment) {
       if (state.currentExperiment !== experiment) {
         commit('setLoading', { experiment: true })
         commit('changeExperiment', experiment)
-        dispatch('restart')
+        worldManager.setExperiment(experiment)
       }
     },
 
@@ -73,29 +44,13 @@ export default new Vuex.Store({
       commit('changeRenderer', renderer)
     },
 
-    changeConfig({ commit, dispatch }, partialConfig) {
+    changeConfig({ commit }, partialConfig) {
       commit('changeConfig', partialConfig)
-      if (partialConfig.columns || partialConfig.rows) dispatch('restart')
-    },
-
-    setLoading({ commit }, loading) {
-      commit('setLoading', loading)
-    },
-
-    play({ commit, dispatch }) {
-      if (animationId) return
-      animationId = requestAnimationFrame(() => dispatch('update'))
-      commit('setIsPlaying', true)
-    },
-
-    pause({ commit }) {
-      cancelAnimationFrame(animationId)
-      animationId = null
-      commit('setIsPlaying', false)
+      worldManager.setConfig(partialConfig)
     },
 
     changeFPS({ commit }, fps) {
-      commit('setFPS', { fps })
+      commit('setFPS', { fps: worldManager.setFPS(fps) })
     },
   },
 
@@ -132,3 +87,9 @@ export default new Vuex.Store({
     },
   },
 })
+
+worldManager.setExperiments(experimentManager.experiments)
+worldManager.on('init', () => store.commit('setLoading', { experiment: false }))
+worldManager.on('update', nextGeneration => store.commit('nextGeneration', nextGeneration))
+
+export default store

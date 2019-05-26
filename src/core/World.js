@@ -1,15 +1,4 @@
 export default class World {
-  static NEIGHBOR_INDEXES = {
-    TOP_LEFT: 0,
-    TOP: 1,
-    TOP_RIGHT: 2,
-    LEFT: 3,
-    RIGHT: 4,
-    BOTTOM_LEFT: 5,
-    BOTTOM: 6,
-    BOTTOM_RIGHT: 7,
-  }
-
   constructor({ columns, rows, ...rest }) {
     this.columns = columns
     this.rows = rows
@@ -59,8 +48,8 @@ export default class World {
       for (row = 0; row < this.rows; row++) {
         for (column = 0; column < this.columns; column++) {
           cell = this.grid[row][column]
-          const surroundings = this.getSurroundings(cell.row, cell.column)
-          cell.reset(surroundings, World.NEIGHBOR_INDEXES)
+          const neighbors = this.getNeighbors(cell.row, cell.column)
+          cell.reset(neighbors)
         }
       }
       // bottom/up processing (used by cave with water experiment)
@@ -68,8 +57,8 @@ export default class World {
       for (row = this.rows - 1; row >= 0; row--) {
         for (column = 0; column < this.columns; column++) {
           cell = this.grid[row][column]
-          const surroundings = this.getSurroundings(cell.row, cell.column)
-          cell.process(surroundings, World.NEIGHBOR_INDEXES)
+          const neighbors = this.getNeighbors(cell.row, cell.column)
+          cell.process(neighbors)
         }
       }
 
@@ -79,9 +68,9 @@ export default class World {
     return [simplifyGrid(this.grid), this.generation]
   }
 
-  // Get the 7 surroundings cells based on the coordinates
-  getSurroundings(row, column) {
-    const surroundings = []
+  // Get the 7 neighbors cells based on the coordinates
+  getNeighbors(row, column) {
+    const neighbors = []
     for (let x = -1; x <= 1; x++) {
       for (let y = -1; y <= 1; y++) {
         const currentCell = x === 0 && y === 0
@@ -99,15 +88,15 @@ export default class World {
               || neighborRow >= this.rows
               || neighborColumn < 0
               || neighborColumn >= this.columns))) {
-            surroundings.push(this.grid[neighborRow][neighborColumn])
+            neighbors.push(this.grid[neighborRow][neighborColumn])
           } else {
-            surroundings.push(null)
+            neighbors.push(null)
           }
         }
       }
     }
 
-    return surroundings
+    return neighbors
   }
 
   // Initialize the grid from a mapping

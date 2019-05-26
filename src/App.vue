@@ -21,12 +21,8 @@ export default {
     Controls,
   },
 
-  mounted() {
-    this.init().then(this.play)
-  },
-  methods: {
-    ...mapActions(['init', 'play']),
-  },
+  mounted() { this.init().then(this.play) },
+  methods: { ...mapActions(['init', 'play']) },
 }
 </script>
 

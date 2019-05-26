@@ -1,5 +1,6 @@
-import Cell from '../Cell'
-import World from '../World'
+import Cell from '../core/Cell'
+import World from '../core/World'
+import { TOP, BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, RIGHT } from '../core/utils/neighborIndexes'
 import caveExperiment from './cave'
 
 const COLORS = [
@@ -26,7 +27,7 @@ class Water extends Cell {
 
   getColor() { return COLORS[this.water] }
 
-  process(neighbors, { BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, RIGHT }) {
+  process(neighbors) {
     if (!this.water) { return }
     // Give as much to the bottom neighbor
     this.manageWater(neighbors[BOTTOM], 1)
@@ -57,7 +58,7 @@ class Rock extends Cell {
 
   getColor() { return COLORS[this.moss ? 10 : 11] }
 
-  process(neighbors, { TOP, BOTTOM }) {
+  process(neighbors) {
     const bottomNeighborIsRock = neighbors[BOTTOM] && neighbors[BOTTOM].constructor.type === 'rock'
     const topNeighborIsWaterNotFull = neighbors[TOP]
       && neighbors[TOP].constructor.type !== 'rock'

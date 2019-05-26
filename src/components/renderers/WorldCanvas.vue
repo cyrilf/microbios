@@ -8,14 +8,16 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  data: () => ({ firstDraw: true }),
+
   mounted() {
     this.canvas = this.$refs.canvas
     this.ctx = this.canvas.getContext('2d')
     this.setLoading({ renderer: false })
-    this.draw()
   },
 
   computed: {
@@ -33,7 +35,8 @@ export default {
       } = this
       // eslint-disable-next-line no-unused-vars
       const { cellSize } = this.config
-      this.draw()
+      // on first draw canvas size not updated yet, so use Vue.nextTick
+      this.firstDraw ? Vue.nextTick(this.draw) : this.draw()
     },
   },
 
@@ -59,6 +62,7 @@ export default {
           }
         }
       }
+      this.firstDraw = false
     },
   },
 }
