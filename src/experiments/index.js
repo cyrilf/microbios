@@ -10,11 +10,9 @@ const experiments = [
   { name: 'Explosion', getModule: () => import('./explosion') },
 ]
 
-const defaultExperiment = experiments[0].name
-
 const experimentManager = {
   experiments,
-  defaultExperiment,
+  defaultExperimentName: experiments[0].name,
 }
 
 export default experimentManager

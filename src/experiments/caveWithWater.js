@@ -1,5 +1,5 @@
-import Cell from '../Cell'
-import World from '../World'
+import Cell from '../core/Cell'
+import World from '../core/World'
 import caveExperiment from './cave'
 
 const COLORS = [

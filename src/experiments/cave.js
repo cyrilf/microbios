@@ -1,5 +1,5 @@
-import Cell from '../Cell'
-import createExperiment from '../utils/createExperiment'
+import Cell from '../core/Cell'
+import createExperiment from '../core/utils/createExperiment'
 
 export class Wall extends Cell {
   static type = 'wall'
@@ -14,7 +14,7 @@ export class Wall extends Cell {
   }
 
   reset() {
-    this.wasOpen = this.open;
+    this.wasOpen = this.open
   }
 }
 

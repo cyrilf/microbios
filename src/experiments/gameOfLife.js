@@ -1,5 +1,5 @@
-import Cell from '../Cell'
-import createExperiment from '../utils/createExperiment'
+import Cell from '../core/Cell'
+import createExperiment from '../core/utils/createExperiment'
 
 export class Living extends Cell {
   static type = 'living'

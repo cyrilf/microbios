@@ -1,5 +1,5 @@
-import Cell from '../Cell'
-import createExperiment from '../utils/createExperiment'
+import Cell from '../core/Cell'
+import createExperiment from '../core/utils/createExperiment'
 
 const COLORS = [
   'rgba(255,0,0,1)', 'rgba(255,96,0,1)', 'rgba(255,191,0,1)', 'rgba(223,255,0,1)',

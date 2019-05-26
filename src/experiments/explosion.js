@@ -1,6 +1,6 @@
-import Cell from '../Cell'
-import createExperiment from '../utils/createExperiment'
-import getSurroundingCellsAverageValue from '../utils/getSurroundingCellsAverageValue'
+import Cell from '../core/Cell'
+import createExperiment from '../core/utils/createExperiment'
+import getSurroundingCellsAverageValue from '../core/utils/getSurroundingCellsAverageValue'
 
 class Boom extends Cell {
   static type = 'Boom'

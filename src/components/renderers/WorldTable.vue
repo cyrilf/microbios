@@ -19,19 +19,13 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  mounted() {
-    this.setLoading({ renderer: false })
-  },
-  computed: {
-    ...mapState(['grid', 'config']),
-  },
-  methods: {
-    ...mapActions(['setLoading']),
-  },
+  mounted() { this.setLoading({ renderer: false }) },
+  computed: { ...mapState(['grid', 'config']) },
+  methods: { ...mapActions(['setLoading']) },
 }
 </script>
 
-<style lang="scss">
+<style>
 .world {
   margin: 0 auto;
   border-collapse: collapse;

@@ -1,7 +1,8 @@
 export default (neighbors, value) => {
-  const summed = neighbors.reduce((result, neighbor) => {
+  const summed = neighbors.reduce((sum, neighbor) => {
+    let result = sum
     if (neighbor !== null && (neighbor[value] || neighbor[value] === 0)) {
-      result += neighbor[value] // eslint-disable-line no-param-reassign
+      result += neighbor[value]
     }
     return result
   }, 0)
