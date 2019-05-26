@@ -8,13 +8,20 @@ export default class Cell {
     this.worldColumns = columns
   }
 
+  /**
+   * Should return a valid CSS color string
+   */
+  getColor() {} // eslint-disable-line
 
-  // eslint-disable-next-line
-  reset(surroundings) {}
-  // eslint-disable-next-line
-  process(surroundings) {}
-  // eslint-disable-next-line
-  click() {}
-  // eslint-disable-next-line
-  getColor() {}
+  /**
+   * Change the cell state based on its neighbors
+   * @param {Array} neighbors
+   */
+  process(neighbors) {} // eslint-disable-line
+
+  /**
+   * Prepare the cell state for the next generation
+   * @param {Array} neighbors
+   */
+  reset(neighbors) { } // eslint-disable-line
 }
