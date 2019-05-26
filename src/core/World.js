@@ -1,15 +1,4 @@
 export default class World {
-  static NEIGHBOR_INDEXES = {
-    TOP_LEFT: 0,
-    TOP: 1,
-    TOP_RIGHT: 2,
-    LEFT: 3,
-    RIGHT: 4,
-    BOTTOM_LEFT: 5,
-    BOTTOM: 6,
-    BOTTOM_RIGHT: 7,
-  }
-
   constructor({ columns, rows, ...rest }) {
     this.columns = columns
     this.rows = rows
@@ -60,7 +49,7 @@ export default class World {
         for (column = 0; column < this.columns; column++) {
           cell = this.grid[row][column]
           const surroundings = this.getSurroundings(cell.row, cell.column)
-          cell.reset(surroundings, World.NEIGHBOR_INDEXES)
+          cell.reset(surroundings)
         }
       }
       // bottom/up processing (used by cave with water experiment)
@@ -69,7 +58,7 @@ export default class World {
         for (column = 0; column < this.columns; column++) {
           cell = this.grid[row][column]
           const surroundings = this.getSurroundings(cell.row, cell.column)
-          cell.process(surroundings, World.NEIGHBOR_INDEXES)
+          cell.process(surroundings)
         }
       }
 
