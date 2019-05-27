@@ -1,7 +1,7 @@
 <template>
   <div class="world-container">
-    <Loader v-show="experimentLoading || rendererLoading" class="world"/>
-    <component :is="worldComponent" v-show="!experimentLoading && !rendererLoading" class="world"/>
+    <Loader v-show="isLoading" class="world"/>
+    <component :is="worldComponent" v-show="!isLoading" class="world"/>
   </div>
 </template>
 
@@ -15,8 +15,7 @@ export default {
   },
   computed: {
     ...mapState(['loading', 'renderer']),
-    experimentLoading() { return this.loading.experiment },
-    rendererLoading() { return this.loading.renderer },
+    isLoading() { return this.loading.experiment || this.loading.renderer },
     worldComponent() {
       const { renderer } = this // to make `renderer` reactive
       return () => import(`./renderers/World${renderer}.vue`)
