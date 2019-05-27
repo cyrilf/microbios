@@ -1,5 +1,5 @@
 const experiments = [
-  { name: 'Game of Life', getModule: () => import('./gameOfLife') },
+  { name: 'Game of Life', getModule: () => import('./gameOfLife'), selected: true },
   { name: 'Forest Fire', getModule: () => import('./forestFire') },
   { name: 'Maze', getModule: () => import('./maze') },
   { name: 'Cave', getModule: () => import('./cave') },
@@ -10,6 +10,7 @@ const experiments = [
   { name: 'Cyclic', getModule: () => import('./cyclic') },
   { name: 'Glitch', getModule: () => import('./glitch') },
   { name: 'Explosion', getModule: () => import('./explosion') },
+  { name: 'Snake', getModule: () => import('./snake') },
 ]
 
 export default experiments
