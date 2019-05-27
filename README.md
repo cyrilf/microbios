@@ -1,17 +1,18 @@
-# microbios - [live website](https://cyrilf.github.io/microbios/)
+# Microbios
+> [live website](https://microbios.cyrilf.com/)
 
 ![microbios website](./src/assets/microbios.gif)
 
 _Cyclic experiment running on the demo website_
 
-Find more **experiments** on [the live demo version](https://cyrilf.github.io/microbios/) 💡
+Find more **experiments** on [the live demo version](https://microbios.cyrilf.com/) 💡
 
 ----
 
 ## DESCRIPTION 📖
 
 **Microbios** provide a generic code that allows simulations of **cellular automata** experiments.  
-The most famous one being the **Game of Life** (that you can find on the [live version](https://cyrilf.github.io/microbios/) or on the [experiments folder](https://github.com/cyrilf/microbios/tree/5bcf07ffca6d75c2462a3c8af5e05b2dbc402961/src/experiments)).
+The most famous one being the **Game of Life** (that you can find on the [live version](https://microbios.cyrilf.com/) or on the [experiments folder](https://github.com/cyrilf/microbios/tree/5bcf07ffca6d75c2462a3c8af5e05b2dbc402961/src/experiments)).
 
 This is an open-source project, licensed under MIT.
 
