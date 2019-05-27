@@ -59,7 +59,8 @@ const worldManager = {
 
   setExperiments(experiments) {
     this.experiments = experiments
-    this.currentExperiment = this.experiments[0] // eslint-disable-line prefer-destructuring
+    this.currentExperiment = this.experiments.find(e => e.selected)
+      || this.experiments[0]
   },
 
   async setExperiment(experiment, key = 'name') {

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import experimentManager from './experiments'
+import experiments from './experiments'
 import worldManager from './core/worldManager'
 
 Vue.use(Vuex)
@@ -14,8 +14,8 @@ const store = new Vuex.Store({
     isPlaying: false,
     loading: { experiment: true, renderer: true },
     fps: 60,
-    experiments: experimentManager.experiments,
-    currentExperiment: experimentManager.defaultExperimentName,
+    experiments,
+    currentExperiment: (experiments.find(e => e.selected) || experiments[0]).name,
     renderer: 'Canvas',
   },
 
@@ -88,7 +88,7 @@ const store = new Vuex.Store({
   },
 })
 
-worldManager.setExperiments(experimentManager.experiments)
+worldManager.setExperiments(experiments)
 worldManager.on('init', () => store.commit('setLoading', { experiment: false }))
 worldManager.on('update', nextGeneration => store.commit('nextGeneration', nextGeneration))
 
