@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import experiments from './experiments'
+import experiments from './experiments/experiments'
 import worldManager from './core/worldManager'
 
 Vue.use(Vuex)

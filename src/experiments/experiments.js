@@ -10,7 +10,7 @@ const experiments = [
   { id: 'cyclic', name: 'Cyclic' },
   { id: 'glitch', name: 'Glitch' },
   { id: 'explosion', name: 'Explosion' },
-  { id: 'snake', name: 'Snake' },
+  { id: 'snakes', name: 'Snakes', selected: true },
 ].map(e => ({ ...e, getModule: () => import(`./${e.id}`) }))
 
 export default experiments

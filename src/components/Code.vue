@@ -2,7 +2,11 @@
   <div class="code">
     <h2>
       Code
-      <span class="link"> (<a :href="link">view "{{currentExperiment.name}}" code on github</a>)</span>
+      <span class="link">
+        (<a :href="link">
+          view "{{currentExperiment.name}}" code on github
+        </a>)
+      </span>
     </h2>
     <div v-show="isLoading" class="code-loading">LOADING...</div>
     <prism-editor
