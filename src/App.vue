@@ -36,6 +36,11 @@ export default {
 * {
   box-sizing: border-box;
 }
+
+html {
+  overflow-y:scroll; /*https://stackoverflow.com/a/1202542/1410020*/
+}
+
 body {
   font-family: 'Quicksand', sans-serif;
   background: rgba(248, 207, 96, 1) url(./assets/golden.png);
