@@ -1,6 +1,9 @@
 <template>
   <div class="code">
-    <h2>Code</h2>
+    <h2>
+      Code
+      <span class="link"> (<a :href="link">view "{{currentExperiment.name}}" code on github</a>)</span>
+    </h2>
     <div v-show="isLoading" class="code-loading">LOADING...</div>
     <prism-editor
       v-show="!isLoading"
@@ -25,18 +28,20 @@ export default {
   data() {
     return {
       code: null,
+      link: null,
       isLoading: true,
     }
-  },
-  async created() {
-    this.code = await this.fetchCode()
   },
   computed: {
     ...mapState(['currentExperiment']),
   },
   watch: {
-    async currentExperiment() {
-      this.code = await this.fetchCode()
+    currentExperiment: {
+      async handler() {
+        this.link = `https://github.com/cyrilf/microbios/blob/master/src/experiments/${this.currentExperiment.id}.js`
+        this.code = await this.fetchCode()
+      },
+      immediate: true,
     },
   },
   methods: {
@@ -65,6 +70,17 @@ export default {
       color: white;
       background: #f49733;
       margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .link {
+        font-size: 0.8rem;
+        margin-left: 0.5rem;
+        a {
+          color: white;
+        }
+      }
     }
 
     .code-loading {
