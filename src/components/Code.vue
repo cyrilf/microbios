@@ -1,14 +1,26 @@
 <template>
   <div class="code">
     <div v-show="isLoading">LOADING...</div>
-    <pre v-show="!isLoading">{{code}}</pre>
+    <prism-editor
+      v-show="!isLoading"
+      :code="code"
+      language="js"
+      :lineNumbers="true"
+      :readonly="true"></prism-editor>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import 'prismjs'
+import 'prismjs/themes/prism.css'
+import PrismEditor from 'vue-prism-editor'
+import 'vue-prism-editor/dist/VuePrismEditor.css'
 
 export default {
+  components: {
+    PrismEditor,
+  },
   data() {
     return {
       code: null,
