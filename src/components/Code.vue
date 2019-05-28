@@ -1,6 +1,7 @@
 <template>
   <div class="code">
-    <div v-show="isLoading">LOADING...</div>
+    <h2>Code</h2>
+    <div v-show="isLoading" class="code-loading">LOADING...</div>
     <prism-editor
       v-show="!isLoading"
       :code="code"
@@ -53,3 +54,21 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+  .code {
+    max-width: 1042px; // fits code line of 100 chars
+    margin: 0 auto;
+    background: white;
+    margin-top: 2rem;
+
+    h2 {
+      color: white;
+      background: #f49733;
+      margin: 0;
+    }
+
+    .code-loading {
+      padding: 1rem;
+    }
+  }
+</style>
