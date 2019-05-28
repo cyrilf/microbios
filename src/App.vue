@@ -14,7 +14,8 @@
 import { mapActions } from 'vuex'
 import World from './components/World.vue'
 import Controls from './components/Controls.vue'
-import Code from './components/Code.vue'
+
+const Code = () => import('./components/Code.vue')
 
 export default {
   name: 'app',
