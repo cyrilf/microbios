@@ -12,6 +12,7 @@
     <prism-editor
       v-show="!isLoading"
       :code="code"
+      class="editor"
       language="js"
       :lineNumbers="true"
       :readonly="true"></prism-editor>
@@ -66,9 +67,8 @@ export default {
 <style lang="scss">
   .code {
     max-width: 1042px; // fits code line of 100 chars
-    margin: 0 auto;
+    margin: 2rem auto;
     background: white;
-    margin-top: 2rem;
 
     h2 {
       color: white;
@@ -89,6 +89,11 @@ export default {
 
     .code-loading {
       padding: 1rem;
+    }
+
+    .editor {
+      max-height: 500px;
+      overflow-y: auto;
     }
   }
 </style>
