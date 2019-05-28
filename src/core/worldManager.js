@@ -63,8 +63,8 @@ const worldManager = {
       || this.experiments[0]
   },
 
-  async setExperiment(experiment, key = 'name') {
-    this.currentExperiment = this.experiments.find(e => e[key] === experiment) || experiment
+  setExperiment(experiment) {
+    this.currentExperiment = experiment
     this.restart()
   },
 

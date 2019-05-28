@@ -28,8 +28,8 @@
       <select v-model="currentExperiment">
         <option
           v-for="experiment in experiments"
-          :key="experiment.name"
-          :value="experiment.value">
+          :key="experiment.id"
+          :value="experiment.id">
           {{ experiment.name }}
         </option>
       </select>
@@ -55,16 +55,13 @@ export default {
   },
 
   computed: {
-    ...mapState(['isPlaying', 'generation', 'config']),
-    experiments() {
-      return this.$store.state.experiments.map(e => ({ name: e.name, value: e.name }))
-    },
+    ...mapState(['isPlaying', 'generation', 'config', 'experiments']),
     fps: {
       get() { return this.$store.state.fps },
       set(value) { this.changeFPS(value) },
     },
     currentExperiment: {
-      get() { return this.$store.state.currentExperiment },
+      get() { return this.$store.state.currentExperiment.id },
       set(value) { this.changeExperiment(value) },
     },
     renderer: {

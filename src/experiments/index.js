@@ -1,16 +1,16 @@
 const experiments = [
-  { name: 'Game of Life', getModule: () => import('./gameOfLife'), selected: true },
-  { name: 'Forest Fire', getModule: () => import('./forestFire') },
-  { name: 'Maze', getModule: () => import('./maze') },
-  { name: 'Cave', getModule: () => import('./cave') },
-  { name: 'Cave with water', getModule: () => import('./caveWithWater') },
-  { name: 'Cave with rain', getModule: () => import('./caveWithRain') },
-  { name: 'Splash', getModule: () => import('./splash') },
-  { name: 'Lava', getModule: () => import('./lava') },
-  { name: 'Cyclic', getModule: () => import('./cyclic') },
-  { name: 'Glitch', getModule: () => import('./glitch') },
-  { name: 'Explosion', getModule: () => import('./explosion') },
-  { name: 'Snake', getModule: () => import('./snake') },
-]
+  { id: 'gameOfLife', name: 'Game of Life' },
+  { id: 'forestFire', name: 'Forest Fire' },
+  { id: 'maze', name: 'Maze' },
+  { id: 'cave', name: 'Cave' },
+  { id: 'caveWithWater', name: 'Cave with water' },
+  { id: 'caveWithRain', name: 'Cave with rain' },
+  { id: 'splash', name: 'Splash' },
+  { id: 'lava', name: 'Lava' },
+  { id: 'cyclic', name: 'Cyclic' },
+  { id: 'glitch', name: 'Glitch' },
+  { id: 'explosion', name: 'Explosion' },
+  { id: 'snake', name: 'Snake' },
+].map(e => ({ ...e, getModule: () => import(`./${e.id}`) }))
 
 export default experiments

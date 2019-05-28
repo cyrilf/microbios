@@ -15,7 +15,7 @@ const store = new Vuex.Store({
     loading: { experiment: true, renderer: true },
     fps: 60,
     experiments,
-    currentExperiment: (experiments.find(e => e.selected) || experiments[0]).name,
+    currentExperiment: (experiments.find(e => e.selected) || experiments[0]),
     renderer: 'Canvas',
   },
 
@@ -31,8 +31,13 @@ const store = new Vuex.Store({
     play({ commit }) { commit('setIsPlaying', worldManager.play()) },
     pause({ commit }) { commit('setIsPlaying', worldManager.pause()) },
 
-    changeExperiment({ state, commit }, experiment) {
-      if (state.currentExperiment !== experiment) {
+    changeExperiment({ state, commit }, experimentId) {
+      if (state.currentExperiment.id !== experimentId) {
+        const experiment = this.state.experiments.find(e => e.id === experimentId)
+        if (!experiment) {
+          throw new Error(`The experiment "${experimentId}" isn't registered`)
+        }
+
         commit('setLoading', { experiment: true })
         commit('changeExperiment', experiment)
         worldManager.setExperiment(experiment)

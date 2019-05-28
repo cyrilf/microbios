@@ -6,6 +6,7 @@
     </div>
     <World/>
     <Controls/>
+    <Code/>
   </div>
 </template>
 
@@ -13,12 +14,14 @@
 import { mapActions } from 'vuex'
 import World from './components/World.vue'
 import Controls from './components/Controls.vue'
+import Code from './components/Code.vue'
 
 export default {
   name: 'app',
   components: {
     World,
     Controls,
+    Code,
   },
 
   mounted() { this.init().then(this.play) },
