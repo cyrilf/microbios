@@ -11,6 +11,6 @@ const experiments = [
   { id: 'glitch', name: 'Glitch' },
   { id: 'explosion', name: 'Explosion' },
   { id: 'snakes', name: 'Snakes', selected: true },
-].map(e => ({ ...e, getModule: () => import(`./${e.id}`) }))
+].map(e => ({ ...e, value: e.id /* to be compatible with dat-select */, getModule: () => import(`./${e.id}`) }))
 
 export default experiments
