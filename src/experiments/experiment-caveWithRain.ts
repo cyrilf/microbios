@@ -8,7 +8,7 @@ import {
   LEFT,
   RIGHT,
 } from "../core/utils/neighborIndexes";
-import caveExperiment from "./cave";
+import caveExperiment from "./experiment-cave";
 
 const COLORS = [
   "rgba(89, 125, 206, 0)",

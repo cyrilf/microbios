@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import World from "@/components/World.vue";
-import { useWorldStore } from "./stores/world";
 import { onMounted } from "vue";
+import { useWorldStore } from "@/stores/world";
+import World from "@/components/World.vue";
+import Controls from "@/components/Controls.vue";
 
 import experiments from "@/experiments";
 import worldManager from "@/core/worldManager";
@@ -25,8 +26,8 @@ onMounted(async () => {
     <small>Run cellular automata experiments</small>
   </div>
   <World />
-  <!-- <Controls />
-    <Code /> -->
+  <Controls />
+  <!-- <Code /> -->
 </template>
 
 <style scoped>
