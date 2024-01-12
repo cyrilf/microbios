@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand|Fascinate");
+
+:root {
+  --color-text: black;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+html {
+  margin-left: calc(100vw - 100%);
+  margin-right: 0;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: rgba(248, 207, 96, 1) url(@/assets/golden.png);
+  text-align: center;
+  margin: 0;
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family: "Quicksand", sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
