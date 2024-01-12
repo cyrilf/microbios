@@ -20,6 +20,7 @@ const useWorldStore = defineStore("world", () => {
   const isPlaying = ref(false);
   const loading = ref<Loading>({ experiment: true, renderer: true });
   const fps = ref(60);
+  const allExperiments = experiments;
   const currentExperiment = ref(
     experiments.find((e) => e.selected) || experiments[0]
   );
@@ -37,8 +38,8 @@ const useWorldStore = defineStore("world", () => {
     await worldManager.value.init(initConfig);
   };
 
-  const update = worldManager.value?.update();
-  const resart = worldManager.value?.restart();
+  const update = worldManager.value?.update || (() => {});
+  const restart = worldManager.value?.restart || (() => ({}));
   const setLoading = (partialLoading: Partial<Loading>) => {
     loading.value = { ...loading.value, ...partialLoading };
   };
@@ -95,12 +96,13 @@ const useWorldStore = defineStore("world", () => {
     isPlaying,
     loading,
     fps,
+    allExperiments,
     currentExperiment,
     renderer,
 
     init,
     update,
-    resart,
+    restart,
     setLoading,
     play,
     pause,
