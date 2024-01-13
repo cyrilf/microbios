@@ -47,16 +47,13 @@ const play = worldStore.play;
 const pause = worldStore.pause;
 const update = worldStore.update;
 const restart = worldStore.restart;
-
-const controlsOpened = ref(false);
-const experimentFolderOpened = ref(false);
 </script>
 
 <template>
   <section>
     <img src="../assets/arrow.svg" alt="arrow" class="arrow" />
-    <DatGui v-model="controlsOpened">
-      <DatFolder label="Experiment" v-model="experimentFolderOpened">
+    <DatGui :open="false">
+      <DatFolder label="Experiment" :open="false">
         <DatButton
           @click="isPlaying ? pause() : play()"
           :label="isPlaying ? 'Pause' : 'Play'"
@@ -158,7 +155,8 @@ section {
     box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
     border: solid 3px #41403e;
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    &:hover:not(:disabled) {
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
       box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
       background: #f49733;
     }

@@ -13,9 +13,14 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@cyrilf/vue-dat-gui": "^1.0.5",
+    "@cyrilf/vue-dat-gui": "^1.0.6",
     "pinia": "^2.1.7",
-    "vue": "^3.3.11"
+    "simple-code-editor": "^2.0.9",
+    "vue": "^3.3.11",
+    "highlight.js": "11.8.0"
+  },
+  "resolutions": {
+    "highlight.js": "11.8.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",
