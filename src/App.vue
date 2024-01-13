@@ -3,6 +3,7 @@ import { onMounted } from "vue";
 import { useWorldStore } from "@/stores/world";
 import World from "@/components/World.vue";
 import Controls from "@/components/Controls.vue";
+import Code from "@/components/Code.vue";
 
 import experiments from "@/experiments";
 import worldManager from "@/core/worldManager";
@@ -15,8 +16,8 @@ worldManager.on("update", (nextGeneration: NewGeneration) =>
   worldStore.nextGeneration(nextGeneration)
 );
 onMounted(async () => {
-  await worldStore.init(worldManager);
-  worldStore.play();
+  // await worldStore.init(worldManager);
+  // worldStore.play();
 });
 </script>
 
@@ -27,7 +28,7 @@ onMounted(async () => {
   </div>
   <World />
   <Controls />
-  <!-- <Code /> -->
+  <Code />
 </template>
 
 <style scoped>
