@@ -48,8 +48,7 @@ const draw = () => {
 watch(
   grid,
   () => {
-    // firstDraw.value ? nextTick(draw) : draw();
-    draw();
+    firstDraw.value ? nextTick(draw) : draw();
   },
   { immediate: true }
 );

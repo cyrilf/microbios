@@ -90,7 +90,7 @@ const restart = worldStore.restart;
       <button @click="isPlaying ? pause() : play()">
         {{ isPlaying ? "Pause" : "Play" }}
       </button>
-      <button @click="restart()">Restart</button>
+      <button @click="restart">Restart</button>
       <select v-model="currentExperiment">
         <option
           v-for="experiment in experiments"

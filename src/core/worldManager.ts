@@ -44,9 +44,10 @@ const worldManager: WorldManager = {
   },
 
   async restart() {
+    const { isPlaying } = this;
     this.pause();
     await this.init();
-    this.isPlaying && this.play();
+    isPlaying && this.play();
   },
 
   play() {
