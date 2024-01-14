@@ -16,8 +16,8 @@ worldManager.on("update", (nextGeneration: NewGeneration) =>
   worldStore.nextGeneration(nextGeneration)
 );
 onMounted(async () => {
-  // await worldStore.init(worldManager);
-  // worldStore.play();
+  await worldStore.init(worldManager);
+  worldStore.play();
 });
 </script>
 

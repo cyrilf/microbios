@@ -15,7 +15,7 @@ export default abstract class Cell {
   /**
    * Should return a valid CSS color string
    */
-  abstract getColor(): string;
+  abstract getColor(): string | null;
 
   /**
    * Prepare the cell state for the next generation
