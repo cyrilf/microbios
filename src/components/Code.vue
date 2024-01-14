@@ -91,6 +91,8 @@ watchEffect(async () => {
 
   .code-loading {
     padding: 1rem;
+    color: white;
+    background: #474949;
   }
 }
 </style>

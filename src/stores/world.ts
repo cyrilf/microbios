@@ -38,10 +38,14 @@ const useWorldStore = defineStore("world", () => {
     await worldManager.value.init(initConfig);
   };
 
-  const update = worldManager.value?.update || (() => {});
-  const restart = worldManager.value?.restart || (() => ({}));
   const setLoading = (partialLoading: Partial<Loading>) => {
     loading.value = { ...loading.value, ...partialLoading };
+  };
+  const update = () => {
+    worldManager.value?.update();
+  };
+  const restart = () => {
+    worldManager.value?.restart();
   };
 
   const play = () => {
