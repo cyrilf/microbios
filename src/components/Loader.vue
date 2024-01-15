@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useWorldStore } from "@/stores/world";
+import { computed } from "vue";
 
-// Todo get this from pinia store
-const config = ref({ columns: 100, rows: 50, cellSize: 7 });
+const worldStore = useWorldStore();
+
+const config = computed(() => worldStore.config);
 </script>
 
 <template>

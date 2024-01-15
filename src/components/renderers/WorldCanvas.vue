@@ -1,29 +1,30 @@
 <script setup lang="ts">
 import { useWorldStore } from "@/stores/world";
-import { computed, ref, onMounted, watch, nextTick } from "vue";
+import { computed, ref, onMounted, watch, watchEffect } from "vue";
 
 const worldStore = useWorldStore();
 
-const firstDraw = ref(true);
-
 const canvas = ref<HTMLCanvasElement | null>(null);
 const ctx = ref<CanvasRenderingContext2D | null>(null);
+
+const generation = computed(() => worldStore.generation);
+const grid = computed(() => worldStore.grid);
+const config = computed(() => worldStore.config);
+
+const canvasWidth = computed(
+  () => config.value.columns * config.value.cellSize
+);
+const canvasHeight = computed(() => config.value.rows * config.value.cellSize);
 onMounted(() => {
   if (canvas.value) {
+    canvas.value.width = canvasWidth.value;
+    canvas.value.height = canvasHeight.value;
     ctx.value = canvas.value.getContext("2d");
     worldStore.setLoading({ renderer: false });
   }
 });
 
-const grid = computed(() => worldStore.grid);
-const config = computed(() => worldStore.config);
-
-const canvasWidth = computed(
-  () => grid.value[0] && grid.value[0].length * config.value.cellSize
-);
-const canvasHeight = computed(() => grid.value.length * config.value.cellSize);
-
-const draw = () => {
+watchEffect(() => {
   const cellSize = config.value.cellSize;
   if (!grid.value[0]) {
     return;
@@ -42,20 +43,20 @@ const draw = () => {
       }
     }
   }
-  firstDraw.value = false;
-};
+});
 
-watch(
-  grid,
-  () => {
-    firstDraw.value ? nextTick(draw) : draw();
-  },
-  { immediate: true }
-);
+// watch(
+//   generation,
+//   () => {
+//     // firstDraw.value ? nextTick(draw) : draw();
+//     draw();
+//   },
+//   { immediate: true, flush: "post" }
+// );
 </script>
 
 <template>
-  <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight">
+  <canvas ref="canvas">
     Your browser is not supported. Try another renderer.
   </canvas>
 </template>
