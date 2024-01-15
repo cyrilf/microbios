@@ -1,5 +1,5 @@
 const worldManager: WorldManager = {
-  config: { columns: 100, rows: 50, cellSize: 7 },
+  config: { columns: 40, rows: 40, cellSize: 7 },
   experiments: [],
   currentExperiment: null,
   isPlaying: false,

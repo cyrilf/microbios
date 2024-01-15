@@ -10,8 +10,8 @@ type Loading = {
 
 const useWorldStore = defineStore("world", () => {
   const config = ref<WorldManagerConfig>({
-    columns: 100,
-    rows: 50,
+    columns: 40,
+    rows: 40,
     cellSize: 7,
   });
   const worldManager = ref<WorldManager | null>(null);
@@ -31,11 +31,11 @@ const useWorldStore = defineStore("world", () => {
     initConfig?: Partial<WorldManagerConfig>
   ) => {
     worldManager.value = newWorldManager;
-    if (initConfig !== config.value) {
+    if (initConfig && initConfig !== config.value) {
       changeConfig(initConfig);
     }
 
-    await worldManager.value.init(initConfig);
+    await worldManager.value.init(initConfig || config.value);
   };
 
   const setLoading = (partialLoading: Partial<Loading>) => {
@@ -77,7 +77,9 @@ const useWorldStore = defineStore("world", () => {
   };
 
   const changeConfig = (partialConfig?: Partial<WorldManagerConfig>) => {
-    config.value = { ...config.value, ...partialConfig };
+    const newConfig = { ...config.value, ...partialConfig };
+    config.value = newConfig;
+    worldManager.value?.setConfig(newConfig);
   };
 
   const changeFPS = (newFPS: number) => {
@@ -93,7 +95,6 @@ const useWorldStore = defineStore("world", () => {
   };
 
   return {
-    worldManager,
     config,
     generation,
     grid,

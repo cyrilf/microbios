@@ -45,28 +45,18 @@ export default class World {
       return { ...cd, distribution: totalDistribution };
     });
 
-    this.grid = [];
-    let row = 0;
-    let column = 0;
-    for (; row < this.rows; row++) {
-      this.grid.push([]);
-      for (column = 0; column < this.columns; column++) {
+    this.grid = Array.from({ length: this.rows }, (_, row) =>
+      Array.from({ length: this.columns }, (_, column) => {
         const random = Math.random() * totalDistribution;
         const type = sortedCellDistribution.find(
           ({ distribution }) => random <= distribution
         )?.type;
-        if (type) {
-          const CellClass = this.cellTypes.get(type);
-          this.grid[row].push(
-            CellClass
-              ? new CellClass(row, column, this.rows, this.columns)
-              : null
-          );
-        }
-      }
-    }
-
-    // this.initGrid = simplifyGrid(this.grid);
+        const CellClass = type ? this.cellTypes.get(type) : null;
+        return CellClass
+          ? new CellClass(row, column, this.rows, this.columns)
+          : null;
+      })
+    );
   }
 
   registerCellClass<T extends CellClass>(CellClass: T) {
@@ -75,37 +65,29 @@ export default class World {
 
   // Compute the next X generations where X is the param `steps`
   nextGeneration(steps = 1) {
-    let i = 0;
-    let row = 0;
-    let column = 0;
-    let cell;
-    for (; i < steps; i++) {
-      for (row = 0; row < this.rows; row++) {
-        for (column = 0; column < this.columns; column++) {
-          this.grid[row][column]?.prepare();
-        }
-      }
+    Array.from({ length: steps }, () => {
+      this.grid.forEach((row) => {
+        row.forEach((cell) => cell?.prepare());
+      });
+
       // bottom/up processing (used by cave with water experiment)
       // better at renderering scenes that modify bottom neighbor
+      let row = 0;
       for (row = this.rows - 1; row >= 0; row--) {
-        for (column = 0; column < this.columns; column++) {
-          cell = this.grid[row][column];
-          if (cell) {
-            const neighbors = this.getNeighbors(cell.row, cell.column);
-            cell.process(neighbors);
-          }
-        }
+        this.grid[row].forEach(
+          (cell) => cell?.process(this.getNeighbors(cell.row, cell.column))
+        );
       }
 
       this.generation += 1;
-    }
+    });
 
     return [simplifyGrid(this.grid), this.generation];
   }
 
   // Get the 7 neighbors cells based on the coordinates
   getNeighbors(row: number, column: number) {
-    const neighbors = [];
+    const neighbors: (Cell | null)[] = [];
     for (let x = -1; x <= 1; x++) {
       for (let y = -1; y <= 1; y++) {
         const currentCell = x === 0 && y === 0;
@@ -139,17 +121,17 @@ export default class World {
   }
 
   // Initialize the grid from a mapping
-  initFrom(grid: number[][] = [], mappings: Mapping[] = []) {
-    this.grid = [];
+  initFrom(initGrid: number[][] = [], mappings: Mapping[] = []) {
+    const grid: Grid = [];
     let row = 0;
     let column = 0;
     for (; row < this.rows; row++) {
-      this.grid.push([]);
+      grid.push([]);
       for (column = 0; column < this.columns; column++) {
         let result = null;
         for (let i = 0; i < mappings.length; i++) {
           const { type, value } = mappings[i];
-          if (grid[row][column] === value) {
+          if (initGrid[row][column] === value) {
             const CellClass = this.cellTypes.get(type);
             result = CellClass
               ? new CellClass(row, column, this.rows, this.columns)
@@ -157,11 +139,11 @@ export default class World {
             break;
           }
         }
-        this.grid[row].push(result);
+        grid[row].push(result);
       }
     }
 
-    // this.initGrid = simplifyGrid(this.grid);
+    this.grid = grid;
   }
 
   convertGrid(mappings: Mapping[] = [], defaultValue = 0) {
@@ -188,18 +170,5 @@ export default class World {
   }
 }
 
-const simplifyGrid = (grid: (Cell | null)[][]) => {
-  const simple: (string | null)[][] = [];
-  const rows = grid.length;
-  const columns = grid[0].length;
-  let row = 0;
-  let column = 0;
-  for (; row < rows; row++) {
-    simple.push([]);
-    for (column = 0; column < columns; column++) {
-      simple[row][column] = grid[row][column]?.getColor() || null;
-    }
-  }
-
-  return simple;
-};
+const simplifyGrid = (grid: (Cell | null)[][]): (string | null)[][] =>
+  grid.map((row) => row.map((cell) => cell?.getColor() ?? null));
