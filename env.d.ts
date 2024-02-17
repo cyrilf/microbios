@@ -1,6 +1,9 @@
 /// <reference types="vite/client" />
 declare module "simple-code-editor";
 
+// TODO
+type Experiment = any;
+
 type WorldManager = {
   config: WorldManagerConfig;
   experiments: Array<Experiment>;

@@ -1,5 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Fascinate&family=Quicksand&display=swap"):
-  root {
+@import url("https://fonts.googleapis.com/css2?family=Fascinate&family=Quicksand&display=swap");
+
+:root {
   --color-text: black;
 }
 
@@ -17,7 +18,6 @@ html {
 }
 
 body {
-  min-height: 100vh;
   color: var(--color-text);
   background: rgba(248, 207, 96, 1) url(@/assets/golden.png);
   text-align: center;
@@ -31,4 +31,5 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
 }

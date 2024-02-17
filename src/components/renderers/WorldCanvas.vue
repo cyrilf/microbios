@@ -4,11 +4,14 @@ import { computed, ref, onMounted, watch, watchEffect } from "vue";
 
 const worldStore = useWorldStore();
 
+const props = defineProps<{
+  generation: number;
+  grid: string[][];
+}>();
+
 const canvas = ref<HTMLCanvasElement | null>(null);
 const ctx = ref<CanvasRenderingContext2D | null>(null);
 
-const generation = computed(() => worldStore.generation);
-const grid = computed(() => worldStore.grid);
 const config = computed(() => worldStore.config);
 
 const canvasWidth = computed(
@@ -25,34 +28,31 @@ onMounted(() => {
 });
 
 watchEffect(() => {
-  const cellSize = config.value.cellSize;
-  if (!grid.value[0]) {
+  const { grid } = props;
+  const { cellSize } = config.value;
+
+  if (!grid?.[0] || !ctx.value) {
     return;
   }
+  const rows = grid.length;
+  const columns = grid[0].length;
+  const fillStyle = ctx.value.fillStyle;
 
-  ctx.value?.clearRect(0, 0, canvasWidth.value, canvasHeight.value);
+  ctx.value.clearRect(0, 0, canvasWidth.value, canvasHeight.value);
 
-  const rows = grid.value.length;
-  const columns = grid.value[0].length;
   for (let row = 0; row < rows; row++) {
+    const rowData = grid[row];
     for (let col = 0; col < columns; col++) {
-      if (grid.value[row][col] && ctx.value) {
-        ctx.value.fillStyle = grid.value[row][col];
-
+      const currentCell = rowData[col];
+      if (currentCell) {
+        ctx.value.fillStyle = currentCell ?? "";
         ctx.value.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
       }
     }
   }
-});
 
-// watch(
-//   generation,
-//   () => {
-//     // firstDraw.value ? nextTick(draw) : draw();
-//     draw();
-//   },
-//   { immediate: true, flush: "post" }
-// );
+  ctx.value.fillStyle = fillStyle;
+});
 </script>
 
 <template>

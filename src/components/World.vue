@@ -4,6 +4,10 @@ import Loader from "@/components/Loader.vue";
 import { useWorldStore } from "@/stores/world";
 
 const worldStore = useWorldStore();
+const props = defineProps<{
+  generation: number;
+  grid: string[][];
+}>();
 
 const isLoading = computed(() => worldStore.loading.renderer);
 
@@ -17,7 +21,12 @@ const WorldComponent = defineAsyncComponent({
 <template>
   <div class="world-container">
     <Loader v-show="isLoading" class="world" />
-    <WorldComponent v-show="!isLoading" class="world" />
+    <WorldComponent
+      v-show="!isLoading"
+      class="world"
+      :generation="props.generation"
+      :grid="props.grid"
+    />
   </div>
 </template>
 
