@@ -2,6 +2,10 @@
 import { computed, ref } from "vue";
 import { useWorldStore } from "@/stores/world";
 
+defineProps<{
+  generation: number;
+}>();
+
 const renderers = ref([
   { name: "Canvas", value: "WorldCanvas" },
   { name: "HTML (table)", value: "Table" },
@@ -10,8 +14,7 @@ const renderers = ref([
 const worldStore = useWorldStore();
 
 const isPlaying = computed(() => worldStore.isPlaying);
-const generation = computed(() => worldStore.generation);
-const experiments = computed(() => worldStore.allExperiments);
+const experiments = computed(() => worldStore.experiments);
 
 const fps = computed({
   get: () => worldStore.fps,

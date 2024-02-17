@@ -10,17 +10,14 @@ type Loading = {
 
 const useWorldStore = defineStore("world", () => {
   const config = ref<WorldManagerConfig>({
-    columns: 40,
-    rows: 40,
+    columns: 100,
+    rows: 50,
     cellSize: 7,
   });
-  const worldManager = ref<WorldManager | null>(null);
-  const generation = ref(0);
-  const grid = ref<string[][]>([]);
+  let worldManager: WorldManager | null = null;
   const isPlaying = ref(false);
   const loading = ref<Loading>({ experiment: true, renderer: true });
   const fps = ref(60);
-  const allExperiments = experiments;
   const currentExperiment = ref(
     experiments.find((e) => e.selected) || experiments[0]
   );
@@ -30,32 +27,32 @@ const useWorldStore = defineStore("world", () => {
     newWorldManager: WorldManager,
     initConfig?: Partial<WorldManagerConfig>
   ) => {
-    worldManager.value = newWorldManager;
+    worldManager = newWorldManager;
     if (initConfig && initConfig !== config.value) {
       changeConfig(initConfig);
     }
 
-    await worldManager.value.init(initConfig || config.value);
+    await worldManager.init(initConfig || config.value);
   };
 
   const setLoading = (partialLoading: Partial<Loading>) => {
     loading.value = { ...loading.value, ...partialLoading };
   };
   const update = () => {
-    worldManager.value?.update();
+    worldManager?.update();
   };
   const restart = () => {
-    worldManager.value?.restart();
+    worldManager?.restart();
   };
 
   const play = () => {
     isPlaying.value = true;
-    worldManager.value?.play();
+    worldManager?.play();
   };
 
   const pause = () => {
     isPlaying.value = false;
-    worldManager.value?.pause();
+    worldManager?.pause();
   };
 
   const changeExperiment = (experimentId: string) => {
@@ -67,7 +64,7 @@ const useWorldStore = defineStore("world", () => {
 
       setLoading({ experiment: true });
       currentExperiment.value = experiment;
-      worldManager.value?.setExperiment(experiment);
+      worldManager?.setExperiment(experiment);
     }
   };
 
@@ -79,29 +76,22 @@ const useWorldStore = defineStore("world", () => {
   const changeConfig = (partialConfig?: Partial<WorldManagerConfig>) => {
     const newConfig = { ...config.value, ...partialConfig };
     config.value = newConfig;
-    worldManager.value?.setConfig(newConfig);
+    worldManager?.setConfig(newConfig);
   };
 
   const changeFPS = (newFPS: number) => {
     if (newFPS >= 0) {
       fps.value = newFPS;
-      worldManager.value?.setFPS(newFPS);
+      worldManager?.setFPS(newFPS);
     }
-  };
-
-  const nextGeneration = ([newGrid, newGeneration]: NewGeneration) => {
-    grid.value = newGrid;
-    generation.value = newGeneration;
   };
 
   return {
     config,
-    generation,
-    grid,
     isPlaying,
     loading,
     fps,
-    allExperiments,
+    experiments,
     currentExperiment,
     renderer,
 
@@ -115,7 +105,6 @@ const useWorldStore = defineStore("world", () => {
     changeRenderer,
     changeConfig,
     changeFPS,
-    nextGeneration,
   };
 });
 

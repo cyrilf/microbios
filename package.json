@@ -13,11 +13,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@cyrilf/vue-dat-gui": "^1.0.6",
+    "@cyrilf/vue-dat-gui": "^1.0.7",
+    "highlight.js": "11.8.0",
     "pinia": "^2.1.7",
     "simple-code-editor": "^2.0.9",
-    "vue": "^3.3.11",
-    "highlight.js": "11.8.0"
+    "vue": "^3.3.11"
   },
   "resolutions": {
     "highlight.js": "11.8.0"
