@@ -10,11 +10,23 @@ const props = defineProps<{
 }>();
 
 const isLoading = computed(() => worldStore.loading.renderer);
+const renderer = computed(() => worldStore.renderer);
 
-const WorldComponent = defineAsyncComponent({
-  loader: () => import(`@/components/renderers/${worldStore.renderer}.vue`),
-  loadingComponent: Loader,
-  delay: 200,
+const getRenderer = (renderer: string) =>
+  defineAsyncComponent({
+    loader: () =>
+      import(
+        `@/components/renderers/Renderer${
+          renderer.charAt(0).toUpperCase() + renderer.slice(1)
+        }.vue`
+      ),
+    loadingComponent: Loader,
+    delay: 200,
+  });
+
+let WorldComponent = getRenderer(renderer.value);
+watch(renderer, () => {
+  WorldComponent = getRenderer(renderer.value);
 });
 </script>
 

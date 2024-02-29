@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, shallowRef } from "vue";
 import { defineStore } from "pinia";
 
 import experiments from "@/experiments";
@@ -9,50 +9,92 @@ type Loading = {
 };
 
 const useWorldStore = defineStore("world", () => {
-  const config = ref<WorldManagerConfig>({
+  const config = shallowRef<WorldManagerConfig>({
     columns: 100,
     rows: 50,
     cellSize: 7,
   });
-  let worldManager: WorldManager | null = null;
+  let world: World = null;
   const isPlaying = ref(false);
   const loading = ref<Loading>({ experiment: true, renderer: true });
   const fps = ref(60);
-  const currentExperiment = ref(
+  let frames = 0;
+  let animationId: number = 0;
+  const currentExperiment = shallowRef(
     experiments.find((e) => e.selected) || experiments[0]
   );
-  const renderer = ref("WorldCanvas");
+  const renderer = ref("canvas");
+  let onUpdateListener: Function | undefined;
 
-  const init = async (
-    newWorldManager: WorldManager,
-    initConfig?: Partial<WorldManagerConfig>
-  ) => {
-    worldManager = newWorldManager;
-    if (initConfig && initConfig !== config.value) {
-      changeConfig(initConfig);
+  const init = async ({
+    initConfig,
+    onUpdate,
+  }: {
+    initConfig?: Partial<WorldManagerConfig>;
+    onUpdate?: Function;
+  } = {}) => {
+    if (onUpdate) {
+      onUpdateListener = onUpdate;
     }
+    config.value = { ...config.value, ...initConfig };
 
-    await worldManager.init(initConfig || config.value);
+    const module = await currentExperiment.value?.getModule();
+    if (!module) {
+      throw new Error("No current experiment selected");
+    }
+    const createWorld = module.default;
+    world = createWorld(config.value);
+    setLoading({ experiment: false });
+    update(); // first generation
+  };
+
+  const changeConfig = (partialConfig?: Partial<WorldManagerConfig>) => {
+    config.value = { ...config.value, ...partialConfig };
+    if (partialConfig?.columns || partialConfig?.rows) {
+      restart();
+    }
+  };
+
+  const update = () => {
+    if (!world) return;
+
+    if (world?.options?.maxGeneration > world.generation) {
+      if (
+        !isPlaying.value ||
+        (isPlaying.value && fps.value !== 0 && frames > 60 / fps.value)
+      ) {
+        onUpdateListener?.(world.nextGeneration());
+        frames = 0;
+      }
+
+      if (isPlaying.value) {
+        animationId = requestAnimationFrame(update);
+        frames++;
+      }
+    }
+  };
+  const restart = async () => {
+    const wasPlaying = isPlaying.value;
+    pause();
+    await init();
+    wasPlaying && play();
+  };
+
+  const play = () => {
+    if (animationId) return;
+    // TODO replace with update()
+    animationId = requestAnimationFrame(update);
+    isPlaying.value = true;
+  };
+
+  const pause = () => {
+    animationId && cancelAnimationFrame(animationId);
+    animationId = 0;
+    isPlaying.value = false;
   };
 
   const setLoading = (partialLoading: Partial<Loading>) => {
     loading.value = { ...loading.value, ...partialLoading };
-  };
-  const update = () => {
-    worldManager?.update();
-  };
-  const restart = () => {
-    worldManager?.restart();
-  };
-
-  const play = () => {
-    isPlaying.value = true;
-    worldManager?.play();
-  };
-
-  const pause = () => {
-    isPlaying.value = false;
-    worldManager?.pause();
   };
 
   const changeExperiment = (experimentId: string) => {
@@ -64,7 +106,7 @@ const useWorldStore = defineStore("world", () => {
 
       setLoading({ experiment: true });
       currentExperiment.value = experiment;
-      worldManager?.setExperiment(experiment);
+      restart();
     }
   };
 
@@ -73,16 +115,9 @@ const useWorldStore = defineStore("world", () => {
     renderer.value = newRenderer;
   };
 
-  const changeConfig = (partialConfig?: Partial<WorldManagerConfig>) => {
-    const newConfig = { ...config.value, ...partialConfig };
-    config.value = newConfig;
-    worldManager?.setConfig(newConfig);
-  };
-
   const changeFPS = (newFPS: number) => {
     if (newFPS >= 0) {
       fps.value = newFPS;
-      worldManager?.setFPS(newFPS);
     }
   };
 
