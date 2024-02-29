@@ -7,8 +7,8 @@ defineProps<{
 }>();
 
 const renderers = ref([
-  { name: "Canvas", value: "WorldCanvas" },
-  { name: "HTML (table)", value: "Table" },
+  { name: "Canvas", value: "canvas" },
+  { name: "HTML (table)", value: "table" },
 ]);
 
 const worldStore = useWorldStore();

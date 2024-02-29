@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useWorldStore } from "@/stores/world";
-import { computed, ref, onMounted, watch, watchEffect } from "vue";
+import { computed, ref, onMounted, watchEffect } from "vue";
 
 const worldStore = useWorldStore();
 

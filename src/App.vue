@@ -5,22 +5,18 @@ import World from "@/components/World.vue";
 import Controls from "@/components/Controls.vue";
 import Code from "@/components/Code.vue";
 
-import experiments from "@/experiments";
-import worldManager from "@/core/worldManager";
-
 const worldStore = useWorldStore();
 
 const generation = ref(0);
 const grid = shallowRef<string[][]>([]);
 
-worldManager.setExperiments(experiments);
-worldManager.on("init", () => worldStore.setLoading({ experiment: false }));
-worldManager.on("update", (nextGeneration: NewGeneration) => {
+const onUpdate = (nextGeneration: NewGeneration) => {
   grid.value = nextGeneration[0];
   generation.value = nextGeneration[1];
-});
+};
+
 onMounted(async () => {
-  await worldStore.init(worldManager);
+  await worldStore.init({ onUpdate });
   worldStore.play();
 });
 </script>
@@ -37,7 +33,8 @@ onMounted(async () => {
 
 <style scoped>
 .title {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
   margin-top: 1rem;
   margin-bottom: 2rem;
 
@@ -57,8 +54,7 @@ onMounted(async () => {
     }
   }
   small {
-    float: right;
-    color: black;
+    margin-left: auto;
     font-size: 1rem;
     font-style: italic;
     background: rgba(255, 255, 255, 0.6);
