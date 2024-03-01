@@ -17,40 +17,37 @@ const worldStore = useWorldStore();
 const isPlaying = computed(() => worldStore.isPlaying);
 const experiments = computed(() => worldStore.experiments);
 
+const { setFPS, setExperiment, setRenderer, setConfig, play, pause, update, restart } = worldStore;
+
 const fps = computed({
   get: () => worldStore.fps,
-  set: (fps) => worldStore.changeFPS(fps)
+  set: setFPS
 });
 
 const currentExperiment = computed({
-  get: () => worldStore.currentExperiment.id,
-  set: (experiment) => worldStore.changeExperiment(experiment)
+  get: () => worldStore.currentExperiment?.id,
+  set: (experiment) => setExperiment(experiment as string)
 });
 
 const renderer = computed({
   get: () => worldStore.renderer,
-  set: (value) => worldStore.changeRenderer(value)
+  set: setRenderer
 });
 
 const columns = computed({
   get: () => worldStore.config.columns,
-  set: (value) => worldStore.changeConfig({ columns: value })
+  set: (value) => setConfig({ columns: value })
 });
 
 const rows = computed({
   get: () => worldStore.config.rows,
-  set: (value) => worldStore.changeConfig({ rows: value })
+  set: (value) => setConfig({ rows: value })
 });
 
 const cellSize = computed({
   get: () => worldStore.config.cellSize,
-  set: (value) => worldStore.changeConfig({ cellSize: value })
+  set: (value) => setConfig({ cellSize: value })
 });
-
-const play = worldStore.play;
-const pause = worldStore.pause;
-const update = worldStore.update;
-const restart = worldStore.restart;
 </script>
 
 <template>

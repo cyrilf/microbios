@@ -10,13 +10,13 @@ const worldStore = useWorldStore();
 const generation = ref(0);
 const grid = shallowRef<string[][]>([]);
 
-const onUpdate = (nextGeneration: NewGeneration) => {
+const updateCallback = (nextGeneration: NewGeneration) => {
   grid.value = nextGeneration[0];
   generation.value = nextGeneration[1];
 };
 
 onMounted(async () => {
-  await worldStore.init({ onUpdate });
+  await worldStore.init({ updateCallback });
   worldStore.play();
 });
 </script>

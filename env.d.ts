@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-declare module "simple-code-editor";
+declare module 'simple-code-editor';
 
 // TODO
 type Experiment = {
@@ -24,6 +24,11 @@ type WorldConfig = {
 type WorldOptions = {
   wrap: boolean;
   maxGeneration: number;
+};
+
+type Loading = {
+  experiment: boolean;
+  renderer: boolean;
 };
 
 type NewGeneration = [newGrid: Cell[][], newGeneration: number];
