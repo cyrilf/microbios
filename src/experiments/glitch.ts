@@ -1,6 +1,6 @@
 import World from '../core/World';
-import { Living } from './experiment-gameOfLife';
-import { Cyclic } from './experiment-cyclic';
+import { Living } from './gameOfLife';
+import { Cyclic } from './cyclic';
 
 class CyclicAlive extends Cyclic {
   wasAlive = Math.random() > 0.5;

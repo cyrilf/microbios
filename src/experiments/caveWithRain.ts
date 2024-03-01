@@ -1,7 +1,7 @@
 import Cell from '../core/Cell';
 import World from '../core/World';
 import { TOP, BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, RIGHT } from '../core/utils/neighborIndexes';
-import caveExperiment from './experiment-cave';
+import caveExperiment from './cave';
 
 const COLORS = [
   'rgba(89, 125, 206, 0)',
