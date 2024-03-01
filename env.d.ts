@@ -2,7 +2,13 @@
 declare module "simple-code-editor";
 
 // TODO
-type Experiment = any;
+type Experiment = {
+  id: string;
+  name: string;
+  selected?: boolean;
+  value: string;
+  getModule: () => Promise<World>;
+};
 type World = any;
 
 type WorldManagerConfig = {

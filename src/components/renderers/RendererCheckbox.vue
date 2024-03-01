@@ -13,17 +13,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <table class="world">
+  <table class="world" cellspacing="0" cellpadding="0">
     <tbody>
       <tr v-for="(row, i) in grid" :key="i">
         <td
           v-for="(cellColor, j) in row"
           :key="`${i}-${j}`"
           :style="`
-            background-color: ${cellColor || 'transparent'};
             width: ${worldStore.config.cellSize}px;
             height: ${worldStore.config.cellSize}px;`"
-        />
+        >
+          <input
+            type="checkbox"
+            :checked="!!cellColor && cellColor?.[cellColor?.length - 2] !== '0'"
+          />
+        </td>
       </tr>
     </tbody>
   </table>
@@ -33,5 +37,14 @@ onMounted(() => {
 .world {
   margin: 0 auto;
   border-collapse: collapse;
+  border-spacing: 0;
+}
+tr,
+th {
+  line-height: 0;
+}
+input[type='checkbox'] {
+  width: 10px;
+  height: 10px;
 }
 </style>

@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useWorldStore } from "@/stores/world";
+import { computed, ref } from 'vue';
+import { useWorldStore } from '@/stores/world';
 
 defineProps<{
   generation: number;
 }>();
 
 const renderers = ref([
-  { name: "Canvas", value: "canvas" },
-  { name: "HTML (table)", value: "table" },
+  { name: 'Canvas', value: 'canvas' },
+  { name: 'HTML (table)', value: 'table' },
+  { name: 'Checkboxes', value: 'checkbox' }
 ]);
 
 const worldStore = useWorldStore();
@@ -18,32 +19,32 @@ const experiments = computed(() => worldStore.experiments);
 
 const fps = computed({
   get: () => worldStore.fps,
-  set: (fps) => worldStore.changeFPS(fps),
+  set: (fps) => worldStore.changeFPS(fps)
 });
 
 const currentExperiment = computed({
   get: () => worldStore.currentExperiment.id,
-  set: (experiment) => worldStore.changeExperiment(experiment),
+  set: (experiment) => worldStore.changeExperiment(experiment)
 });
 
 const renderer = computed({
   get: () => worldStore.renderer,
-  set: (value) => worldStore.changeRenderer(value),
+  set: (value) => worldStore.changeRenderer(value)
 });
 
 const columns = computed({
   get: () => worldStore.config.columns,
-  set: (value) => worldStore.changeConfig({ columns: value }),
+  set: (value) => worldStore.changeConfig({ columns: value })
 });
 
 const rows = computed({
   get: () => worldStore.config.rows,
-  set: (value) => worldStore.changeConfig({ rows: value }),
+  set: (value) => worldStore.changeConfig({ rows: value })
 });
 
 const cellSize = computed({
   get: () => worldStore.config.cellSize,
-  set: (value) => worldStore.changeConfig({ cellSize: value }),
+  set: (value) => worldStore.changeConfig({ cellSize: value })
 });
 
 const play = worldStore.play;
@@ -57,32 +58,19 @@ const restart = worldStore.restart;
     <img src="../assets/arrow.svg" alt="arrow" class="arrow" />
     <DatGui :open="false">
       <DatFolder label="Experiment" :open="false">
-        <DatButton
-          @click="isPlaying ? pause() : play()"
-          :label="isPlaying ? 'Pause' : 'Play'"
-        />
-        <DatButton v-show="!isPlaying" @click="update" label="Next" />
-        <DatButton @click="restart" label="Restart" />
-        <DatSelect
-          v-model="currentExperiment"
-          :items="experiments"
-          label="Experiment"
-        />
+        <DatButton :label="isPlaying ? 'Pause' : 'Play'" @click="isPlaying ? pause() : play()" />
+        <DatButton v-show="!isPlaying" label="Next" @click="update" />
+        <DatButton label="Restart" @click="restart" />
+        <DatSelect v-model="currentExperiment" :items="experiments" label="Experiment" />
       </DatFolder>
       <DatFolder label="Performance">
         <DatSelect v-model="renderer" :items="renderers" label="Renderers" />
-        <DatNumber
-          :min="0"
-          :max="60"
-          :step="1"
-          v-model.number="fps"
-          label="FPS"
-        />
+        <DatNumber v-model.number="fps" :min="0" :max="60" :step="1" label="FPS" />
       </DatFolder>
       <DatFolder label="World">
-        <DatNumber :min="1" v-model.number="columns" label="Columns" />
-        <DatNumber :min="1" v-model.number="rows" label="Rows" />
-        <DatNumber :min="1" v-model.number="cellSize" label="Cell size" />
+        <DatNumber v-model.number="columns" :min="1" label="Columns" />
+        <DatNumber v-model.number="rows" :min="1" label="Rows" />
+        <DatNumber v-model.number="cellSize" :min="1" label="Cell size" />
       </DatFolder>
     </DatGui>
     <span class="generation"
@@ -91,15 +79,11 @@ const restart = worldStore.restart;
     <div class="controls">
       <button :disabled="isPlaying" @click="update()">Next</button>
       <button @click="isPlaying ? pause() : play()">
-        {{ isPlaying ? "Pause" : "Play" }}
+        {{ isPlaying ? 'Pause' : 'Play' }}
       </button>
       <button @click="restart">Restart</button>
       <select v-model="currentExperiment">
-        <option
-          v-for="experiment in experiments"
-          :key="experiment.id"
-          :value="experiment.id"
-        >
+        <option v-for="experiment in experiments" :key="experiment.id" :value="experiment.id">
           {{ experiment.name }}
         </option>
       </select>
@@ -115,10 +99,10 @@ section {
 .arrow {
   display: none;
   position: fixed;
-  top: 25px;
+  top: 50px;
   right: 100px;
-  width: 130px;
-  transform: scaleX(-1);
+  width: 150px;
+  transform: scaleX(-1) scale(1.2);
 
   @media (min-width: 1260px) {
     & {
@@ -165,6 +149,7 @@ section {
     }
     &:disabled {
       opacity: 0.5;
+      color: black;
       cursor: not-allowed;
     }
   }

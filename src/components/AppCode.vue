@@ -1,24 +1,23 @@
 <script setup lang="ts">
-import hljs from "highlight.js";
-import CodeEditor from "simple-code-editor";
+import CodeEditor from 'simple-code-editor';
 
-import { useWorldStore } from "@/stores/world";
-import { computed, ref, watchEffect } from "vue";
+import { useWorldStore } from '@/stores/world';
+import { computed, ref, watchEffect } from 'vue';
 
-const code = ref<string>("");
-const link = ref<string>("");
+const code = ref<string>('');
+const link = ref<string>('');
 const isLoading = ref<boolean>(true);
 
 const worldStore = useWorldStore();
 const currentExperiment = computed(() => worldStore.currentExperiment);
 
 const fetchCode = async () => {
-  let text = "";
+  let text = '';
   try {
     isLoading.value = true;
     const response = await fetch(
       `https://api.github.com/repos/cyrilf/microbios/contents/src/experiments/${currentExperiment.value.id}.js`,
-      { headers: { Accept: "application/vnd.github.V3.raw" } }
+      { headers: { Accept: 'application/vnd.github.V3.raw' } }
     );
     text = await response.text();
   } finally {
@@ -39,8 +38,7 @@ watchEffect(async () => {
     <h2>
       Code
       <span class="link">
-        (<a :href="link"> view "{{ currentExperiment.name }}" code on github </a
-        >)
+        (<a :href="link"> view "{{ currentExperiment.name }}" code on github </a>)
       </span>
     </h2>
     <div v-show="isLoading" class="code-loading">LOADING...</div>
@@ -53,7 +51,7 @@ watchEffect(async () => {
       theme="rainbow"
       :header="false"
       width="100%"
-      borderRadius="0"
+      border-radius="0"
       max-height="500px"
       style="overflow-y: auto"
     />

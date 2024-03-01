@@ -1,6 +1,6 @@
-import Cell from "../core/Cell";
-import createExperiment from "../core/utils/createExperiment";
-import getNeighborCellsAverageValue from "../core/utils/getNeighborCellsAverageValue";
+import Cell from '../core/Cell';
+import createExperiment from '../core/utils/createExperiment';
+import getNeighborCellsAverageValue from '../core/utils/getNeighborCellsAverageValue';
 
 // thanks to @sanojian who thanks lithander on TIGSource
 
@@ -12,7 +12,7 @@ for (let index = 0; index < 64; index++) {
 }
 
 export class Water extends Cell {
-  static type = "water";
+  static type = 'water';
 
   water = true;
   value = 0;
@@ -22,9 +22,7 @@ export class Water extends Cell {
 
   getColor() {
     const v = Math.max(2 * this.value + 0.02, 0) - 0.02 + 0.5;
-    return COLORS[
-      REVERSE_COLORS_INDEX[Math.floor(REVERSE_COLORS_INDEX.length * v)]
-    ];
+    return COLORS[REVERSE_COLORS_INDEX[Math.floor(REVERSE_COLORS_INDEX.length * v)]];
   }
 
   prepare() {

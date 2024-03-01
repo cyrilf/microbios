@@ -1,5 +1,7 @@
 export default abstract class Cell {
-  static type = "Cell";
+  static type = 'Cell';
+  [key: string]: any;
+
   public row: number;
   public column: number;
   public worldRows: number;
@@ -12,18 +14,12 @@ export default abstract class Cell {
     this.worldColumns = columns;
   }
 
-  /**
-   * Should return a valid CSS color string
-   */
+  // Return the cell color
   abstract getColor(): string | null;
 
-  /**
-   * Prepare the cell state for the next generation
-   */
+  // Prepare the cell state for the next generation
   abstract prepare(): void;
 
-  /**
-   * Change the cell state based on its neighbors
-   */
+  // Change the cell state based on its neighbors
   abstract process(neighbors: (Cell | null)[]): void;
 }

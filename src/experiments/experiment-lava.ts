@@ -1,16 +1,16 @@
-import Cell from "../core/Cell";
-import createExperiment from "../core/utils/createExperiment";
-import getNeighborCellsAverageValue from "../core/utils/getNeighborCellsAverageValue";
+import Cell from '../core/Cell';
+import createExperiment from '../core/utils/createExperiment';
+import getNeighborCellsAverageValue from '../core/utils/getNeighborCellsAverageValue';
 
 // thanks to @sanojian who thanks TheLastBanana on TIGSource
 
 const COLORS = [
-  "rgba(34,10,21,1)",
-  "rgba(68,17,26,1)",
-  "rgba(123,16,16,1)",
-  "rgba(190,45,16,1)",
-  "rgba(244,102,20,1)",
-  "rgba(254,212,97,1)",
+  'rgba(34,10,21,1)',
+  'rgba(68,17,26,1)',
+  'rgba(123,16,16,1)',
+  'rgba(190,45,16,1)',
+  'rgba(244,102,20,1)',
+  'rgba(254,212,97,1)'
 ];
 
 const colorsIndexes: number[] = [];
@@ -59,7 +59,7 @@ for (; index < 64; ++index) {
 }
 
 export class Lava extends Cell {
-  static type = "lava";
+  static type = 'lava';
 
   value = 0;
   prev = this.value;

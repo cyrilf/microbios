@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useWorldStore } from "@/stores/world";
-import { computed, ref, onMounted, watchEffect } from "vue";
+import { useWorldStore } from '@/stores/world';
+import { computed, ref, onMounted, watchEffect } from 'vue';
 
 const worldStore = useWorldStore();
 
@@ -14,15 +14,13 @@ const ctx = ref<CanvasRenderingContext2D | null>(null);
 
 const config = computed(() => worldStore.config);
 
-const canvasWidth = computed(
-  () => config.value.columns * config.value.cellSize
-);
+const canvasWidth = computed(() => config.value.columns * config.value.cellSize);
 const canvasHeight = computed(() => config.value.rows * config.value.cellSize);
 onMounted(() => {
   if (canvas.value) {
     canvas.value.width = canvasWidth.value;
     canvas.value.height = canvasHeight.value;
-    ctx.value = canvas.value.getContext("2d");
+    ctx.value = canvas.value.getContext('2d');
     worldStore.setLoading({ renderer: false });
   }
 });
@@ -45,7 +43,7 @@ watchEffect(() => {
     for (let col = 0; col < columns; col++) {
       const currentCell = rowData[col];
       if (currentCell) {
-        ctx.value.fillStyle = currentCell ?? "";
+        ctx.value.fillStyle = currentCell ?? '';
         ctx.value.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
       }
     }
@@ -56,9 +54,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <canvas ref="canvas">
-    Your browser is not supported. Try another renderer.
-  </canvas>
+  <canvas ref="canvas"> Your browser is not supported. Try another renderer. </canvas>
 </template>
 
 <style scoped>

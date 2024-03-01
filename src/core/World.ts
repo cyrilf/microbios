@@ -1,4 +1,4 @@
-import Cell from "./Cell";
+import Cell from './Cell';
 
 type Grid = (Cell | null)[][];
 type Distribution = {
@@ -11,6 +11,7 @@ type Mapping = {
   property?: string;
 };
 
+export type WorldType = typeof World;
 export default class World {
   public columns: number;
   public rows: number;
@@ -32,12 +33,10 @@ export default class World {
     let sortedCellDistribution = cellDistributions.slice(0);
     if (this.cellTypes.size === 0) {
       throw new Error(
-        "You forgot to register your `cellTypes`. Make sure to call `registerCellClass` before `init`"
+        'You forgot to register your `cellTypes`. Make sure to call `registerCellClass` before `init`'
       );
     }
-    sortedCellDistribution.sort((a, b) =>
-      a.distribution > b.distribution ? 1 : -1
-    );
+    sortedCellDistribution.sort((a, b) => (a.distribution > b.distribution ? 1 : -1));
 
     let totalDistribution = 0;
     sortedCellDistribution = sortedCellDistribution.map((cd) => {
@@ -48,13 +47,10 @@ export default class World {
     this.grid = Array.from({ length: this.rows }, (_, row) =>
       Array.from({ length: this.columns }, (_, column) => {
         const random = Math.random() * totalDistribution;
-        const type = sortedCellDistribution.find(
-          ({ distribution }) => random <= distribution
-        )?.type;
+        const type = sortedCellDistribution.find(({ distribution }) => random <= distribution)
+          ?.type;
         const CellClass = type ? this.cellTypes.get(type) : null;
-        return CellClass
-          ? new CellClass(row, column, this.rows, this.columns)
-          : null;
+        return CellClass ? new CellClass(row, column, this.rows, this.columns) : null;
       })
     );
   }
@@ -74,9 +70,7 @@ export default class World {
       // better at renderering scenes that modify bottom neighbor
       let row = 0;
       for (row = this.rows - 1; row >= 0; row--) {
-        this.grid[row].forEach(
-          (cell) => cell?.process(this.getNeighbors(cell.row, cell.column))
-        );
+        this.grid[row].forEach((cell) => cell?.process(this.getNeighbors(cell.row, cell.column)));
       }
 
       this.generation += 1;
@@ -133,9 +127,7 @@ export default class World {
           const { type, value } = mappings[i];
           if (initGrid[row][column] === value) {
             const CellClass = this.cellTypes.get(type);
-            result = CellClass
-              ? new CellClass(row, column, this.rows, this.columns)
-              : null;
+            result = CellClass ? new CellClass(row, column, this.rows, this.columns) : null;
             break;
           }
         }
@@ -158,10 +150,8 @@ export default class World {
         const mapping = mappings.find((m) => m.type === type);
         if (mapping) {
           const { property, value } = mapping;
-          // @ts-ignore
-          exportGrid[row][column] = grid[row][column][property]
-            ? value
-            : defaultValue;
+          exportGrid[row][column] =
+            property && grid[row][column]?.[property] ? value : defaultValue;
         }
       }
     }

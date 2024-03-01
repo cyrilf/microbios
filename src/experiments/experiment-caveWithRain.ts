@@ -1,17 +1,10 @@
-import Cell from "../core/Cell";
-import World from "../core/World";
-import {
-  TOP,
-  BOTTOM,
-  BOTTOM_LEFT,
-  BOTTOM_RIGHT,
-  LEFT,
-  RIGHT,
-} from "../core/utils/neighborIndexes";
-import caveExperiment from "./experiment-cave";
+import Cell from '../core/Cell';
+import World from '../core/World';
+import { TOP, BOTTOM, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, RIGHT } from '../core/utils/neighborIndexes';
+import caveExperiment from './experiment-cave';
 
 const COLORS = [
-  "rgba(89, 125, 206, 0)",
+  'rgba(89, 125, 206, 0)',
   `rgba(89, 125, 206, ${1 / 9})`,
   `rgba(89, 125, 206, ${2 / 9})`,
   `rgba(89, 125, 206, ${3 / 9})`,
@@ -20,16 +13,16 @@ const COLORS = [
   `rgba(89, 125, 206, ${6 / 9})`,
   `rgba(89, 125, 206, ${7 / 9})`,
   `rgba(89, 125, 206, ${8 / 9})`,
-  "rgba(89, 125, 206, 1)",
-  "rgba(109, 170, 44, 1)",
-  "rgba(68, 36, 52, 1)",
+  'rgba(89, 125, 206, 1)',
+  'rgba(109, 170, 44, 1)',
+  'rgba(68, 36, 52, 1)'
 ];
 
 const WATER_FULL = 9;
 const CHANCE_TO_RAIN = 0.02;
 
 class Water extends Cell {
-  static type = "water";
+  static type = 'water';
 
   water = 0;
 
@@ -55,23 +48,16 @@ class Water extends Cell {
 
   prepare() {}
 
-  manageWater(
-    neighbor: Water,
-    quantity: number,
-    minimumWaterTransfer = WATER_FULL
-  ) {
+  manageWater(neighbor: Water, quantity: number, minimumWaterTransfer = WATER_FULL) {
     if (
       !this.water ||
       neighbor === null ||
-      (neighbor.constructor as typeof Water).type !== "water" ||
+      (neighbor.constructor as typeof Water).type !== 'water' ||
       neighbor.water >= minimumWaterTransfer
     ) {
       return;
     }
-    const amount = Math.min(
-      this.water,
-      Math.ceil((WATER_FULL - neighbor.water) * quantity)
-    );
+    const amount = Math.min(this.water, Math.ceil((WATER_FULL - neighbor.water) * quantity));
     this.water -= amount;
     // eslint-disable-next-line no-param-reassign
     neighbor.water += amount;
@@ -79,7 +65,7 @@ class Water extends Cell {
 }
 
 class Rock extends Cell {
-  static type = "rock";
+  static type = 'rock';
 
   moss = false;
 
@@ -88,12 +74,9 @@ class Rock extends Cell {
   }
 
   process(neighbors: Rock[] | Water[]) {
-    const bottomNeighborIsRock =
-      neighbors[BOTTOM] && "moss" in neighbors[BOTTOM];
+    const bottomNeighborIsRock = neighbors[BOTTOM] && 'moss' in neighbors[BOTTOM];
     const topNeighborIsWaterNotFull =
-      neighbors[TOP] &&
-      "water" in neighbors[TOP] &&
-      neighbors[TOP].water !== WATER_FULL;
+      neighbors[TOP] && 'water' in neighbors[TOP] && neighbors[TOP].water !== WATER_FULL;
     this.moss = bottomNeighborIsRock && topNeighborIsWaterNotFull;
   }
 
@@ -107,10 +90,7 @@ export default (config: WorldConfig) => {
     cave.nextGeneration();
   }
 
-  const grid = cave.convertGrid(
-    [{ type: "wall", property: "open", value: 0 }],
-    1
-  );
+  const grid = cave.convertGrid([{ type: 'wall', property: 'open', value: 0 }], 1);
 
   // cut the top third of the caves off
   for (let y = 0; y < Math.floor(config.rows / 3); y++) {
@@ -124,8 +104,8 @@ export default (config: WorldConfig) => {
   world.registerCellClass(Rock);
 
   world.initFrom(grid, [
-    { value: 1, type: "rock" },
-    { value: 0, type: "water" },
+    { value: 1, type: 'rock' },
+    { value: 0, type: 'water' }
   ]);
 
   return world;

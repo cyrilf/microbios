@@ -1,8 +1,8 @@
-import Cell from "../core/Cell";
-import createExperiment from "../core/utils/createExperiment";
+import Cell from '../core/Cell';
+import createExperiment from '../core/utils/createExperiment';
 
 export class Living extends Cell {
-  static type = "living";
+  static type = 'living';
 
   alive = Math.random() > 0.5;
   wasAlive = false;
@@ -16,9 +16,7 @@ export class Living extends Cell {
   }
 
   process(neighbors: Living[]) {
-    const neighborsAlive = neighbors.filter(
-      (neighbor) => neighbor && neighbor.wasAlive
-    ).length;
+    const neighborsAlive = neighbors.filter((neighbor) => neighbor && neighbor.wasAlive).length;
     this.alive = neighborsAlive === 3 || (neighborsAlive === 2 && this.alive);
   }
 }

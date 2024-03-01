@@ -1,14 +1,11 @@
-import Cell from "../core/Cell";
-import createExperiment from "../core/utils/createExperiment";
-import getNeighborCellsAverageValue from "../core/utils/getNeighborCellsAverageValue";
+import Cell from '../core/Cell';
+import createExperiment from '../core/utils/createExperiment';
+import getNeighborCellsAverageValue from '../core/utils/getNeighborCellsAverageValue';
 
 class Boom extends Cell {
-  static type = "Boom";
+  static type = 'Boom';
 
-  value =
-    this.column === this.worldColumns / 2 && this.row === this.worldRows / 2
-      ? 10
-      : 0;
+  value = this.column === this.worldColumns / 2 && this.row === this.worldRows / 2 ? 10 : 0;
   prev = this.value;
   next = this.value;
 
