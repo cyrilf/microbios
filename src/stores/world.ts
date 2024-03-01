@@ -1,18 +1,18 @@
-import { ref, shallowRef } from "vue";
-import { defineStore } from "pinia";
+import { ref, shallowRef } from 'vue';
+import { defineStore } from 'pinia';
 
-import experiments from "@/experiments";
+import experiments from '@/experiments';
 
 type Loading = {
   experiment: boolean;
   renderer: boolean;
 };
 
-const useWorldStore = defineStore("world", () => {
+const useWorldStore = defineStore('world', () => {
   const config = shallowRef<WorldManagerConfig>({
     columns: 100,
     rows: 50,
-    cellSize: 7,
+    cellSize: 7
   });
   let world: World = null;
   const isPlaying = ref(false);
@@ -20,18 +20,16 @@ const useWorldStore = defineStore("world", () => {
   const fps = ref(60);
   let frames = 0;
   let animationId: number = 0;
-  const currentExperiment = shallowRef(
-    experiments.find((e) => e.selected) || experiments[0]
-  );
-  const renderer = ref("canvas");
-  let onUpdateListener: Function | undefined;
+  const currentExperiment = shallowRef(experiments.find((e) => e.selected) || experiments[0]);
+  const renderer = ref('canvas');
+  let onUpdateListener: (nextGeneration: NewGeneration) => void;
 
   const init = async ({
     initConfig,
-    onUpdate,
+    onUpdate
   }: {
     initConfig?: Partial<WorldManagerConfig>;
-    onUpdate?: Function;
+    onUpdate?: (nextGeneration: NewGeneration) => void;
   } = {}) => {
     if (onUpdate) {
       onUpdateListener = onUpdate;
@@ -40,7 +38,7 @@ const useWorldStore = defineStore("world", () => {
 
     const module = await currentExperiment.value?.getModule();
     if (!module) {
-      throw new Error("No current experiment selected");
+      throw new Error('No current experiment selected');
     }
     const createWorld = module.default;
     world = createWorld(config.value);
@@ -59,10 +57,7 @@ const useWorldStore = defineStore("world", () => {
     if (!world) return;
 
     if (world?.options?.maxGeneration > world.generation) {
-      if (
-        !isPlaying.value ||
-        (isPlaying.value && fps.value !== 0 && frames > 60 / fps.value)
-      ) {
+      if (!isPlaying.value || (isPlaying.value && fps.value !== 0 && frames > 60 / fps.value)) {
         onUpdateListener?.(world.nextGeneration());
         frames = 0;
       }
@@ -139,7 +134,7 @@ const useWorldStore = defineStore("world", () => {
     changeExperiment,
     changeRenderer,
     changeConfig,
-    changeFPS,
+    changeFPS
   };
 });
 

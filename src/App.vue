@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref, shallowRef } from "vue";
-import { useWorldStore } from "@/stores/world";
-import World from "@/components/World.vue";
-import Controls from "@/components/Controls.vue";
-import Code from "@/components/Code.vue";
+import { onMounted, ref, shallowRef } from 'vue';
+import { useWorldStore } from '@/stores/world';
+import AppScene from '@/components/AppScene.vue';
+import AppControls from '@/components/AppControls.vue';
+import AppCode from '@/components/AppCode.vue';
 
 const worldStore = useWorldStore();
 
@@ -26,9 +26,9 @@ onMounted(async () => {
     <h1>Microbios</h1>
     <small>Run cellular automata experiments</small>
   </div>
-  <World :generation="generation" :grid="grid" />
-  <Controls :generation="generation" />
-  <Code />
+  <AppScene :generation="generation" :grid="grid" />
+  <AppControls :generation="generation" />
+  <AppCode />
 </template>
 
 <style scoped>
@@ -45,7 +45,7 @@ onMounted(async () => {
     text-shadow:
       0px 5px 0px white,
       0px 9px 0px #7a4815;
-    font-family: "Fascinate", system-ui, sans-serif;
+    font-family: 'Fascinate', system-ui, sans-serif;
 
     @media (min-width: 425px) {
       & {

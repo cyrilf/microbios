@@ -1,14 +1,14 @@
-import Cell from "../core/Cell";
-import createExperiment from "../core/utils/createExperiment";
+import Cell from '../core/Cell';
+import createExperiment from '../core/utils/createExperiment';
 
 export class Wall extends Cell {
-  static type = "wall";
+  static type = 'wall';
 
   open = Math.random() > 0.4;
   wasOpen = false;
 
   getColor() {
-    return this.open ? "" : "rgba(68, 36, 52, 1)";
+    return this.open ? '' : 'rgba(68, 36, 52, 1)';
   }
 
   prepare() {
@@ -16,9 +16,7 @@ export class Wall extends Cell {
   }
 
   process(neighbors: Wall[]) {
-    const openNeighbors = neighbors.filter(
-      (neighbor) => neighbor && neighbor.wasOpen
-    ).length;
+    const openNeighbors = neighbors.filter((neighbor) => neighbor && neighbor.wasOpen).length;
     this.open = (this.wasOpen && openNeighbors >= 4) || openNeighbors >= 6;
   }
 }

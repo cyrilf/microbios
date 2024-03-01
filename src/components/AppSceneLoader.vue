@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useWorldStore } from "@/stores/world";
-import { computed } from "vue";
+import { useWorldStore } from '@/stores/world';
+import { computed } from 'vue';
 
 const worldStore = useWorldStore();
 

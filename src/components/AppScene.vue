@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent, watch } from "vue";
-import Loader from "@/components/Loader.vue";
-import { useWorldStore } from "@/stores/world";
+import { computed, defineAsyncComponent, watch } from 'vue';
+import SceneLoader from '@/components/AppSceneLoader.vue';
+import { useWorldStore } from '@/stores/world';
 
 const worldStore = useWorldStore();
 const props = defineProps<{
@@ -16,26 +16,24 @@ const getRenderer = (renderer: string) =>
   defineAsyncComponent({
     loader: () =>
       import(
-        `@/components/renderers/Renderer${
-          renderer.charAt(0).toUpperCase() + renderer.slice(1)
-        }.vue`
+        `@/components/renderers/Renderer${renderer.charAt(0).toUpperCase() + renderer.slice(1)}.vue`
       ),
-    loadingComponent: Loader,
-    delay: 200,
+    loadingComponent: SceneLoader,
+    delay: 200
   });
 
-let WorldComponent = getRenderer(renderer.value);
+let SceneRenderer = getRenderer(renderer.value);
 watch(renderer, () => {
-  WorldComponent = getRenderer(renderer.value);
+  SceneRenderer = getRenderer(renderer.value);
 });
 </script>
 
 <template>
-  <div class="world-container">
-    <Loader v-show="isLoading" class="world" />
-    <WorldComponent
+  <div class="scene-container">
+    <SceneLoader v-show="isLoading" class="scene" />
+    <SceneRenderer
       v-show="!isLoading"
-      class="world"
+      class="scene"
       :generation="props.generation"
       :grid="props.grid"
     />
@@ -43,11 +41,11 @@ watch(renderer, () => {
 </template>
 
 <style scoped>
-.world-container {
+.scene-container {
   min-height: 370px; /*hacky-way to avoid controler jump when switching renderer*/
   overflow: auto;
 }
-.world {
+.scene {
   background: white;
   border: solid 10px #41403e;
 }
