@@ -12,6 +12,8 @@ const worldStore = useWorldStore();
 const currentExperiment = computed(() => worldStore.currentExperiment);
 
 const fetchCode = async () => {
+  if (!currentExperiment.value) return '';
+
   let text = '';
   try {
     isLoading.value = true;
@@ -28,13 +30,15 @@ const fetchCode = async () => {
 };
 
 watchEffect(async () => {
-  link.value = `https://github.com/cyrilf/microbios/blob/main/src/experiments/${currentExperiment.value.id}.js`;
-  code.value = await fetchCode();
+  if (currentExperiment.value) {
+    link.value = `https://github.com/cyrilf/microbios/blob/main/src/experiments/${currentExperiment.value.id}.js`;
+    code.value = await fetchCode();
+  }
 });
 </script>
 
 <template>
-  <div class="code">
+  <div v-if="currentExperiment" class="code">
     <h2>
       Code
       <span class="link">
