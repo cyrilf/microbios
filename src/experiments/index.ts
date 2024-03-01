@@ -1,4 +1,4 @@
-const experiments = [
+const experiments: Experiment[] = [
   { id: 'gameOfLife', name: 'Game of Life' },
   { id: 'forestFire', name: 'Forest Fire' },
   { id: 'maze', name: 'Maze' },
@@ -14,7 +14,7 @@ const experiments = [
 ].map((e) => ({
   ...e,
   value: e.id /* to be compatible with dat-select */,
-  getModule: () => import(`./experiment-${e.id}.ts`)
+  getModule: () => import(`./${e.id}.ts`)
 }));
 
 export default experiments;
