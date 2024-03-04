@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref, shallowRef } from 'vue';
+import { useDark } from '@vueuse/core';
+
 import { useWorldStore } from '@/stores/world';
 import AppScene from '@/components/AppScene.vue';
 import AppControls from '@/components/AppControls.vue';
 import AppCode from '@/components/AppCode.vue';
 
 const worldStore = useWorldStore();
+
+useDark();
 
 const generation = ref(0);
 const grid = shallowRef<string[][]>([]);
@@ -40,12 +44,12 @@ onMounted(async () => {
 
   h1 {
     margin: 0px;
+    color: var(--title-color);
     font-size: 2rem;
-    color: rgb(223, 128, 12);
+    font-family: 'Fascinate', system-ui, sans-serif;
     text-shadow:
       0px 5px 0px white,
       0px 9px 0px #7a4815;
-    font-family: 'Fascinate', system-ui, sans-serif;
 
     @media (min-width: 425px) {
       & {
@@ -55,10 +59,10 @@ onMounted(async () => {
   }
   small {
     margin-left: auto;
-    font-size: 1rem;
-    font-style: italic;
     background: rgba(255, 255, 255, 0.6);
     padding: 3px;
+    font-style: italic;
+    font-size: 1rem;
   }
 }
 </style>

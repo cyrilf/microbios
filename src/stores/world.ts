@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia';
-import { toRefs } from 'vue';
 
 import { useWorldManager } from '@/core/worldManager';
 import experiments from '@/experiments';
 
 const useWorldStore = defineStore('world', () => {
   const worldManager = useWorldManager();
-  const { config, isPlaying, fps, currentExperiment, renderer, loading } = toRefs(worldManager);
+  const { config, isPlaying, fps, currentExperiment, renderer, loading } = worldManager;
   const {
     init: initWorldManager,
     setConfig,
