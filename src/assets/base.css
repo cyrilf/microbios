@@ -19,6 +19,7 @@
   --controls-color: #41403e;
   --controls-background-color: white;
   --controls-border-color: #41403e;
+  --arrow-color: #41403e;
 
   --generation-color: black;
   --generation-background-color: rgba(244, 151, 51, 1);
@@ -40,6 +41,7 @@
   --controls-color: var(--neutral-light);
   --controls-background-color: var(--neutral-dark);
   --controls-border-color: black;
+  --arrow-color: black;
 
   --generation-background-color: var(--primary-color);
 }
@@ -52,12 +54,12 @@
 }
 
 body {
-  background: var(--background-color) url(@/assets/golden.png);
+  background: var(--background-color) url(@/assets/golden.png) !important;
   color: var(--color);
   font-family: 'Quicksand', sans-serif;
   text-align: center;
 }
 
 html.dark body {
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(@/assets/golden.png);
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(@/assets/golden.png) !important;
 }
