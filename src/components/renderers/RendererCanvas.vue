@@ -9,12 +9,16 @@ const props = defineProps<{
   grid: string[][];
 }>();
 
+const windowWidth = ref(window.innerWidth);
 const canvas = ref<HTMLCanvasElement | null>(null);
 const ctx = ref<CanvasRenderingContext2D | null>(null);
 
 const config = computed(() => worldStore.config);
 
-const canvasWidth = computed(() => config.value.columns * config.value.cellSize);
+const canvasWidth = computed(() => {
+  const adjustedWidth = windowWidth.value > 360 ? windowWidth.value : 360;
+  return Math.min(config.value.columns * config.value.cellSize, adjustedWidth) - 20;
+});
 const canvasHeight = computed(() => config.value.rows * config.value.cellSize);
 onMounted(() => {
   if (canvas.value) {
@@ -24,7 +28,6 @@ onMounted(() => {
     worldStore.setLoading({ renderer: false });
   }
 });
-
 watchEffect(() => {
   const { grid } = props;
   const { cellSize } = config.value;
