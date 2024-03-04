@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useWorldStore } from '@/stores/world';
+import AppArrow from '@/components/AppArrow.vue';
 
 defineProps<{
   generation: number;
@@ -52,7 +53,7 @@ const cellSize = computed({
 
 <template>
   <section>
-    <img src="../assets/arrow.svg" alt="arrow" class="arrow" />
+    <AppArrow />
     <DatGui :open="false">
       <DatFolder label="Experiment" :open="false">
         <DatButton :label="isPlaying ? 'Pause' : 'Play'" @click="isPlaying ? pause() : play()" />
@@ -93,25 +94,11 @@ section {
   margin-top: 2rem;
 }
 
-.arrow {
-  display: none;
-  position: fixed;
-  top: 50px;
-  right: 100px;
-  transform: scaleX(-1) scale(1.2);
-  width: 150px;
-
-  @media (min-width: 1260px) {
-    & {
-      display: block;
-    }
-  }
-}
-
 .controls {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 1rem;
   padding-top: 50px;
 
   button,
@@ -132,7 +119,6 @@ section {
   select {
     transition: box-shadow 0.5s ease;
     cursor: pointer;
-    margin: 0 1rem;
     outline: none;
     box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
     border: solid 3px var(--controls-border-color);
