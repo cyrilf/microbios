@@ -46,7 +46,7 @@ watch(renderer, () => {
   overflow: auto;
 }
 .scene {
-  border: solid 10px #41403e;
+  border: solid 10px var(--neutral-dark);
   background: var(--scene-background-color);
 }
 </style>
