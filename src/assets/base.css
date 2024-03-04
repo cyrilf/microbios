@@ -17,6 +17,7 @@
   --code-background-color: rgba(244, 151, 51, 1);
 
   --controls-color: #41403e;
+  --controls-color-hover: black;
   --controls-background-color: white;
   --controls-border-color: #41403e;
   --arrow-color: #41403e;
@@ -39,6 +40,7 @@
   --code-background-color: var(--primary-color);
 
   --controls-color: var(--neutral-light);
+  --controls-color-hover: var(--neutral-dark);
   --controls-background-color: var(--neutral-dark);
   --controls-border-color: black;
   --arrow-color: black;

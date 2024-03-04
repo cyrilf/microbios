@@ -1,6 +1,5 @@
 import { ref, shallowRef } from 'vue';
 
-// TODO
 export const useWorldManager = () => {
   const config = shallowRef({ columns: 100, rows: 50, cellSize: 7 });
   let world: World = null;

@@ -8,7 +8,7 @@ export class Living extends Cell {
   wasAlive = false;
 
   getColor() {
-    return this.alive ? `rgba(68, 36, 52, ${this.wasAlive ? 1 : 0.7})` : null;
+    return this.alive ? `rgba(68, 36, 52, ${this.wasAlive ? 1 : 0.8})` : null;
   }
 
   prepare() {

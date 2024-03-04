@@ -129,6 +129,7 @@ section {
     &:focus:not(:disabled) {
       box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
       background: #f49733;
+      color: var(--controls-color-hover);
     }
     &:disabled {
       opacity: 0.6;

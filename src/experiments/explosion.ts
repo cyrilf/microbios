@@ -15,7 +15,7 @@ class Boom extends Cell {
     const g = Math.floor(v * 100);
     const b = Math.floor(v * 100);
 
-    return `rgba(${r}, ${g}, ${b}, ${this.value * 10})`;
+    return this.value > 0.01 ? `rgba(${r}, ${g}, ${b}, ${this.value * 10})` : null;
   }
 
   prepare() {
