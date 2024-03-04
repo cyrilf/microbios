@@ -12,8 +12,8 @@
 
   --scene-background-color: white;
 
-  --code-color: white;
-  --code-color-hover: black;
+  --code-color: var(--neutral-dark);
+  --code-color-hover: white;
   --code-background-color: rgba(244, 151, 51, 1);
 
   --controls-color: #41403e;

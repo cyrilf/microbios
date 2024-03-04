@@ -35,7 +35,7 @@ export class Cyclic extends Cell {
   }
 
   process(neighbors: Cyclic[]) {
-    const next = (this.state + 1) % 16;
+    const next = (this.state + Math.floor(Math.random() * 2)) % 16;
     const changing = neighbors.some((neighbor) => neighbor && neighbor.previousState === next);
 
     if (changing) this.state = next;
