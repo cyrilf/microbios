@@ -1,4 +1,4 @@
-import Cell from './Cell';
+import type Cell from './Cell';
 
 type Grid = (Cell | null)[][];
 type Distribution = {
@@ -30,16 +30,17 @@ export default class World {
   }
 
   init(cellDistributions: Distribution[]) {
-    let sortedCellDistribution = cellDistributions.slice(0);
     if (this.cellTypes.size === 0) {
       throw new Error(
         'You forgot to register your `cellTypes`. Make sure to call `registerCellClass` before `init`'
       );
     }
-    sortedCellDistribution.sort((a, b) => (a.distribution > b.distribution ? 1 : -1));
+    const sortedCellDistribution = cellDistributions.toSorted((a, b) =>
+      a.distribution > b.distribution ? 1 : -1
+    );
 
     let totalDistribution = 0;
-    sortedCellDistribution = sortedCellDistribution.map((cd) => {
+    const cumulativeDistributions = sortedCellDistribution.map((cd) => {
       totalDistribution += cd.distribution;
       return { ...cd, distribution: totalDistribution };
     });
@@ -47,8 +48,8 @@ export default class World {
     this.grid = Array.from({ length: this.rows }, (_, row) =>
       Array.from({ length: this.columns }, (_, column) => {
         const random = Math.random() * totalDistribution;
-        const type = sortedCellDistribution.find(({ distribution }) => random <= distribution)
-          ?.type;
+        const { type } =
+          cumulativeDistributions.find(({ distribution }) => random <= distribution) || {};
         const CellClass = type ? this.cellTypes.get(type) : null;
         return CellClass ? new CellClass(row, column, this.rows, this.columns) : null;
       })
@@ -122,20 +123,28 @@ export default class World {
     for (; row < this.rows; row++) {
       grid.push([]);
       for (column = 0; column < this.columns; column++) {
-        let result = null;
-        for (let i = 0; i < mappings.length; i++) {
-          const { type, value } = mappings[i];
-          if (initGrid[row][column] === value) {
-            const CellClass = this.cellTypes.get(type);
-            result = CellClass ? new CellClass(row, column, this.rows, this.columns) : null;
-            break;
-          }
-        }
+        const result = this.createCellFromMappings(row, column, initGrid, mappings);
         grid[row].push(result);
       }
     }
 
     this.grid = grid;
+  }
+
+  private createCellFromMappings(
+    row: number,
+    column: number,
+    grid: number[][],
+    mappings: Mapping[]
+  ): Cell | null {
+    for (const { type, value } of mappings) {
+      if (grid[row][column] === value) {
+        const CellClass = this.cellTypes.get(type);
+        return CellClass ? new CellClass(row, column, this.rows, this.columns) : null;
+      }
+    }
+
+    return null;
   }
 
   convertGrid(mappings: Mapping[] = [], defaultValue = 0) {

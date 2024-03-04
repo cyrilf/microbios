@@ -98,8 +98,8 @@ section {
   position: fixed;
   top: 50px;
   right: 100px;
-  width: 150px;
   transform: scaleX(-1) scale(1.2);
+  width: 150px;
 
   @media (min-width: 1260px) {
     & {
@@ -109,16 +109,16 @@ section {
 }
 
 .controls {
-  padding-top: 50px;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 50px;
 
   button,
   input,
   select,
   span {
-    color: #41403e;
+    color: var(--controls-color);
     font-size: 1rem;
     @media (min-width: 788px) {
       & {
@@ -130,24 +130,24 @@ section {
   button,
   input,
   select {
-    background: white;
-    padding: 1rem 1rem;
-    margin: 0 1rem;
     transition: box-shadow 0.5s ease;
-    outline: none;
     cursor: pointer;
+    margin: 0 1rem;
+    outline: none;
     box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
-    border: solid 3px #41403e;
+    border: solid 3px var(--controls-border-color);
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    background: var(--controls-background-color);
+    padding: 1rem 1rem;
     &:hover:not(:disabled),
     &:focus:not(:disabled) {
       box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
       background: #f49733;
     }
     &:disabled {
-      opacity: 0.5;
-      color: black;
+      opacity: 0.6;
       cursor: not-allowed;
+      color: var(--controls-color);
     }
   }
 
@@ -158,11 +158,12 @@ section {
 }
 
 .generation {
-  padding: 10px;
-  background: #f49733;
-  border: 5px solid rgba(0, 0, 0, 0.5);
   display: inline-flex;
-  min-width: 160px;
   justify-content: space-between;
+  border: 5px solid var(--generation-border-color);
+  background: var(--generation-background-color);
+  padding: 10px;
+  min-width: 160px;
+  color: var(--generation-color);
 }
 </style>

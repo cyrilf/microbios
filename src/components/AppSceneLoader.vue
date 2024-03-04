@@ -21,11 +21,11 @@ const config = computed(() => worldStore.config);
 
 <style scoped>
 .loading {
-  box-sizing: content-box;
-  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: content-box;
+  margin: 0 auto;
   border: solid 3px #41403e;
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 }

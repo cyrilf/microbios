@@ -3,10 +3,14 @@ import CodeEditor from 'simple-code-editor';
 
 import { useWorldStore } from '@/stores/world';
 import { computed, ref, watchEffect } from 'vue';
+import { useDark } from '@vueuse/core';
 
 const code = ref<string>('');
 const link = ref<string>('');
 const isLoading = ref<boolean>(true);
+const isDark = useDark();
+
+const codeTheme = computed(() => (isDark.value ? 'androidstudio' : 'rainbow'));
 
 const worldStore = useWorldStore();
 const currentExperiment = computed(() => worldStore.currentExperiment);
@@ -52,7 +56,7 @@ watchEffect(async () => {
       :languages="[['typescript', 'TS']]"
       line-nums
       read-only
-      theme="rainbow"
+      :theme="codeTheme"
       :header="false"
       width="100%"
       border-radius="0"
@@ -64,37 +68,35 @@ watchEffect(async () => {
 
 <style scoped>
 .code {
-  max-width: 100ch;
   margin: 2rem auto;
-  --main-color: #f49733;
+  max-width: 100ch;
 
   h2 {
-    color: white;
-    background: var(--main-color);
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: baseline;
     gap: 0.5rem;
+    margin: 0;
+    background: var(--code-background-color);
+    color: var(--code-color);
     font-size: 2rem;
 
     .link {
       font-size: 1rem;
       a {
-        color: white;
+        color: var(--code-color);
         &:hover,
         &:focus {
-          color: var(--main-color);
-          background-color: white;
+          color: var(--code-color-hover);
         }
       }
     }
   }
 
   .code-loading {
+    background: #474949;
     padding: 1rem;
     color: white;
-    background: #474949;
   }
 }
 </style>

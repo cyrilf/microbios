@@ -34,7 +34,6 @@ watchEffect(() => {
   }
   const rows = grid.length;
   const columns = grid[0].length;
-  const fillStyle = ctx.value.fillStyle;
 
   ctx.value.clearRect(0, 0, canvasWidth.value, canvasHeight.value);
 
@@ -48,8 +47,6 @@ watchEffect(() => {
       }
     }
   }
-
-  ctx.value.fillStyle = fillStyle;
 });
 </script>
 

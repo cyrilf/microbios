@@ -19,7 +19,7 @@ class Snake extends Cell {
   color = COLORS[Math.floor(Math.random() * COLORS.length)];
 
   getColor() {
-    return `${this.color} ${this.life / LENGTH})`;
+    return this.life === 0 ? null : `${this.color} ${this.life / LENGTH})`;
   }
 
   prepare() {
