@@ -22,7 +22,7 @@ const fetchCode = async () => {
   try {
     isLoading.value = true;
     const response = await fetch(
-      `https://api.github.com/repos/cyrilf/microbios/contents/src/experiments/${currentExperiment.value.id}.js`,
+      `https://api.github.com/repos/cyrilf/microbios/contents/src/experiments/${currentExperiment.value.id}.ts`,
       { headers: { Accept: 'application/vnd.github.V3.raw' } }
     );
     text = await response.text();
@@ -35,7 +35,7 @@ const fetchCode = async () => {
 
 watchEffect(async () => {
   if (currentExperiment.value) {
-    link.value = `https://github.com/cyrilf/microbios/blob/main/src/experiments/${currentExperiment.value.id}.js`;
+    link.value = `https://github.com/cyrilf/microbios/blob/main/src/experiments/${currentExperiment.value.id}.ts`;
     code.value = await fetchCode();
   }
 });
