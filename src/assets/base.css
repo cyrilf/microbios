@@ -1,0 +1,66 @@
+:root {
+  --primary-color: rgba(204, 118, 25, 1);
+  --neutral-light: rgba(228, 228, 228, 1);
+  --neutral-dark: rgba(64, 64, 67, 1);
+  --neutral-darker: rgba(34, 34, 34, 1);
+
+  --color: black;
+  --background-color: rgba(248, 207, 96, 1);
+
+  --title-color: rgb(223, 128, 12);
+
+  --scene-background-color: white;
+
+  --code-color: var(--neutral-darker);
+  --code-color-hover: white;
+  --code-background-color: rgba(244, 151, 51, 1);
+
+  --controls-color: #41403e;
+  --controls-color-hover: black;
+  --controls-background-color: white;
+  --controls-border-color: #41403e;
+  --arrow-color: #41403e;
+
+  --generation-color: black;
+  --generation-background-color: rgba(244, 151, 51, 1);
+  --generation-border-color: rgba(0, 0, 0, 0.5);
+}
+
+:root.dark {
+  --color: black;
+  --background-color: var(--neutral-dark);
+
+  --title-color: var(--primary-color);
+
+  --scene-background-color: rgba(67, 82, 104, 1);
+
+  --code-color: black;
+  --code-color-hover: white;
+  --code-background-color: var(--primary-color);
+
+  --controls-color: var(--neutral-light);
+  --controls-color-hover: var(--neutral-darker);
+  --controls-background-color: var(--neutral-dark);
+  --controls-border-color: black;
+  --arrow-color: black;
+
+  --generation-background-color: var(--primary-color);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  background: var(--background-color) url(@/assets/golden.webp) !important;
+  color: var(--color);
+  font-family: 'Quicksand', sans-serif;
+  text-align: center;
+}
+
+html.dark body {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(@/assets/golden.webp) !important;
+}
