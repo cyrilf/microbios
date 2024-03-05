@@ -1,7 +1,7 @@
 :root {
   --primary-color: rgba(204, 118, 25, 1);
   --neutral-light: rgba(228, 228, 228, 1);
-  --neutral-dark: rgba(71, 73, 73, 1);
+  --neutral-dark: rgba(64, 64, 67, 1);
   --neutral-darker: rgba(34, 34, 34, 1);
 
   --color: black;
@@ -39,7 +39,7 @@
   --code-background-color: var(--primary-color);
 
   --controls-color: var(--neutral-light);
-  --controls-color-hover: var(--neutral-dark);
+  --controls-color-hover: var(--neutral-darker);
   --controls-background-color: var(--neutral-dark);
   --controls-border-color: black;
   --arrow-color: black;
