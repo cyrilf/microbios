@@ -14,7 +14,7 @@ const experiments: Experiment[] = [
 ].map((e) => ({
   ...e,
   value: e.id /* to be compatible with dat-select */,
-  getModule: () => import(`./${e.id}.ts`)
+  getModule: () => import(`./experiments/${e.id}.ts`)
 }));
 
 export default experiments;

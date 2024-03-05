@@ -1,5 +1,5 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 35 40">
+  <svg xmlns="http://www.w3.org/2000/svg" class="arrow" viewBox="0 0 35 40" role="presentation">
     <g
       fill="none"
       stroke="currentColor"
