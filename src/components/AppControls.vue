@@ -80,11 +80,14 @@ const cellSize = computed({
         {{ isPlaying ? 'Pause' : 'Play' }}
       </button>
       <button @click="restart">Restart</button>
-      <select v-model="currentExperiment">
-        <option v-for="experiment in experiments" :key="experiment.id" :value="experiment.id">
-          {{ experiment.name }}
-        </option>
-      </select>
+      <label class="select-experiment">
+        Choose the active experiment
+        <select v-model="currentExperiment">
+          <option v-for="experiment in experiments" :key="experiment.id" :value="experiment.id">
+            {{ experiment.name }}
+          </option>
+        </select>
+      </label>
     </div>
   </section>
 </template>
@@ -141,6 +144,14 @@ section {
   input {
     cursor: inherit;
     max-width: 120px;
+  }
+
+  .select-experiment {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: -2rem;
+    color: var(--controls-color);
   }
 }
 

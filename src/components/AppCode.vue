@@ -54,7 +54,6 @@ watchEffect(async () => {
       v-show="!isLoading"
       v-model="code"
       :languages="[['typescript', 'TS']]"
-      line-nums
       read-only
       :theme="codeTheme"
       :header="false"

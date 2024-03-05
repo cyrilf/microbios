@@ -54,7 +54,12 @@ watchEffect(() => {
 </script>
 
 <template>
-  <canvas ref="canvas"> Your browser is not supported. Try another renderer. </canvas>
+  <canvas
+    ref="canvas"
+    :alt="`Canvas rendering the '${worldStore.currentExperiment?.name}' automata experiment`"
+  >
+    Your browser is not supported. Try another renderer.
+  </canvas>
 </template>
 
 <style scoped>
