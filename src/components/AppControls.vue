@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import { useWorldStore } from '@/stores/world';
 import AppArrow from '@/components/AppArrow.vue';
+import { useDark, useToggle } from '@vueuse/core';
 
 defineProps<{
   generation: number;
@@ -12,6 +13,9 @@ const renderers = ref([
   { name: 'HTML (table)', value: 'table' },
   { name: 'Checkboxes', value: 'checkbox' }
 ]);
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 
 const worldStore = useWorldStore();
 
@@ -71,18 +75,23 @@ const cellSize = computed({
         <DatNumber v-model.number="cellSize" :min="1" label="Cell size" />
       </DatFolder>
     </DatGui>
-    <span class="generation"
-      ><span>Generation: </span><span>{{ generation }}</span></span
-    >
+    <div class="flex">
+      <span class="generation"
+        ><span>Generation: </span><span>{{ generation }}</span></span
+      >
+      <button class="m-button small" title="Change the theme" @click="toggleDark()">
+        {{ isDark ? '☀️' : '🌙' }}
+      </button>
+    </div>
     <div class="controls">
-      <button :disabled="isPlaying" @click="update()">Next</button>
-      <button @click="isPlaying ? pause() : play()">
+      <button :disabled="isPlaying" class="m-button" @click="update()">Next</button>
+      <button class="m-button" @click="isPlaying ? pause() : play()">
         {{ isPlaying ? 'Pause' : 'Play' }}
       </button>
-      <button @click="restart">Restart</button>
+      <button class="m-button" @click="restart">Restart</button>
       <label class="select-experiment">
         Choose the active experiment
-        <select v-model="currentExperiment">
+        <select v-model="currentExperiment" class="m-select">
           <option v-for="experiment in experiments" :key="experiment.id" :value="experiment.id">
             {{ experiment.name }}
           </option>
@@ -97,62 +106,71 @@ section {
   margin-top: 2rem;
 }
 
+.flex {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .controls {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
   padding-top: 50px;
+}
 
-  button,
-  input,
-  select,
-  span {
-    color: var(--controls-color);
-    font-size: 1rem;
-    @media (min-width: 788px) {
-      & {
-        font-size: 2rem;
-      }
+.m-button,
+.m-input,
+.m-select {
+  color: var(--controls-color);
+  font-size: 1rem;
+  @media (min-width: 788px) {
+    & {
+      font-size: 2rem;
     }
   }
 
-  button,
-  input,
-  select {
-    transition: box-shadow 0.5s ease;
-    cursor: pointer;
-    outline: none;
-    box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
-    border: solid 3px var(--controls-border-color);
-    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-    background: var(--controls-background-color);
-    padding: 1rem 1rem;
-    &:hover:not(:disabled),
-    &:focus:not(:disabled) {
-      box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
-      background: #f49733;
-      color: var(--controls-color-hover);
-    }
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      color: var(--controls-color);
-    }
+  &.small {
+    padding: 0.2rem;
   }
+}
 
-  input {
-    cursor: inherit;
-    max-width: 120px;
+.m-button,
+.m-input,
+.m-select {
+  transition: box-shadow 0.5s ease;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 20px 38px 34px -26px hsla(0, 0%, 0%, 0.2);
+  border: solid 3px var(--controls-border-color);
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  background: var(--controls-background-color);
+  padding: 1rem;
+  &:hover:not(:disabled),
+  &:focus:not(:disabled) {
+    box-shadow: 2px 8px 4px -6px hsla(0, 0%, 0%, 0.3);
+    background: #f49733;
+    color: var(--controls-color-hover);
   }
-
-  .select-experiment {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: -2rem;
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
     color: var(--controls-color);
   }
+}
+
+input {
+  cursor: inherit;
+  max-width: 120px;
+}
+
+.select-experiment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: -1.8rem;
+  color: var(--controls-color);
 }
 
 .generation {
