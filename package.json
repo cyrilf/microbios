@@ -13,7 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@cyrilf/vue-dat-gui": "^1.0.7",
+    "@cyrilf/vue-dat-gui": "^1.0.13",
     "@vueuse/core": "^10.9.0",
     "highlight.js": "^11.9.0",
     "pinia": "^2.1.7",
