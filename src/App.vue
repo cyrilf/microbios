@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref, shallowRef } from 'vue';
+import { onMounted, ref, shallowRef, defineAsyncComponent } from 'vue';
 import { useDark } from '@vueuse/core';
 
 import { useWorldStore } from '@/stores/world';
 import AppScene from '@/components/AppScene.vue';
 import AppControls from '@/components/AppControls.vue';
-import AppCode from '@/components/AppCode.vue';
+
+const AppCode = defineAsyncComponent(() => import('@/components/AppCode.vue'));
 
 const worldStore = useWorldStore();
 

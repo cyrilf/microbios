@@ -1,16 +1,17 @@
 <script setup lang="ts">
-import CodeEditor from 'simple-code-editor';
+import { computed, ref, watchEffect } from 'vue';
 
 import { useWorldStore } from '@/stores/world';
-import { computed, ref, watchEffect } from 'vue';
-import { useDark } from '@vueuse/core';
+
+import 'highlight.js/styles/a11y-dark.min.css';
+import hljs from 'highlight.js/lib/core';
+import typescript from 'highlight.js/lib/languages/javascript';
+
+hljs.registerLanguage('typescript', typescript);
 
 const code = ref<string>('');
 const link = ref<string>('');
 const isLoading = ref<boolean>(true);
-const isDark = useDark();
-
-const codeTheme = computed(() => (isDark.value ? 'androidstudio' : 'rainbow'));
 
 const worldStore = useWorldStore();
 const currentExperiment = computed(() => worldStore.currentExperiment);
@@ -33,6 +34,15 @@ const fetchCode = async () => {
   return text;
 };
 
+const highlight = (el: HTMLElement, binding: any) => {
+  el.textContent = binding.value;
+  el.removeAttribute('data-highlighted');
+  hljs.highlightElement(el);
+};
+
+// Directive used on this component
+const vHighlight = { mounted: highlight, updated: highlight };
+
 watchEffect(async () => {
   if (currentExperiment.value) {
     link.value = `https://github.com/cyrilf/microbios/blob/main/src/experiments/${currentExperiment.value.id}.ts`;
@@ -50,18 +60,7 @@ watchEffect(async () => {
       </span>
     </h2>
     <div v-show="isLoading" class="code-loading">LOADING...</div>
-    <CodeEditor
-      v-show="!isLoading"
-      v-model="code"
-      :languages="[['typescript', 'TS']]"
-      read-only
-      :theme="codeTheme"
-      :header="false"
-      width="100%"
-      border-radius="0"
-      max-height="500px"
-      style="overflow-y: auto"
-    />
+    <pre class="code-wrapper"><code v-highlight="code" class="hljs language-typescript"/></pre>
   </div>
 </template>
 
@@ -96,6 +95,17 @@ watchEffect(async () => {
     background: #474949;
     padding: 1rem;
     color: white;
+  }
+
+  .code-wrapper {
+    max-height: 500px;
+    overflow-y: auto;
+    text-align: left;
+    & > code {
+      font-size: 1rem;
+      line-height: 1.5;
+      font-family: monospace;
+    }
   }
 }
 </style>
